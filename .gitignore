@@ -4,6 +4,8 @@
 [Rr]elease.*
 .cocos-project.json
 proj.wp8-xaml
+proj.ios_mac
+proj.linux
 
 
 #--------------

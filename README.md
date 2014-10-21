@@ -18,7 +18,7 @@ Abrir Git Bash y poner los siguientes comandos en el directorio del proyecto:
 
 > git init
 
-> git remote add origin https://github.com/Urkaz/Gridle.git
+> git remote add origin https://github.com/Urkaz/Griddle.git
 
 > git fetch
 
