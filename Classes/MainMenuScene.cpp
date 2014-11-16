@@ -1,29 +1,23 @@
+#include <iostream>
 #include "MainMenuScene.h"
-//#include "GameScene.h"
+#include "PicrossSelectorScene.h"
 
 USING_NS_CC;
 
+//Constante redefinida
+int Constant::GAMEMODE;
+
 Scene* MainMenuScene::createScene()
 {
-	// 'scene' is an autorelease object
 	auto scene = Scene::create();
-
-	// 'layer' is an autorelease object
 	auto layer = MainMenuScene::create();
-
-	// add layer as a child to scene
 	scene->addChild(layer);
-
-	// return the scene
 	return scene;
 }
 
-// on "init" you need to initialize your instance
 bool MainMenuScene::init()
 {
-	//////////////////////////////
-	// 1. super init first
-	if ( !Layer::init() )
+	if (!Layer::init())
 	{
 		return false;
 	}
@@ -34,15 +28,18 @@ bool MainMenuScene::init()
 	// Creating menu
 	auto playItem = MenuItemImage::create("Play_Button.png",
 			"Play_Button(Click).png",
-			CC_CALLBACK_1(MainMenuScene::goToGameScene, this));
+			CC_CALLBACK_1(MainMenuScene::goToNormalSelector, this));
 
-	auto menu = Menu::create(playItem, NULL , NULL);
+	auto playItem2 = MenuItemImage::create("Play_Button.png",
+			"Play_Button(Click).png",
+			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
+
+	auto menu = Menu::create(playItem, playItem2 , NULL);
 
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
 	this->addChild(menu, 1);
 
 	// Adding background
-
 	auto background = Sprite::create("Background.png");
 
 	background->setPosition(Point((visibleSize.width  /2),
@@ -50,41 +47,56 @@ bool MainMenuScene::init()
 
 	addChild(background, 0);
 
-
-
-	/*auto menuTitle = MenuItemImage::create("MainMenuScreen/Game_Title.png", "MainMenuScreen/Game_Title.png");
-
-    auto playItem = MenuItemImage::create("MainMenuScreen/Play_Button.png",
-                                          "MainMenuScreen/Play_Button(Click).png",
-                                          CC_CALLBACK_1(MainMenuScene::goToGameScene, this));
-
-    auto menu = Menu::create(menuTitle, playItem, NULL);
-
-    menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
-    this->addChild(menu, 1);
-
-    // Adding background
-    auto background = Sprite::create("MainMenuScreen/Background.png");
-
-    background->setPosition(Point((visibleSize.width  /2),
-                                  (visibleSize.height /2)));
-
-    addChild(background, 0);*/
-
-	//Preloading sounds
+	// Sounds
 	/*CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/ButtonClick.wav");
     if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false) {
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("audio/Music.mp3");
         CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/Music.mp3", true);
     }*/
 
+	
+	
+	//TEST READ FILE
+	/*std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename("hex.dat").c_str( );
+	
+	FILE *stream = fopen(fullPath.c_str(),"r");
+
+	if(stream == nullptr) perror("Error opening file");
+	else
+	{
+		short c = 0;
+		while(c!= EOF)
+		{
+			c = fgetc(stream);
+			if(c!= EOF) 
+			{
+				CCLOG("%d",c);
+			}
+		}
+	}*/
+
 	return true;
 }
 
-void MainMenuScene::goToGameScene(Ref *pSender) {
+void MainMenuScene::goToNormalSelector(Ref *pSender) {
+
+	Constant::GAMEMODE = Picross::NORMAL;
+
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 
-	//auto scene = GameScene::createScene();
+	auto scene = PicrossSelectorScene::createScene();
 
-	//Director::getInstance()->replaceScene(TransitionFade::create(1.0,scene));
+	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5,scene));
 }
+
+void MainMenuScene::goToFreeSelector(Ref *pSender) {
+
+	Constant::GAMEMODE = Picross::FREE;
+
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+
+	auto scene = PicrossSelectorScene::createScene();
+
+	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5,scene));
+}
+

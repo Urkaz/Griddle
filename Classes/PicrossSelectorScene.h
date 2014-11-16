@@ -2,9 +2,9 @@
 
 #include "cocos2d.h"
 #include "Picross.h"
-#include "Constant.h"
 
-class MainMenuScene: public cocos2d::Layer
+
+class PicrossSelectorScene: public cocos2d::Layer
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -14,9 +14,9 @@ public:
     virtual bool init();
     
     // implement the "static create()" method manually
-    CREATE_FUNC(MainMenuScene);
+    CREATE_FUNC(PicrossSelectorScene);
     
     // Added
-	void goToNormalSelector(Ref *pSender);
-	void goToFreeSelector(Ref *pSender);
+	void goToPicrossGame(Ref *pSender);
+	void returnToMainMenu(Ref *pSender);
 };
