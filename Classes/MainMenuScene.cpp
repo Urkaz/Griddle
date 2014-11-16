@@ -5,7 +5,7 @@
 USING_NS_CC;
 
 //Constante redefinida
-int Constant::GAMEMODE;
+GameMode Constant::GAMEMODE;
 
 Scene* MainMenuScene::createScene()
 {
@@ -80,7 +80,7 @@ bool MainMenuScene::init()
 
 void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
-	Constant::GAMEMODE = Picross::NORMAL;
+	Constant::GAMEMODE = GameMode::NORMAL;
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 
@@ -91,7 +91,7 @@ void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
 void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
-	Constant::GAMEMODE = Picross::FREE;
+	Constant::GAMEMODE = GameMode::FREE;
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 

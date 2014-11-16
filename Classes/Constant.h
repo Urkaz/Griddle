@@ -3,6 +3,6 @@
 class Constant
 {
 public:
-	static int GAMEMODE;
+	static GameMode GAMEMODE;
 };
 
