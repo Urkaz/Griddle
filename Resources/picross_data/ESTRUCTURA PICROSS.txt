@@ -1,0 +1,5 @@
+0x0000					= filas (hex)
+0x0001					= columnas (hex)
+0x0002 -> 0xXXXX
+(0x0002+filas*columnas) = picross (hex)
+0xXXXX+2 -> final 		= nombre picross (letras normales)

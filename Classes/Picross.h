@@ -1,9 +1,21 @@
 #pragma once
 
+#include "cocos2d.h"
+#include <vector>
+
+enum class GameMode {NORMAL, FREE, BOMB};
+
 class Picross
 {
 public:
-	Picross(void);
-};
+	Picross(int num, GameMode gm);
 
-enum class GameMode {NORMAL, FREE, BOMB};
+	short getRowCount();
+	short getColumnCount();
+
+private:
+
+	std::vector<int> solution;
+	short rows;
+	short columns;
+};

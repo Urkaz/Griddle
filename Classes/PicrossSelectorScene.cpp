@@ -1,7 +1,10 @@
 #include "PicrossSelectorScene.h"
 #include "MainMenuScene.h"
+#include "PicrossGameScene.h"
 
 USING_NS_CC;
+
+int Constant::PUZZLE_NUMBER;
 
 Scene* PicrossSelectorScene::createScene()
 {
@@ -40,11 +43,12 @@ bool PicrossSelectorScene::init()
 
 void PicrossSelectorScene::goToPicrossGame(Ref *pSender)
 {
+	Constant::PUZZLE_NUMBER = 0;
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 
-	//auto scene = PicrossSelectorScene::createScene();
+	auto scene = PicrossGameScene::createScene();
 
-	//Director::getInstance()->replaceScene(TransitionFade::create(1.0,scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(1.0,scene));
 }
 
 void PicrossSelectorScene::returnToMainMenu(Ref *pSender)
