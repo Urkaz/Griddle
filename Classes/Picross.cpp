@@ -17,7 +17,7 @@ Picross::Picross(int num, GameMode gm)
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
 
-	if(stream == nullptr) perror("Error opening file");
+	if(stream == nullptr) perror(("Error opening file: picross_data/"+mode+"/"+to_string(num)+".dat").c_str());
 	else
 	{
 		short c = 0;
@@ -32,7 +32,7 @@ Picross::Picross(int num, GameMode gm)
 			c = fgetc(stream);
 			if(c!= EOF)
 			{
-				CCLOG("%d",c);
+				log("%d",c);
 			}
 		}
 	}

@@ -17,13 +17,16 @@ public:
     CREATE_FUNC(PicrossGameScene);
     
     // Added
+
+
 	//void goToPicrossGame(Ref *pSender);
 	//void returnToMainMenu(Ref *pSender);
 
 private:
-
+	std::vector<cocos2d::Sprite*> picrossGrid;
 	Picross* picross;
 	//int userSolution;
 
-	void createSquareGrid();
+	std::vector<cocos2d::Sprite*> createSquareGrid();
+	std::vector<cocos2d::Sprite*> createTriangleGrid();
 };
