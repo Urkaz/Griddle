@@ -53,27 +53,6 @@ bool MainMenuScene::init()
         CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("audio/Music.mp3", true);
     }*/
 
-	
-	
-	//TEST READ FILE
-	/*std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename("hex.dat").c_str( );
-	
-	FILE *stream = fopen(fullPath.c_str(),"r");
-
-	if(stream == nullptr) perror("Error opening file");
-	else
-	{
-		short c = 0;
-		while(c!= EOF)
-		{
-			c = fgetc(stream);
-			if(c!= EOF) 
-			{
-				CCLOG("%d",c);
-			}
-		}
-	}*/
-
 	return true;
 }
 
