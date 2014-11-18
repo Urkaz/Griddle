@@ -10,8 +10,8 @@ class Picross
 public:
 	Picross(int num, GameMode gm);
 
-	short getRowCount();
-	short getColumnCount();
+	short getRowNumber();
+	short getColumnNumber();
 
 private:
 

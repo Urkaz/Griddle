@@ -38,12 +38,14 @@ Picross::Picross(int num, GameMode gm)
 	}
 }
 
-short Picross::getRowCount()
+//Devuelve el número de filas que tiene el Picross.
+short Picross::getRowNumber()
 {
 	return rows;
 }
 
-short Picross::getColumnCount()
+//Devuelve el número de columnas que tiene el Picross.
+short Picross::getColumnNumber()
 {
 	return columns;
 }

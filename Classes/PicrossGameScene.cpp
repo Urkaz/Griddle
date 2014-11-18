@@ -29,53 +29,58 @@ bool PicrossGameScene::init()
 
 	//Se comprueba el GameMode
 	if(Constant::GAMEMODE != GameMode::TRIANGLES)
-		picrossGridVector = createSquareGrid();
-	else //NYI
-		picrossGridVector = createTriangleGrid();
+	{
+		picrossGridVector = createSquareMatrix(picross);
+		picrossGridLayer = createLayer(picrossGridVector);
+	}
+	//NO IMPLEMENTADO
+	//else
+		//picrossGridVector = createTriangleGrid();
 
+	addChild(picrossGridLayer);
 	return true;
 }
 
-//Devuelve la matriz de Sprites que forman un Picross cuadrado y los añade a la escena.
-vector<vector<Sprite*>> PicrossGameScene::createSquareGrid()
+/**
+ * Crea la matriz de Sprites que forman un Picross cuadrado.
+ *
+ * vector[0] = fila 0;
+ * vector[0][0] = fila 0, columna 0.
+ * vector[1][2] = fila 1, columna 2.
+ *
+ * @param   picross	Instancia de la clase Picross.
+ * @return  Vector de filas de Sprites del Picross.
+ */
+vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 {
-	vector<vector<Sprite*>> grid = vector<vector<Sprite*>>(picross->getColumnCount());
+	vector<vector<Sprite*>> matrix = vector<vector<Sprite*>>(picross->getColumnNumber());
 
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	int layerOffsetX = visibleSize.width  /2;
-	int layerOffsetY = visibleSize.height /2;
-
-	//picrossGridS = Layer::create();
-	Layer* spriteLayer = Layer::create();
-	spriteLayer->setContentSize(Size(1, 1));
-	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
-	spriteLayer->setScale(5);
-
-	for(int i = 0; i < picross->getColumnCount(); i++) //Columnas
+	for(int i = 0; i < picross->getColumnNumber(); i++) //"i" representa el número de fila
 	{
-		vector<Sprite*> row = vector<Sprite*>(picross->getRowCount());
-		for(int j = 0; j < picross->getRowCount(); j++) //Filas
+		//Se crea una nueva fila a la que añadir sprites
+		vector<Sprite*> row = vector<Sprite*>(picross->getRowNumber());
+		for(int j = 0; j < picross->getRowNumber(); j++) //"j" representa el número de columna dentro de la fila "i"
 		{
+			//Se crea un sprite con la imagen por defecto de vacío.
 			Sprite* sprite = Sprite::create("picross_images/empty_picross.png");
 
 			//Prueba cambio de textura
 			Texture2D *texture = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
 			if((j+i)%2==0) sprite->setTexture(texture);
 
-
+			//Se signa la posición al sprite relativa a la cuadrícula
 			int spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnCount()/2;
 			int spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowCount()/2;
 
 			sprite->setPosition(spriteOffsetX+sprite->getBoundingBox().size.width*i,
 								spriteOffsetY+sprite->getBoundingBox().size.height*-j);
 
-			spriteLayer->addChild(sprite,0);
+			//Se añade a la fila
 			row[j] = sprite;
 		}
-		grid[i] = row;
+		//La fila entera se añade a la matriz
+		matrix[i] = row;
 	}
-
-	addChild(spriteLayer);
 
 	/*for(unsigned int i = 0; i < grid.size(); i++)
 	{
@@ -83,15 +88,33 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareGrid()
 		log("TEST %f",grid[i][0]->getPosition().x);
 	}*/
 
-	return grid;
+	return matrix;
 }
 
-//Devuelve la matriz de Sprites que forman un Picross triangular y los añade a la escena.
-vector<vector<Sprite*>> PicrossGameScene::createTriangleGrid()
+/**
+ * Crea una única capa que contiene todos los Sprites de un Picross de cualquier tipo.
+ *
+ * @param   spriteVector	Vector de filas de Sprites de un Picross de cualquier tipo.
+ * @return  Layer con todos los Sprites que forman un Picross centrada en el medio de la pantalla.
+ */
+Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 {
-	vector<vector<Sprite*>> grid = vector<vector<Sprite*>>(0);
+	//Se obtiene el ancho y alto de la zona visible
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	int layerOffsetX = visibleSize.width  /2;
+	int layerOffsetY = visibleSize.height /2;
 
-	return grid;
+	//Se crea una capa en el centro de la pantalla a la que se le añadiran los sprites
+	Layer* spriteLayer = Layer::create();
+	spriteLayer->setContentSize(Size(1, 1));
+	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
+	spriteLayer->setScale(5);
+
+	for(unsigned int i = 0; i < spriteVector.size(); i++) //Fila
+		for(unsigned int j = 0; j < spriteVector[i].size(); j++) //Columna
+			spriteLayer->addChild(spriteVector[i][j],0);
+
+	return spriteLayer;
 }
 
 void PicrossGameScene::onMouseDown(Event* event)

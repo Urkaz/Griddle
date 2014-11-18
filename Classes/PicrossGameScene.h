@@ -28,8 +28,10 @@ private:
 	Picross* picross;
 	//int userSolution;
 
-	std::vector<std::vector<cocos2d::Sprite*>> createSquareGrid();
-	std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid();
+	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
+	std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid(); //NYI
+
+	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
 
 	void pixelLocationSquareGrid();
 	void pixelLocationTriangleGrid();
