@@ -23,8 +23,8 @@ public:
 	//void returnToMainMenu(Ref *pSender);
 
 private:
-	std::vector<std::vector<cocos2d::Sprite*>> picrossGrid;
-	cocos2d::Layer* picrossGridS;
+	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
+	Layer* picrossGridLayer;
 	Picross* picross;
 	//int userSolution;
 

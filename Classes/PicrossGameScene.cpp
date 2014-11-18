@@ -29,9 +29,9 @@ bool PicrossGameScene::init()
 
 	//Se comprueba el GameMode
 	if(Constant::GAMEMODE != GameMode::TRIANGLES)
-		picrossGrid = createSquareGrid();
+		picrossGridVector = createSquareGrid();
 	else //NYI
-		picrossGrid = createTriangleGrid();
+		picrossGridVector = createTriangleGrid();
 
 	return true;
 }
@@ -41,41 +41,47 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareGrid()
 {
 	vector<vector<Sprite*>> grid = vector<vector<Sprite*>>(picross->getColumnCount());
 
-	//picrossGridS = Layer::create();
-
-
 	Size visibleSize = Director::getInstance()->getVisibleSize();
+	int layerOffsetX = visibleSize.width  /2;
+	int layerOffsetY = visibleSize.height /2;
 
-	int offsetX = visibleSize.width  /2;
-	int offsetY = visibleSize.height /2;
+	//picrossGridS = Layer::create();
+	Layer* spriteLayer = Layer::create();
+	spriteLayer->setContentSize(Size(1, 1));
+	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
+	spriteLayer->setScale(5);
 
 	for(int i = 0; i < picross->getColumnCount(); i++) //Columnas
 	{
 		vector<Sprite*> row = vector<Sprite*>(picross->getRowCount());
 		for(int j = 0; j < picross->getRowCount(); j++) //Filas
 		{
-			Sprite* sprite = Sprite::create("picross_images/empty_selector.png");
-			sprite->setScale(5);
+			Sprite* sprite = Sprite::create("picross_images/empty_picross.png");
 
-			int reOffsetX = offsetX+sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnCount()/2;
-			int reOffsetY = offsetY-sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowCount()/2;
+			//Prueba cambio de textura
+			Texture2D *texture = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
+			if((j+i)%2==0) sprite->setTexture(texture);
 
-			sprite->setPosition(reOffsetX+sprite->getBoundingBox().size.width*i,
-								reOffsetY+sprite->getBoundingBox().size.height*-j);
-			//picrossGridS->addChild(sprite,0);
-			//addChild(picrossGridS,0);
 
-			addChild(sprite,0);
+			int spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnCount()/2;
+			int spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowCount()/2;
+
+			sprite->setPosition(spriteOffsetX+sprite->getBoundingBox().size.width*i,
+								spriteOffsetY+sprite->getBoundingBox().size.height*-j);
+
+			spriteLayer->addChild(sprite,0);
 			row[j] = sprite;
 		}
 		grid[i] = row;
 	}
 
-	for(unsigned int i = 0; i < grid.size(); i++)
+	addChild(spriteLayer);
+
+	/*for(unsigned int i = 0; i < grid.size(); i++)
 	{
 		//Prueba
 		log("TEST %f",grid[i][0]->getPosition().x);
-	}
+	}*/
 
 	return grid;
 }
