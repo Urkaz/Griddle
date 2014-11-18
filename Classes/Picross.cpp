@@ -4,7 +4,7 @@
 USING_NS_CC;
 using namespace std;
 
-Picross::Picross(int num, GameMode gm)
+Picross::Picross(short num, GameMode gm)
 {
 	string mode = "";
 	if(gm == GameMode::NORMAL)

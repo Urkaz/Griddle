@@ -4,6 +4,8 @@
 using namespace cocos2d;
 using namespace std;
 
+short Constant::PICROSS_SQUARE_SIDE;
+
 Scene* PicrossGameScene::createScene()
 {
 	auto scene = Scene::create();
@@ -19,6 +21,7 @@ bool PicrossGameScene::init()
 		return false;
 	}
 
+	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
 
@@ -27,53 +30,65 @@ bool PicrossGameScene::init()
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
 
-	//Se comprueba el GameMode
+	//Se comprueba el GameMode para determinar el modo de creación de la matriz.
 	if(Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
 		picrossGridVector = createSquareMatrix(picross);
 		picrossGridLayer = createLayer(picrossGridVector);
 	}
 	//NO IMPLEMENTADO
-	//else
-		//picrossGridVector = createTriangleGrid();
+	/*else
+		picrossGridVector = createTriangleGrid();*/
 
+	//Se define la constante del lado de cada cuadrado del tablero.
+	Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+
+	//TEMPORAL: Se recolocal el tablero al (0,0) para comprobar las coordenadas.
+	picrossGridLayer->setPosition(
+		picrossGridVector[0].size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector[0].size()%2*Constant::PICROSS_SQUARE_SIDE/2,
+		picrossGridVector.size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector.size()%2*Constant::PICROSS_SQUARE_SIDE/2);
+
+	//Se dibuja el tablero.
 	addChild(picrossGridLayer);
+
 	return true;
 }
 
 /**
  * Crea la matriz de Sprites que forman un Picross cuadrado.
- *
+ * ----
+ * vector[i][j]
+ * "i" representa el número de fila
+ * "j" representa el número de columna dentro de la fila "i"
+ * ----
  * vector[0] = fila 0;
  * vector[0][0] = fila 0, columna 0.
  * vector[1][2] = fila 1, columna 2.
- *
+ * ----
  * @param   picross	Instancia de la clase Picross.
  * @return  Vector de filas de Sprites del Picross.
  */
 vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 {
-	vector<vector<Sprite*>> matrix = vector<vector<Sprite*>>(picross->getColumnNumber());
+	vector<vector<Sprite*>> matrix = vector<vector<Sprite*>>(picross->getRowNumber());
 
-	for(int i = 0; i < picross->getColumnNumber(); i++) //"i" representa el número de fila
+	for(int i = 0; i < picross->getRowNumber(); i++) //"i" representa el número de fila
 	{
 		//Se crea una nueva fila a la que añadir sprites
-		vector<Sprite*> row = vector<Sprite*>(picross->getRowNumber());
-		for(int j = 0; j < picross->getRowNumber(); j++) //"j" representa el número de columna dentro de la fila "i"
+		vector<Sprite*> row = vector<Sprite*>(picross->getColumnNumber());
+		for(int j = 0; j < picross->getColumnNumber(); j++) //"j" representa el número de columna dentro de la fila "i"
 		{
 			//Se crea un sprite con la imagen por defecto de vacío.
 			Sprite* sprite = Sprite::create("picross_images/empty_picross.png");
 
-			//Prueba cambio de textura
-			Texture2D *texture = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
-			if((j+i)%2==0) sprite->setTexture(texture);
-
 			//Se signa la posición al sprite relativa a la cuadrícula
-			int spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnCount()/2;
-			int spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowCount()/2;
+			int spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnNumber()/2;
+			int spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowNumber()/2;
 
-			sprite->setPosition(spriteOffsetX+sprite->getBoundingBox().size.width*i,
-								spriteOffsetY+sprite->getBoundingBox().size.height*-j);
+			int posX = spriteOffsetX+sprite->getBoundingBox().size.width*j;
+			int posY = spriteOffsetY+sprite->getBoundingBox().size.height*-i;
+
+			sprite->setPosition(posX,posY);
 
 			//Se añade a la fila
 			row[j] = sprite;
@@ -81,12 +96,6 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 		//La fila entera se añade a la matriz
 		matrix[i] = row;
 	}
-
-	/*for(unsigned int i = 0; i < grid.size(); i++)
-	{
-		//Prueba
-		log("TEST %f",grid[i][0]->getPosition().x);
-	}*/
 
 	return matrix;
 }
@@ -119,8 +128,18 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 
 void PicrossGameScene::onMouseDown(Event* event)
 {
-	auto *e = dynamic_cast<EventMouse *>(event);
+	auto *e = (EventMouse*)event;
 
-	log("%f-%f",e->getCursorX(),e->getCursorY());
-	//labelTouchInfo->setString("You Touched Here");
+
+	short i = (int)e->getCursorY()/Constant::PICROSS_SQUARE_SIDE; //"i" representa el número de fila
+	short j = (int)e->getCursorX()/Constant::PICROSS_SQUARE_SIDE; //"j" representa el número de columna dentro de la fila "i"
+
+	i = std::abs(i-picross->getRowNumber()+1);
+
+	log("ROW:(i): %d , COL(j) %d",i,j);
+
+	Texture2D *texture = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
+
+	if(i < picross->getRowNumber() && j < picross->getColumnNumber())
+		picrossGridVector[i][j]->setTexture(texture);
 }

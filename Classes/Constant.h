@@ -4,6 +4,8 @@ class Constant
 {
 public:
 	static GameMode GAMEMODE;
-	static int PUZZLE_NUMBER;
+	static short PUZZLE_NUMBER;
+
+	static short PICROSS_SQUARE_SIDE;
 };
 

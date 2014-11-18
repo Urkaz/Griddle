@@ -8,7 +8,7 @@ enum class GameMode {NORMAL, FREE, BOMB, TRIANGLES};
 class Picross
 {
 public:
-	Picross(int num, GameMode gm);
+	Picross(short num, GameMode gm);
 
 	short getRowNumber();
 	short getColumnNumber();

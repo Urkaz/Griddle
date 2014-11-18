@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 
-int Constant::PUZZLE_NUMBER;
+short Constant::PUZZLE_NUMBER;
 
 Scene* PicrossSelectorScene::createScene()
 {
