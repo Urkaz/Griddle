@@ -23,10 +23,10 @@ public:
 	//void returnToMainMenu(Ref *pSender);
 
 private:
-	std::vector<cocos2d::Sprite*> picrossGrid;
+	std::vector<std::vector<cocos2d::Sprite*>> picrossGrid;
 	Picross* picross;
 	//int userSolution;
 
-	std::vector<cocos2d::Sprite*> createSquareGrid();
-	std::vector<cocos2d::Sprite*> createTriangleGrid();
+	std::vector<std::vector<cocos2d::Sprite*>> createSquareGrid();
+	std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid();
 };
