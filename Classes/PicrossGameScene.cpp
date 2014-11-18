@@ -19,6 +19,11 @@ bool PicrossGameScene::init()
 		return false;
 	}
 
+	auto mouseListener = EventListenerMouse::create();
+	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
+
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
 
@@ -36,8 +41,13 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareGrid()
 {
 	vector<vector<Sprite*>> grid = vector<vector<Sprite*>>(picross->getColumnCount());
 
-	int offsetX = 500;
-	int offsetY = 500;
+	//picrossGridS = Layer::create();
+
+
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+
+	int offsetX = visibleSize.width  /2;
+	int offsetY = visibleSize.height /2;
 
 	for(int i = 0; i < picross->getColumnCount(); i++) //Columnas
 	{
@@ -46,14 +56,20 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareGrid()
 		{
 			Sprite* sprite = Sprite::create("picross_images/empty_selector.png");
 			sprite->setScale(5);
-			sprite->setPosition(offsetX+sprite->getBoundingBox().size.width*i,offsetY+sprite->getBoundingBox().size.height*-j);
+
+			int reOffsetX = offsetX+sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnCount()/2;
+			int reOffsetY = offsetY-sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowCount()/2;
+
+			sprite->setPosition(reOffsetX+sprite->getBoundingBox().size.width*i,
+								reOffsetY+sprite->getBoundingBox().size.height*-j);
+			//picrossGridS->addChild(sprite,0);
+			//addChild(picrossGridS,0);
+
 			addChild(sprite,0);
 			row[j] = sprite;
 		}
 		grid[i] = row;
 	}
-
-	log("VECTOR SIZE %d", grid.size());
 
 	for(unsigned int i = 0; i < grid.size(); i++)
 	{
@@ -70,4 +86,12 @@ vector<vector<Sprite*>> PicrossGameScene::createTriangleGrid()
 	vector<vector<Sprite*>> grid = vector<vector<Sprite*>>(0);
 
 	return grid;
+}
+
+void PicrossGameScene::onMouseDown(Event* event)
+{
+	auto *e = dynamic_cast<EventMouse *>(event);
+
+	log("%f-%f",e->getCursorX(),e->getCursorY());
+	//labelTouchInfo->setString("You Touched Here");
 }
