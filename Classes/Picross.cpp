@@ -13,11 +13,11 @@ Picross::Picross(short num, GameMode gm)
 		mode = "f";
 
 
-	string fullPath = CCFileUtils::getInstance()->fullPathForFilename("picross_data/"+mode+"/"+to_string(num)+".dat").c_str();
+	string fullPath = CCFileUtils::getInstance()->fullPathForFilename("/picross_data/"+mode+"/"+to_string(num)+".dat").c_str();
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
 
-	if(stream == nullptr) perror(("Error opening file: picross_data/"+mode+"/"+to_string(num)+".dat").c_str());
+	if(stream == nullptr) perror(("Error opening file: /picross_data/"+mode+"/"+to_string(num)+".dat").c_str());
 	else
 	{
 		short c = 0;
