@@ -29,7 +29,7 @@ private:
 	std::vector<std::vector<int>> userSolution;
 
 	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
-	std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid(); //NYI
+	//std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid(); //NYI
 
 	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
 
