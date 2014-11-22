@@ -32,7 +32,7 @@ Picross::Picross(short num, GameMode gm)
 			c = fgetc(stream);
 			if(c!= EOF)
 			{
-				log("%d",c);
+				//log("%d",c);
 			}
 		}
 	}

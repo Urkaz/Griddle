@@ -6,6 +6,14 @@ using namespace std;
 
 short Constant::PICROSS_SQUARE_SIDE;
 
+Texture2D *texMarkX;
+Texture2D *texDraw;
+Texture2D *texEmpty;
+Texture2D::TexParams textureParams;
+
+bool draw = false;
+bool markX = false;
+
 Scene* PicrossGameScene::createScene()
 {
 	auto scene = Scene::create();
@@ -27,6 +35,16 @@ bool PicrossGameScene::init()
 
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
+	//Carga de texturas
+	Texture2D::TexParams tp = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
+	textureParams = tp;
+	texMarkX = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
+	texMarkX->setTexParameters(textureParams);
+	texDraw = Director::getInstance()->getTextureCache()->addImage("picross_images/draw_picross.png");
+	texDraw->setTexParameters(textureParams);
+	texEmpty = Director::getInstance()->getTextureCache()->addImage("picross_images/empty_picross.png");
+	texEmpty->setTexParameters(textureParams);
+
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
 
@@ -44,9 +62,10 @@ bool PicrossGameScene::init()
 	Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 
 	//TEMPORAL: Se recolocal el tablero al (0,0) para comprobar las coordenadas.
-	picrossGridLayer->setPosition(
-		picrossGridVector[0].size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector[0].size()%2*Constant::PICROSS_SQUARE_SIDE/2,
-		picrossGridVector.size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector.size()%2*Constant::PICROSS_SQUARE_SIDE/2);
+	/*picrossGridLayer->setPosition(
+		picrossGridVector[0].size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector[0].size()%2*Constant::PICROSS_SQUARE_SIDE/2+picrossGridLayer->getBoundingBox().size.width/2,
+		picrossGridVector.size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector.size()%2*Constant::PICROSS_SQUARE_SIDE/2+picrossGridLayer->getBoundingBox().size.height/2);
+		*/
 
 	//Se dibuja el tablero.
 	addChild(picrossGridLayer);
@@ -80,13 +99,14 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 		{
 			//Se crea un sprite con la imagen por defecto de vacío.
 			Sprite* sprite = Sprite::create("picross_images/empty_picross.png");
+			sprite->getTexture()->setTexParameters(textureParams);
 
 			//Se signa la posición al sprite relativa a la cuadrícula
-			int spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnNumber()/2;
-			int spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowNumber()/2;
+			float spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnNumber()/2;
+			float spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowNumber()/2;
 
-			int posX = spriteOffsetX+sprite->getBoundingBox().size.width*j;
-			int posY = spriteOffsetY+sprite->getBoundingBox().size.height*-i;
+			float posX = spriteOffsetX+sprite->getBoundingBox().size.width*j;
+			float posY = spriteOffsetY+sprite->getBoundingBox().size.height*-i;
 
 			sprite->setPosition(posX,posY);
 
@@ -108,16 +128,17 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
  */
 Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 {
-	//Se obtiene el ancho y alto de la zona visible
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	int layerOffsetX = visibleSize.width  /2;
-	int layerOffsetY = visibleSize.height /2;
-
 	//Se crea una capa en el centro de la pantalla a la que se le añadiran los sprites
 	Layer* spriteLayer = Layer::create();
 	spriteLayer->setContentSize(Size(1, 1));
-	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
 	spriteLayer->setScale(5);
+
+	//Se obtiene el ancho y alto de la zona visible y se establece la posición
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	int layerOffsetX = visibleSize.width  /2 + spriteLayer->getBoundingBox().size.width/2;
+	int layerOffsetY = visibleSize.height /2 + spriteLayer->getBoundingBox().size.height/2;
+
+	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
 
 	for(unsigned int i = 0; i < spriteVector.size(); i++) //Fila
 		for(unsigned int j = 0; j < spriteVector[i].size(); j++) //Columna
@@ -130,16 +151,23 @@ void PicrossGameScene::onMouseDown(Event* event)
 {
 	auto *e = (EventMouse*)event;
 
+	//Offset del tablero respecto al 0,0
+	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size()/2 * Constant::PICROSS_SQUARE_SIDE + picrossGridVector[0].size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.height/2;
+	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size()/2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.width/2;
 
-	short i = (int)e->getCursorY()/Constant::PICROSS_SQUARE_SIDE; //"i" representa el número de fila
-	short j = (int)e->getCursorX()/Constant::PICROSS_SQUARE_SIDE; //"j" representa el número de columna dentro de la fila "i"
+	//Coordenadas fila(i),columna(j)
+	short i = (e->getCursorY()-offSetY)/Constant::PICROSS_SQUARE_SIDE;
+	short j = (e->getCursorX()-offSetX)/Constant::PICROSS_SQUARE_SIDE;
 
 	i = std::abs(i-picross->getRowNumber()+1);
 
 	log("ROW:(i): %d , COL(j) %d",i,j);
 
-	Texture2D *texture = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
-
-	if(i < picross->getRowNumber() && j < picross->getColumnNumber())
-		picrossGridVector[i][j]->setTexture(texture);
+	//Dentro del tablero
+	if(e->getCursorY() > offSetY && e->getCursorX() > offSetX &&
+		e->getCursorY() < offSetY+Constant::PICROSS_SQUARE_SIDE*picrossGridVector.size() &&
+		e->getCursorX() < offSetX+Constant::PICROSS_SQUARE_SIDE*picrossGridVector[0].size())
+	{
+		picrossGridVector[i][j]->setTexture(texDraw);
+	}
 }

@@ -25,12 +25,12 @@ bool MainMenuScene::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// Creating menu
-	auto playItem = MenuItemImage::create("/Play_Button.png",
-			"/Play_Button(Click).png",
+	auto playItem = MenuItemImage::create("Play_Button.png",
+			"Play_Button(Click).png",
 			CC_CALLBACK_1(MainMenuScene::goToNormalSelector, this));
 
-	auto playItem2 = MenuItemImage::create("/Play_Button.png",
-			"/Play_Button(Click).png",
+	auto playItem2 = MenuItemImage::create("Play_Button.png",
+			"Play_Button(Click).png",
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
 
 	auto menu = Menu::create(playItem, playItem2 , NULL);
@@ -39,7 +39,7 @@ bool MainMenuScene::init()
 	this->addChild(menu, 1);
 
 	// Adding background
-	auto background = Sprite::create("/Background.png");
+	auto background = Sprite::create("Background.png");
 
 	background->setPosition(Point((visibleSize.width  /2),
 			(visibleSize.height /2)));

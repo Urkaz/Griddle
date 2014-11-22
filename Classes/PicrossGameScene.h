@@ -17,7 +17,7 @@ public:
     CREATE_FUNC(PicrossGameScene);
     
     // Added
-	void PicrossGameScene::onMouseDown(cocos2d::Event* event);
+	void onMouseDown(cocos2d::Event* event);
 
 	//void goToPicrossGame(Ref *pSender);
 	//void returnToMainMenu(Ref *pSender);
@@ -26,7 +26,7 @@ private:
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	Layer* picrossGridLayer;
 	Picross* picross;
-	//int userSolution;
+	std::vector<std::vector<int>> userSolution;
 
 	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
 	std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid(); //NYI

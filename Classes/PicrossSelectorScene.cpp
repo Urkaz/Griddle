@@ -25,12 +25,12 @@ bool PicrossSelectorScene::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// Creating menu
-	auto playItem = MenuItemImage::create("/Play_Button.png",
-			"/Play_Button(Click).png",
+	auto playItem = MenuItemImage::create("Play_Button.png",
+			"Play_Button(Click).png",
 			CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
 
-	auto playItem2 = MenuItemImage::create("/CloseNormal.png",
-			"/CloseSelected.png",
+	auto playItem2 = MenuItemImage::create("CloseNormal.png",
+			"CloseSelected.png",
 			CC_CALLBACK_1(PicrossSelectorScene::returnToMainMenu, this));
 
 	auto menu = Menu::create(playItem, playItem2 , NULL);
