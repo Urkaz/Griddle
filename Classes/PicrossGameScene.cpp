@@ -48,14 +48,14 @@ bool PicrossGameScene::init()
 	//Carga de texturas
 	Texture2D::TexParams tp = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
 	textureParams = tp;
-	texMarkX = Director::getInstance()->getTextureCache()->addImage("picross_images/markX_picross.png");
-	texDraw = Director::getInstance()->getTextureCache()->addImage("picross_images/draw_picross.png");
-	texEmpty = Director::getInstance()->getTextureCache()->addImage("picross_images/empty_picross.png");
+	texMarkX = Director::getInstance()->getTextureCache()->addImage("markX_picross.png");
+	texDraw = Director::getInstance()->getTextureCache()->addImage("draw_picross.png");
+	texEmpty = Director::getInstance()->getTextureCache()->addImage("empty_picross.png");
 
-	texButtonDraw = Director::getInstance()->getTextureCache()->addImage("picross_images/boton_lapiz.png");
-	texButtonMarkX = Director::getInstance()->getTextureCache()->addImage("picross_images/boton_X.png");
-	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("picross_images/boton_click_lapiz.png");
-	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("picross_images/boton_click_X.png");
+	texButtonDraw = Director::getInstance()->getTextureCache()->addImage("boton_lapiz.png");
+	texButtonMarkX = Director::getInstance()->getTextureCache()->addImage("boton_X.png");
+	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("boton_click_lapiz.png");
+	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("boton_click_X.png");
 
 	texMarkX->setTexParameters(textureParams);
 	texDraw->setTexParameters(textureParams);
@@ -97,8 +97,8 @@ bool PicrossGameScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	button_draw = Sprite::create("picross_images/boton_lapiz.png");
-	button_X = Sprite::create("picross_images/boton_X.png");
+	button_draw = Sprite::create("boton_lapiz.png");
+	button_X = Sprite::create("boton_X.png");
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
 	button_X->setPosition(button_X->getBoundingBox().size.width/2,button_X->getBoundingBox().size.height/2);
 
@@ -135,7 +135,7 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 		for(int j = 0; j < picross->getColumnNumber(); j++) //"j" representa el número de columna dentro de la fila "i"
 		{
 			//Se crea un sprite con la imagen por defecto de vacío.
-			Sprite* sprite = Sprite::create("picross_images/empty_picross.png");
+			Sprite* sprite = Sprite::create("empty_picross.png");
 			sprite->getTexture()->setTexParameters(textureParams);
 
 			//Se signa la posición al sprite relativa a la cuadrícula

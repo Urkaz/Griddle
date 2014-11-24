@@ -30,7 +30,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	director->setAnimationInterval(1.0 / 60);
 
 	// Sets the search path for images
-	resDirOrders.push_back("images");
+	resDirOrders.push_back("picross_images");
+    resDirOrders.push_back("picross_data");
 
 	//glview->setFrameSize(768, 1024);
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::EXACT_FIT);
