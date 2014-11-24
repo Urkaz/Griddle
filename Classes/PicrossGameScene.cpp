@@ -19,7 +19,7 @@ Texture2D::TexParams textureParams;
 Sprite* button_draw;
 Sprite* button_X;
 
-bool drawEnabled = false;
+bool drawEnabled = true;
 bool markXEnabled = false;
 
 Size visibleSize;
@@ -97,7 +97,7 @@ bool PicrossGameScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	button_draw = Sprite::create("boton_lapiz.png");
+	button_draw = Sprite::create("boton_click_lapiz.png");
 	button_X = Sprite::create("boton_X.png");
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
 	button_X->setPosition(button_X->getBoundingBox().size.width/2,button_X->getBoundingBox().size.height/2);
@@ -191,7 +191,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 	float cursorX = e->getCursorX();
 
 	//Offset del tablero respecto al 0,0
-	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size()/2 * Constant::PICROSS_SQUARE_SIDE + picrossGridVector[0].size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.height/2;
+	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size()/2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.height/2;
 	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size()/2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.width/2;
 
 	//Coordenadas fila(i),columna(j)

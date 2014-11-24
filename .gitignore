@@ -5,6 +5,7 @@
 .cocos-project.json
 proj.wp8-xaml
 proj.linux
+*.psd
 
 
 #--------------
