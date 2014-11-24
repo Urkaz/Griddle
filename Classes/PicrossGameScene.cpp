@@ -184,9 +184,31 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 	return spriteLayer;
 }
 
+/*vector<vector<Label*>> PicrossGameScene::generateRowNumbers()
+{
+	vector<vector<Label*>> rowNums = vector<vector<Label*>>(picross->getRowNumber());
+
+	for(unsigned int i = 0; i < rowNums.size(); i++)
+	{
+		vector<Label*> rowNums = vector<Label*>();
+		int count = 0;
+
+		for(int j = 0; j < picross->getColumnNumber(); j++)
+		{
+			if(picross->getSolution()[i][j] == 1)
+				count++;
+			//vector<LabelTTF*> rowNums = vector<LabelTTF*>();
+		}
+		log("%d",count);
+		count = 0;
+	}
+
+	return rowNums;
+}*/
+
 void PicrossGameScene::onMouseDown(Event* event)
 {
-	auto *e = (EventMouse*)event;
+	auto* e = (EventMouse*)event;
 	float cursorY = e->getCursorY();
 	float cursorX = e->getCursorX();
 
@@ -204,9 +226,10 @@ void PicrossGameScene::onMouseDown(Event* event)
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	if(cursorX < button_draw->getBoundingBox().size.width)
+	//Zona de pulsación de los botones de pintar y poner X
+	if(cursorX < button_draw->getBoundingBox().size.width) //Ancho
 	{
-		if(cursorY < visibleSize.height/2)
+		if(cursorY < visibleSize.height/2) //Abajo
 		{
 			if(!markXEnabled)
 			{
@@ -221,7 +244,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 				markXEnabled = false;
 			}
 		}
-		else
+		else //Arriba
 		{
 			if(!drawEnabled)
 			{

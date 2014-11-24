@@ -12,12 +12,11 @@ Picross::Picross(short num, GameMode gm)
 	else if(gm == GameMode::FREE)
 		mode = "f";
 
-
 	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat").c_str();
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
 
-	if(stream == nullptr) perror(("Error opening file: /picross_data/"+mode+"/"+to_string(num)+".dat").c_str());
+	if(stream == nullptr) perror(("Error opening file: /picross_data/"+mode+"_"+to_string(num)+".dat").c_str());
 	else
 	{
 		short c = 0;
@@ -48,4 +47,10 @@ short Picross::getRowNumber()
 short Picross::getColumnNumber()
 {
 	return columns;
+}
+
+//Devuelve la matriz de solución.
+vector<vector<int>> Picross::getSolution()
+{
+	return solution;
 }

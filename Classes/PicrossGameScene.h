@@ -23,15 +23,23 @@ public:
 	//void returnToMainMenu(Ref *pSender);
 
 private:
-	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
+	//Variables
 	Layer* picrossGridLayer;
 	Picross* picross;
+	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 
+	std::vector<std::vector<cocos2d::Label*>> rowNumbers;
+	std::vector<std::vector<cocos2d::Label*>> columnNumbers;
+
+	//Funciones
 	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
 	//std::vector<std::vector<cocos2d::Sprite*>> createTriangleGrid(); //NYI
 
 	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
+
+	std::vector<std::vector<cocos2d::Label*>> generateRowNumbers();
+	//std::vector<std::vector<cocos2d::Label*>> generateColumnNumbers();
 
 	void pixelLocationSquareGrid();
 	void pixelLocationTriangleGrid();

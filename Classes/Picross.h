@@ -13,9 +13,11 @@ public:
 	short getRowNumber();
 	short getColumnNumber();
 
+	std::vector<std::vector<int>> getSolution();
+
 private:
 
-	std::vector<int> solution;
+	std::vector<std::vector<int>> solution;
 	short rows;
 	short columns;
 };
