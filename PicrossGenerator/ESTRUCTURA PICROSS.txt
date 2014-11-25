@@ -1,0 +1,9 @@
+5 //Número de filas
+5 //Número de columnas
+00000 //Cada nueva línea es una fila del picross
+01100
+11110
+11111
+11110
+Tostadora //Nombre
+Autor //Autor
