@@ -40,10 +40,10 @@
 		386860B61A1A570D004C2233 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 3868609F1A1A570D004C2233 /* HelloWorld.png */; };
 		386860B91A1A570D004C2233 /* ESTRUCTURA PICROSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A21A1A570D004C2233 /* ESTRUCTURA PICROSS.txt */; };
 		386860BA1A1A570D004C2233 /* ESTRUCTURA PICROSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A21A1A570D004C2233 /* ESTRUCTURA PICROSS.txt */; };
-		386860BB1A1A570D004C2233 /* 0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A41A1A570D004C2233 /* 0.dat */; };
-		386860BC1A1A570D004C2233 /* 0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A41A1A570D004C2233 /* 0.dat */; };
-		386860BD1A1A570D004C2233 /* 0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* 0.dat */; };
-		386860BE1A1A570D004C2233 /* 0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* 0.dat */; };
+		386860BB1A1A570D004C2233 /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A41A1A570D004C2233 /* n_0.dat */; };
+		386860BC1A1A570D004C2233 /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A41A1A570D004C2233 /* n_0.dat */; };
+		386860BD1A1A570D004C2233 /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* f_0.dat */; };
+		386860BE1A1A570D004C2233 /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* f_0.dat */; };
 		386860BF1A1A570D004C2233 /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A71A1A570D004C2233 /* PICROSS IDS.txt */; };
 		386860C01A1A570D004C2233 /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A71A1A570D004C2233 /* PICROSS IDS.txt */; };
 		386860C51A1A570D004C2233 /* Play_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 386860AB1A1A570D004C2233 /* Play_Button.png */; };
@@ -283,8 +283,8 @@
 		3868609E1A1A570D004C2233 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		3868609F1A1A570D004C2233 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		386860A21A1A570D004C2233 /* ESTRUCTURA PICROSS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ESTRUCTURA PICROSS.txt"; sourceTree = "<group>"; };
-		386860A41A1A570D004C2233 /* 0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = 0.dat; sourceTree = "<group>"; };
-		386860A61A1A570D004C2233 /* 0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = 0.dat; sourceTree = "<group>"; };
+		386860A41A1A570D004C2233 /* n_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = n_0.dat; path = f/n_0.dat; sourceTree = "<group>"; };
+		386860A61A1A570D004C2233 /* f_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = f_0.dat; path = n/f_0.dat; sourceTree = "<group>"; };
 		386860A71A1A570D004C2233 /* PICROSS IDS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PICROSS IDS.txt"; sourceTree = "<group>"; };
 		386860AB1A1A570D004C2233 /* Play_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play_Button.png; sourceTree = "<group>"; };
 		386860AC1A1A570D004C2233 /* Play_Button(Click).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play_Button(Click).png"; sourceTree = "<group>"; };
@@ -496,6 +496,8 @@
 			isa = PBXGroup;
 			children = (
 				386860A21A1A570D004C2233 /* ESTRUCTURA PICROSS.txt */,
+				386860A41A1A570D004C2233 /* n_0.dat */,
+				386860A61A1A570D004C2233 /* f_0.dat */,
 				386860A31A1A570D004C2233 /* f */,
 				386860A51A1A570D004C2233 /* n */,
 				386860A71A1A570D004C2233 /* PICROSS IDS.txt */,
@@ -506,7 +508,6 @@
 		386860A31A1A570D004C2233 /* f */ = {
 			isa = PBXGroup;
 			children = (
-				386860A41A1A570D004C2233 /* 0.dat */,
 			);
 			path = f;
 			sourceTree = "<group>";
@@ -514,7 +515,6 @@
 		386860A51A1A570D004C2233 /* n */ = {
 			isa = PBXGroup;
 			children = (
-				386860A61A1A570D004C2233 /* 0.dat */,
 			);
 			path = n;
 			sourceTree = "<group>";
@@ -763,7 +763,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				386860BD1A1A570D004C2233 /* 0.dat in Resources */,
+				386860BD1A1A570D004C2233 /* f_0.dat in Resources */,
 				38826DA91A237A6E00110E88 /* boton_X.png in Resources */,
 				38826DA31A237A6E00110E88 /* boton_click_lapiz.png in Resources */,
 				38826DA51A237A6E00110E88 /* boton_click_X.png in Resources */,
@@ -787,7 +787,7 @@
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				386860C51A1A570D004C2233 /* Play_Button.png in Resources */,
 				38826DB11A237A6E00110E88 /* empty.png in Resources */,
-				386860BB1A1A570D004C2233 /* 0.dat in Resources */,
+				386860BB1A1A570D004C2233 /* n_0.dat in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				38826DAD1A237A6E00110E88 /* empty_picross.png in Resources */,
@@ -808,7 +808,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				386860BC1A1A570D004C2233 /* 0.dat in Resources */,
+				386860BC1A1A570D004C2233 /* n_0.dat in Resources */,
 				38826DB41A237A6E00110E88 /* markX_picross.png in Resources */,
 				38826DB21A237A6E00110E88 /* empty.png in Resources */,
 				38826DAE1A237A6E00110E88 /* empty_picross.png in Resources */,
@@ -824,7 +824,7 @@
 				386860B61A1A570D004C2233 /* HelloWorld.png in Resources */,
 				38826DA81A237A6E00110E88 /* boton_lapiz.png in Resources */,
 				38826DB61A237A6E00110E88 /* unknown.png in Resources */,
-				386860BE1A1A570D004C2233 /* 0.dat in Resources */,
+				386860BE1A1A570D004C2233 /* f_0.dat in Resources */,
 				5087E75517EB910900C73F5D /* HelloWorld.png in Resources */,
 				386860C61A1A570D004C2233 /* Play_Button.png in Resources */,
 				38826DB01A237A6E00110E88 /* empty_selector.png in Resources */,

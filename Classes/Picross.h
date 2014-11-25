@@ -2,6 +2,10 @@
 
 #include "cocos2d.h"
 #include <vector>
+#include <string>
+#include <iostream>
+
+
 
 enum class GameMode {NORMAL, FREE, BOMB, TRIANGLES};
 
@@ -18,6 +22,7 @@ public:
 private:
 
 	std::vector<std::vector<int>> solution;
+    std::vector<std::vector<int>> matrixSolution;
 	short rows;
 	short columns;
 };

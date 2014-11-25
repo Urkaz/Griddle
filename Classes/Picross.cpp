@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Picross.h"
+#include <string>
+
 
 USING_NS_CC;
 using namespace std;
@@ -12,10 +14,13 @@ Picross::Picross(short num, GameMode gm)
 	else if(gm == GameMode::FREE)
 		mode = "f";
 
+    string nombre = "";
+    
+    
 	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat").c_str();
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
-
+    
 	if(stream == nullptr) perror(("Error opening file: /picross_data/"+mode+"_"+to_string(num)+".dat").c_str());
 	else
 	{
@@ -29,12 +34,33 @@ Picross::Picross(short num, GameMode gm)
 		while(c!= EOF)
 		{
 			c = fgetc(stream);
-			if(c!= EOF)
+			if(c!= EOF)  //No se que es E0F, no me carga bien el nombre, revisalo ;)
 			{
-				//log("%d",c);
+                
+                matrixSolution = vector<vector<int>>(rows);
+                for(int i = 0; i < rows; i++)
+                {
+                    vector<int> row = vector<int>(columns);
+                    for(int j = 0; j < columns; j++)
+                    {
+                        row[j] = c;
+                        log("%d",row[j]);
+                    }
+                    matrixSolution[i] = row;
+                }
+                
+                log("%d",c);
 			}
+            //nombre = fgetc(stream);
+            //log("%s - HOLA", nombre);
 		}
+        
 	}
+    
+    
+    
+    
+    
 }
 
 //Devuelve el número de filas que tiene el Picross.
