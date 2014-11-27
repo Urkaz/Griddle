@@ -43,7 +43,7 @@ else:
 			if not c:
 				break
 			if c == '\n':
-				w_file.write("\x00")
+				w_file.write("\xFF")
 			else:
 				w_file.write(c)
 

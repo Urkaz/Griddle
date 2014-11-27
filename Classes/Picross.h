@@ -25,4 +25,6 @@ private:
     std::vector<std::vector<int>> matrixSolution;
 	short rows;
 	short columns;
+	std::string name;
+	std::string author;
 };

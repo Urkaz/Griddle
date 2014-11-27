@@ -13,9 +13,6 @@ Picross::Picross(short num, GameMode gm)
 		mode = "n";
 	else if(gm == GameMode::FREE)
 		mode = "f";
-
-    string nombre = "";
-    
     
 	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat").c_str();
 
@@ -29,34 +26,42 @@ Picross::Picross(short num, GameMode gm)
 		// Los dos primeros numeros son las filas y columnas
 		rows = fgetc(stream);
 		columns = fgetc(stream);
+
+		//Leer matrix
+		matrixSolution = vector<vector<int>>(rows);
+		for(int i = 0; i < rows; i++)
+		{
+			vector<int> row = vector<int>(columns);
+			for(int j = 0; j < columns; j++)
+			{
+				c = fgetc(stream);
+				row[j] = c;
+				log("Fila %d - %d",j,row[j]);
+			}
+			matrixSolution[i] = row;
+		}
         
-        matrixSolution = vector<vector<int>>(rows);
-        
-            for(int i = 0; i < rows; i++)
-            {
-                vector<int> row = vector<int>(columns);
-                for(int j = 0; j < columns; j++)
-                {
-                    c = fgetc(stream);
-                    row[j] = c;
-                    log("Fila %d - %d",j,row[j]);
-                }
-                matrixSolution[i] = row;
-            }
-        
-		// Los demás la cuadrícula
-        
-        
-        /*
-		while((char)c!= '0x0')
+		//Leer nombre
+		name = "";
+		while(c != 0xFF)
 		{
 			c = fgetc(stream);
-			
-            //nombre = fgetc(stream);
-            //log("%s - HOLA", nombre);
+			if(c != 0xFF)
+				name = name + (char)c;
 		}
-         */
-        
+
+		log("NOMBRE: %s", name.c_str());
+
+		//Leer autor
+		author = "";
+		while (c != EOF)
+		{
+			c = fgetc(stream);
+			if (c != EOF)
+				author = author + (char)c;
+		}
+
+		log("AUTOR: %s", author.c_str());
 	}
     
     

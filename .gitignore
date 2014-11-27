@@ -6,6 +6,7 @@
 proj.wp8-xaml
 proj.linux
 *.psd
+PicrossGenerator/*.dat
 
 
 #--------------
