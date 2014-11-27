@@ -29,31 +29,33 @@ Picross::Picross(short num, GameMode gm)
 		// Los dos primeros numeros son las filas y columnas
 		rows = fgetc(stream);
 		columns = fgetc(stream);
-
+        
+        matrixSolution = vector<vector<int>>(rows);
+        
+            for(int i = 0; i < rows; i++)
+            {
+                vector<int> row = vector<int>(columns);
+                for(int j = 0; j < columns; j++)
+                {
+                    c = fgetc(stream);
+                    row[j] = c;
+                    log("Fila %d - %d",j,row[j]);
+                }
+                matrixSolution[i] = row;
+            }
+        
 		// Los demás la cuadrícula
-		while(c!= EOF)
+        
+        
+        /*
+		while((char)c!= '0x0')
 		{
 			c = fgetc(stream);
-			if(c!= EOF)  //No se que es E0F, no me carga bien el nombre, revisalo ;)
-			{
-                
-                matrixSolution = vector<vector<int>>(rows);
-                for(int i = 0; i < rows; i++)
-                {
-                    vector<int> row = vector<int>(columns);
-                    for(int j = 0; j < columns; j++)
-                    {
-                        row[j] = c;
-                        log("%d",row[j]);
-                    }
-                    matrixSolution[i] = row;
-                }
-                
-                log("%d",c);
-			}
+			
             //nombre = fgetc(stream);
             //log("%s - HOLA", nombre);
 		}
+         */
         
 	}
     

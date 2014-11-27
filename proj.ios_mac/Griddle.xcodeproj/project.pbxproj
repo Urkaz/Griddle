@@ -498,25 +498,9 @@
 				386860A21A1A570D004C2233 /* ESTRUCTURA PICROSS.txt */,
 				386860A41A1A570D004C2233 /* n_0.dat */,
 				386860A61A1A570D004C2233 /* f_0.dat */,
-				386860A31A1A570D004C2233 /* f */,
-				386860A51A1A570D004C2233 /* n */,
 				386860A71A1A570D004C2233 /* PICROSS IDS.txt */,
 			);
 			path = picross_data;
-			sourceTree = "<group>";
-		};
-		386860A31A1A570D004C2233 /* f */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = f;
-			sourceTree = "<group>";
-		};
-		386860A51A1A570D004C2233 /* n */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = n;
 			sourceTree = "<group>";
 		};
 		386860A81A1A570D004C2233 /* picross_images */ = {
