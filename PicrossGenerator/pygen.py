@@ -5,31 +5,42 @@ import binascii
 
 total = len(sys.argv)
 
-if total <= 2:
+if total <= 1:
 	print("---------------------------")
-	print("Se necesita un archivo de entrada y otro de salida como parametros")
-	print("USO:\t'pygen.py picross.txt n_23'\n\t\t\t\t^\n\t(El nombre del archivo de salida no lleva la extension)")
+	print("Se necesita un archivo de entrada")
+	print("USO:\t'pygen.py n_23'\n\t\t   ^\n\t(El nombre del archivo de entrada no lleva la extension)")
 	print("---------------------------")
 else:
 	file = str(sys.argv[1])
-	nombre = str(sys.argv[2])
 
 	filas = 0;
 	columnas = 0;
 
 	try:
-		r_file = open(file,'r')
-		w_file = open(nombre+".dat", 'wb+')
+		r_file = open(file+".txt",'r')
+		w_file = open(file+".dat", 'wb+')
 
-		filas = int(r_file.read(1)) #filas
+		#Filas
+		num = ""
+		while True:
+			c = r_file.read(1)
+			if c == '\n':
+				break
+			else:
+				num += c
+		filas = int(num)
 		w_file.write(chr(filas))
 
-		r_file.read(1) #Se ignora fin de linea
-
-		columnas = int(r_file.read(1)) #columnas
+		#Columnas
+		num = ""
+		while True:
+			c = r_file.read(1)
+			if c == '\n':
+				break
+			else:
+				num += c
+		columnas = int(num)
 		w_file.write(chr(columnas))
-
-		c = r_file.read(1) #Se ignora fin de linea
 
 		#Leer matriz
 		for i in range(filas*(columnas+1)):
@@ -47,6 +58,6 @@ else:
 			else:
 				w_file.write(c)
 
-		print("Se ha generado el Picross \""+nombre+".dat"+"\" correctamente!")
+		print("Se ha generado el Picross \""+file+".dat"+"\" correctamente!")
 	except IOError as e:
 		print("I/O error({0}): {1}".format(e.errno, e.strerror))
