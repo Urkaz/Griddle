@@ -70,8 +70,8 @@ bool PicrossGameScene::init()
 	texEmpty->setTexParameters(textureParams);
     
     
-    auto pauseItem = MenuItemImage::create("boton_pausa.jpg",
-                                           "boton_pausa.jpg",
+    auto pauseItem = MenuItemImage::create("boton_pausa.png",
+                                           "boton_pausa.png",
                                            CC_CALLBACK_1(PicrossGameScene::goToPauseScene, this));
     
     auto menu = Menu::create(pauseItem, NULL);
@@ -79,7 +79,7 @@ bool PicrossGameScene::init()
     //menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
     
     this->addChild(menu, 0);
-    menu->setPosition(200,200);
+    menu->setPosition(900,600);
 
 
     

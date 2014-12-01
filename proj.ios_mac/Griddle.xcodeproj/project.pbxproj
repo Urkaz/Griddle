@@ -65,6 +65,8 @@
 		38826DB41A237A6E00110E88 /* markX_picross.png in Resources */ = {isa = PBXBuildFile; fileRef = 38826DA11A237A6E00110E88 /* markX_picross.png */; };
 		38826DB51A237A6E00110E88 /* unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 38826DA21A237A6E00110E88 /* unknown.png */; };
 		38826DB61A237A6E00110E88 /* unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 38826DA21A237A6E00110E88 /* unknown.png */; };
+		38AEEFB41A2CCB510001744F /* boton_pausa.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AEEFB31A2CCB510001744F /* boton_pausa.png */; };
+		38AEEFB51A2CCB510001744F /* boton_pausa.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AEEFB31A2CCB510001744F /* boton_pausa.png */; };
 		38E60BFA1A2CB39F003A629B /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38E60BF81A2CB39F003A629B /* PauseScene.cpp */; };
 		38E60BFB1A2CB39F003A629B /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38E60BF81A2CB39F003A629B /* PauseScene.cpp */; };
 		38E60BFF1A2CB52C003A629B /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38E60BFE1A2CB52C003A629B /* n_0.dat */; };
@@ -87,8 +89,6 @@
 		38E60C191A2CC337003A629B /* boton_salir_pulsado.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C0A1A2CC337003A629B /* boton_salir_pulsado.png */; };
 		38E60C1A1A2CC337003A629B /* boton_salir.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C0B1A2CC337003A629B /* boton_salir.png */; };
 		38E60C1B1A2CC337003A629B /* boton_salir.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C0B1A2CC337003A629B /* boton_salir.png */; };
-		38E60C1D1A2CC56B003A629B /* botonespausa.psd in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C1C1A2CC56B003A629B /* botonespausa.psd */; };
-		38E60C1E1A2CC56B003A629B /* botonespausa.psd in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C1C1A2CC56B003A629B /* botonespausa.psd */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -314,6 +314,7 @@
 		38826DA01A237A6E00110E88 /* empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty.png; sourceTree = "<group>"; };
 		38826DA11A237A6E00110E88 /* markX_picross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = markX_picross.png; sourceTree = "<group>"; };
 		38826DA21A237A6E00110E88 /* unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknown.png; sourceTree = "<group>"; };
+		38AEEFB31A2CCB510001744F /* boton_pausa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_pausa.png; sourceTree = "<group>"; };
 		38E60BF81A2CB39F003A629B /* PauseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PauseScene.cpp; path = ../Classes/PauseScene.cpp; sourceTree = "<group>"; };
 		38E60BF91A2CB39F003A629B /* PauseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseScene.h; path = ../Classes/PauseScene.h; sourceTree = "<group>"; };
 		38E60BFE1A2CB52C003A629B /* n_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = n_0.dat; sourceTree = "<group>"; };
@@ -326,7 +327,6 @@
 		38E60C091A2CC337003A629B /* boton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_normal.png; sourceTree = "<group>"; };
 		38E60C0A1A2CC337003A629B /* boton_salir_pulsado.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_salir_pulsado.png; sourceTree = "<group>"; };
 		38E60C0B1A2CC337003A629B /* boton_salir.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_salir.png; sourceTree = "<group>"; };
-		38E60C1C1A2CC56B003A629B /* botonespausa.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = botonespausa.psd; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -540,7 +540,7 @@
 				38826D9A1A237A6E00110E88 /* boton_click_X.png */,
 				38826D9B1A237A6E00110E88 /* boton_lapiz.png */,
 				38826D9C1A237A6E00110E88 /* boton_X.png */,
-				38E60C1C1A2CC56B003A629B /* botonespausa.psd */,
+				38AEEFB31A2CCB510001744F /* boton_pausa.png */,
 				38E60C041A2CC337003A629B /* boton_continuar_pulsado.png */,
 				38E60C051A2CC337003A629B /* boton_continuar.png */,
 				38E60C061A2CC337003A629B /* boton_libre_pulsado.png */,
@@ -792,6 +792,7 @@
 				38826DA91A237A6E00110E88 /* boton_X.png in Resources */,
 				38826DA31A237A6E00110E88 /* boton_click_lapiz.png in Resources */,
 				38826DA51A237A6E00110E88 /* boton_click_X.png in Resources */,
+				38AEEFB41A2CCB510001744F /* boton_pausa.png in Resources */,
 				38E60C181A2CC337003A629B /* boton_salir_pulsado.png in Resources */,
 				38826DB31A237A6E00110E88 /* markX_picross.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
@@ -810,7 +811,6 @@
 				38E60C161A2CC337003A629B /* boton_normal.png in Resources */,
 				386860BF1A1A570D004C2233 /* PICROSS IDS.txt in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
-				38E60C1D1A2CC56B003A629B /* botonespausa.psd in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				38E60C021A2CC035003A629B /* boton_pausa.jpg in Resources */,
@@ -840,10 +840,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38AEEFB51A2CCB510001744F /* boton_pausa.png in Resources */,
 				38E60C191A2CC337003A629B /* boton_salir_pulsado.png in Resources */,
 				38E60C0D1A2CC337003A629B /* boton_continuar_pulsado.png in Resources */,
 				38E60C1B1A2CC337003A629B /* boton_salir.png in Resources */,
-				38E60C1E1A2CC56B003A629B /* botonespausa.psd in Resources */,
 				38E60C151A2CC337003A629B /* boton_normal_pulsado.png in Resources */,
 				38826DB41A237A6E00110E88 /* markX_picross.png in Resources */,
 				38826DB21A237A6E00110E88 /* empty.png in Resources */,
