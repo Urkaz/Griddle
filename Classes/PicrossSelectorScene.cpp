@@ -48,7 +48,7 @@ void PicrossSelectorScene::goToPicrossGame(Ref *pSender)
 
 	auto scene = PicrossGameScene::createScene();
 
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0,scene));
+	Director::getInstance()->pushScene(TransitionFade::create(1.0,scene));
 }
 
 void PicrossSelectorScene::returnToMainMenu(Ref *pSender)

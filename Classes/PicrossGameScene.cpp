@@ -1,5 +1,7 @@
 #include "PicrossGameScene.h"
 #include "Constant.h"
+#include "PauseScene.h"
+
 
 using namespace cocos2d;
 using namespace std;
@@ -13,6 +15,7 @@ Texture2D* texButtonDraw;
 Texture2D* texButtonMarkX;
 Texture2D* texButtonClickDraw;
 Texture2D* texButtonClickMarkX;
+Texture2D* texButtonClickPause;
 
 Texture2D::TexParams textureParams;
 
@@ -56,13 +59,41 @@ bool PicrossGameScene::init()
 	texButtonMarkX = Director::getInstance()->getTextureCache()->addImage("boton_X.png");
 	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("boton_click_lapiz.png");
 	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("boton_click_X.png");
+    
+    texButtonClickPause = Director::getInstance()->getTextureCache()->addImage("boton_pausa.jpg");
+    
+    
+
 
 	texMarkX->setTexParameters(textureParams);
 	texDraw->setTexParameters(textureParams);
 	texEmpty->setTexParameters(textureParams);
+    
+    
+    auto pauseItem = MenuItemImage::create("boton_pausa.jpg",
+                                           "boton_pausa.jpg",
+                                           CC_CALLBACK_1(PicrossGameScene::goToPauseScene, this));
+    
+    auto menu = Menu::create(pauseItem, NULL);
+    
+    //menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
+    
+    this->addChild(menu, 0);
+    menu->setPosition(200,200);
+
+
+    
+    
+    
+    
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
+    
+  
+    
+    
+    
 
 	//Inicializar matriz de solución del usuario
 	userSolution = vector<vector<int>>(picross->getRowNumber());
@@ -307,4 +338,17 @@ void PicrossGameScene::onMouseDown(Event* event)
 		//ELSE (ninguna de las dos cosas marcadas)
 				//MOVER EL TABLERO
 	}
+}
+
+
+
+
+void PicrossGameScene::goToPauseScene(Ref *pSender) {
+    
+    
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+    
+    auto scene = PauseScene::createScene();
+    Director::getInstance()->pushScene(scene);
+    
 }
