@@ -38,8 +38,8 @@ private:
 
 	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
 
-	std::vector<std::vector<cocos2d::Label*>> generateRowNumbers();
-	//std::vector<std::vector<cocos2d::Label*>> generateColumnNumbers();
+	std::vector<std::vector<cocos2d::Label*>> generateNumbers(Picross* picross, bool columnsEnabled);
+	void drawSquareNumbers(std::vector<std::vector<cocos2d::Label*>> rows, std::vector<std::vector<cocos2d::Label*>> columns);
 
 	void pixelLocationSquareGrid();
 	void pixelLocationTriangleGrid();

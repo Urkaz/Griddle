@@ -21,7 +21,6 @@ public:
 
 private:
 
-	std::vector<std::vector<int>> solution;
     std::vector<std::vector<int>> matrixSolution;
 	short rows;
 	short columns;

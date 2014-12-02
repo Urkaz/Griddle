@@ -36,7 +36,7 @@ Picross::Picross(short num, GameMode gm)
 			{
 				c = fgetc(stream);
 				row[j] = c;
-				log("Fila %d - %d",j,row[j]);
+				//log("Fila %d - %d",j,row[j]);
 			}
 			matrixSolution[i] = row;
 		}
@@ -85,5 +85,5 @@ short Picross::getColumnNumber()
 //Devuelve la matriz de solución.
 vector<vector<int>> Picross::getSolution()
 {
-	return solution;
+	return matrixSolution;
 }

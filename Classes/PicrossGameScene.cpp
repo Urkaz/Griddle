@@ -81,6 +81,8 @@ bool PicrossGameScene::init()
 	{
 		picrossGridVector = createSquareMatrix(picross);
 		picrossGridLayer = createLayer(picrossGridVector);
+		rowNumbers = generateNumbers(picross, false);
+		columnNumbers = generateNumbers(picross, true);
 	}
 	//NO IMPLEMENTADO
 	/*else
@@ -88,12 +90,6 @@ bool PicrossGameScene::init()
 
 	//Se define la constante del lado de cada cuadrado del tablero.
 	Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
-
-	//TEMPORAL: Se recolocal el tablero al (0,0) para comprobar las coordenadas.
-	/*picrossGridLayer->setPosition(
-		picrossGridVector[0].size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector[0].size()%2*Constant::PICROSS_SQUARE_SIDE/2+picrossGridLayer->getBoundingBox().size.width/2,
-		picrossGridVector.size()/2*Constant::PICROSS_SQUARE_SIDE+picrossGridVector.size()%2*Constant::PICROSS_SQUARE_SIDE/2+picrossGridLayer->getBoundingBox().size.height/2);
-		*/
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -106,6 +102,11 @@ bool PicrossGameScene::init()
 	addChild(picrossGridLayer);
 	addChild(button_draw);
 	addChild(button_X);
+
+	if (Constant::GAMEMODE != GameMode::TRIANGLES)
+	{
+		drawSquareNumbers(rowNumbers, columnNumbers);
+	}
 
 	return true;
 }
@@ -184,27 +185,94 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 	return spriteLayer;
 }
 
-/*vector<vector<Label*>> PicrossGameScene::generateRowNumbers()
+vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool columnsEnabled)
 {
-	vector<vector<Label*>> rowNums = vector<vector<Label*>>(picross->getRowNumber());
-
-	for(unsigned int i = 0; i < rowNums.size(); i++)
+	//Según columnsEnabled esté a true o false, se invertirán o no las filas y columnas
+	int rows, cols;
+	if (!columnsEnabled)
 	{
-		vector<Label*> rowNums = vector<Label*>();
-		int count = 0;
-
-		for(int j = 0; j < picross->getColumnNumber(); j++)
-		{
-			if(picross->getSolution()[i][j] == 1)
-				count++;
-			//vector<LabelTTF*> rowNums = vector<LabelTTF*>();
-		}
-		log("%d",count);
-		count = 0;
+		rows = picross->getRowNumber();
+		cols = picross->getColumnNumber();
+	}
+	else
+	{
+		rows = picross->getColumnNumber();
+		cols = picross->getRowNumber();
 	}
 
-	return rowNums;
-}*/
+	//Generar etiquetas de texto, cada una con un sólo número
+	int value, count = 0;
+
+	vector<vector<Label*>> nums = vector<vector<Label*>>(rows);
+	for(unsigned int i = 0; i < nums.size(); i++)
+	{
+		vector<Label*> individual = vector<Label*>();
+		for(int j = 0; j < cols; j++)
+		{
+			//intercambiar filas por columnas
+			if (!columnsEnabled)
+				value = picross->getSolution()[i][j];
+			else
+				value = picross->getSolution()[j][i];
+
+			//contar cantidad de unos
+			if (value == 1)
+				count++;
+			else
+			{
+				if (count > 0) // Si encuentra un 0 por el medio crea una etiqueta y reinicia el contador
+				{
+					auto label = Label::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
+					individual.push_back(label);
+					count = 0;
+				}
+			}
+		}
+
+		//Para cuando haya una fila toda de 1 y ningun 0; O no haya ningun 1.
+		if (individual.size() == 0 || count != 0)
+		{
+			auto label = Label::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
+			individual.push_back(label);
+		}
+		//Reinicia contador para empezar de nuevo
+		count = 0;
+		nums[i] = individual;
+	}
+
+	return nums;
+}
+
+void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vector<Label*>> columns)
+{
+	int rowOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int rowOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+
+	int colOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int colOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+
+	//FILAS
+	for (unsigned int i = 0; i < rows.size(); i++)
+	{
+		for (unsigned int j = 0; j < rows[i].size(); j++)
+		{
+			rows[i][j]->setPosition(rowOffsetX + Constant::FONT_SIZE * (j - rows[i].size()),
+				rowOffsetY - (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i);
+			this->addChild(rows[i][j]);
+		}
+	}
+
+	//COLUMNAS
+	for (unsigned int i = 0; i < columns.size(); i++)
+	{
+		for (unsigned int j = 0; j < columns[i].size(); j++)
+		{
+			columns[i][j]->setPosition(colOffsetX+15 + (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i,
+				colOffsetY+10 + Constant::FONT_SIZE * (-j + columns[i].size()));
+			this->addChild(columns[i][j]);
+		}
+	}
+}
 
 void PicrossGameScene::onMouseDown(Event* event)
 {
