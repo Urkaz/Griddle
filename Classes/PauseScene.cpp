@@ -1,9 +1,6 @@
-
 #include "PauseScene.h"
 
-
 USING_NS_CC;
-
 
 Scene* PauseScene::createScene()
 {
@@ -19,7 +16,6 @@ bool PauseScene::init()
     {
         return false;
     }
-    
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -45,9 +41,7 @@ bool PauseScene::init()
                                   (visibleSize.height /2)));
     
     addChild(background, 0);
-    
-    
-    
+
     return true;
      
 }
@@ -65,5 +59,4 @@ void PauseScene::goToPicrossSelector(Ref *pSender) {
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
     Director::getInstance()->popScene();
     Director::getInstance()->popScene();
-
 }

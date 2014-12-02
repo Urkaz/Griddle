@@ -59,41 +59,15 @@ bool PicrossGameScene::init()
 	texButtonMarkX = Director::getInstance()->getTextureCache()->addImage("boton_X.png");
 	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("boton_click_lapiz.png");
 	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("boton_click_X.png");
-    
-    texButtonClickPause = Director::getInstance()->getTextureCache()->addImage("boton_pausa.jpg");
-    
-    
 
+    //texButtonClickPause = Director::getInstance()->getTextureCache()->addImage("boton_pausa.jpg");
 
 	texMarkX->setTexParameters(textureParams);
 	texDraw->setTexParameters(textureParams);
 	texEmpty->setTexParameters(textureParams);
-    
-    
-    auto pauseItem = MenuItemImage::create("boton_pausa.png",
-                                           "boton_pausa.png",
-                                           CC_CALLBACK_1(PicrossGameScene::goToPauseScene, this));
-    
-    auto menu = Menu::create(pauseItem, NULL);
-    
-    //menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
-    
-    this->addChild(menu, 0);
-    menu->setPosition(900,600);
-
-
-    
-    
-    
-    
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
-    
-  
-    
-    
-    
 
 	//Inicializar matriz de solución del usuario
 	userSolution = vector<vector<int>>(picross->getRowNumber());
@@ -124,6 +98,14 @@ bool PicrossGameScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	auto pauseItem = MenuItemImage::create("boton_pausa.png",
+		"boton_click_pausa.png",
+		CC_CALLBACK_1(PicrossGameScene::goToPauseScene, this));
+
+	auto menu = Menu::create(pauseItem, NULL);
+
+	menu->setPosition(visibleSize.width - pauseItem->getBoundingBox().size.width / 2, visibleSize.height - pauseItem->getBoundingBox().size.height / 2);
+
 	button_draw = Sprite::create("boton_click_lapiz.png");
 	button_X = Sprite::create("boton_X.png");
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
@@ -133,6 +115,7 @@ bool PicrossGameScene::init()
 	addChild(picrossGridLayer);
 	addChild(button_draw);
 	addChild(button_X);
+	addChild(menu, 0);
 
 	if (Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
