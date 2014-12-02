@@ -62,9 +62,10 @@ Picross::Picross(short num, GameMode gm)
 		}
 
 		log("AUTOR: %s", author.c_str());
-	}
+	
+    }
     
-    
+ 
     
     
     

@@ -18,6 +18,7 @@ public:
     
     // Added
 	void onMouseDown(cocos2d::Event* event);
+    void goToPauseScene(Ref *pSender);
 
 	//void goToPicrossGame(Ref *pSender);
 	//void returnToMainMenu(Ref *pSender);

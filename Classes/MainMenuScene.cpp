@@ -25,12 +25,12 @@ bool MainMenuScene::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// Creating menu
-	auto playItem = MenuItemImage::create("Play_Button.png",
-			"Play_Button(Click).png",
+	auto playItem = MenuItemImage::create("boton_normal.png",
+			"boton_normal_pulsado.png",
 			CC_CALLBACK_1(MainMenuScene::goToNormalSelector, this));
 
-	auto playItem2 = MenuItemImage::create("Play_Button.png",
-			"Play_Button(Click).png",
+	auto playItem2 = MenuItemImage::create("boton_libre.png",
+			"boton_libre_pulsado.png",
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
 
 	auto menu = Menu::create(playItem, playItem2 , NULL);
