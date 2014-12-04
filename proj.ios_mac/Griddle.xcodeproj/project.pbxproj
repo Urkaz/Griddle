@@ -32,15 +32,19 @@
 		385E7F891A1A50CF00451C10 /* PicrossGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 385E7F7E1A1A50CF00451C10 /* PicrossGameScene.cpp */; };
 		385E7F8A1A1A50CF00451C10 /* PicrossSelectorScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 385E7F801A1A50CF00451C10 /* PicrossSelectorScene.cpp */; };
 		385E7F8B1A1A50CF00451C10 /* PicrossSelectorScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 385E7F801A1A50CF00451C10 /* PicrossSelectorScene.cpp */; };
+		38619B361A30C376002038BA /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38619B331A30C376002038BA /* f_0.dat */; };
+		38619B371A30C376002038BA /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38619B331A30C376002038BA /* f_0.dat */; };
+		38619B381A30C376002038BA /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38619B341A30C376002038BA /* n_0.dat */; };
+		38619B391A30C376002038BA /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38619B341A30C376002038BA /* n_0.dat */; };
+		38619B3A1A30C376002038BA /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 38619B351A30C376002038BA /* PICROSS IDS.txt */; };
+		38619B3B1A30C376002038BA /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 38619B351A30C376002038BA /* PICROSS IDS.txt */; };
+		38619B3D1A30C3DC002038BA /* MarkerFelt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38619B3C1A30C3DC002038BA /* MarkerFelt.ttf */; };
+		38619B3E1A30C3DC002038BA /* MarkerFelt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38619B3C1A30C3DC002038BA /* MarkerFelt.ttf */; };
+		38619B411A30C457002038BA /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38619B3F1A30C457002038BA /* TutorialScene.cpp */; };
+		38619B421A30C457002038BA /* TutorialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38619B3F1A30C457002038BA /* TutorialScene.cpp */; };
 		386860AD1A1A570D004C2233 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3868609A1A1A570D004C2233 /* Background.png */; };
 		386860AE1A1A570D004C2233 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3868609A1A1A570D004C2233 /* Background.png */; };
-		386860B31A1A570D004C2233 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3868609E1A1A570D004C2233 /* Marker Felt.ttf */; };
-		386860B41A1A570D004C2233 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3868609E1A1A570D004C2233 /* Marker Felt.ttf */; };
 		386860B61A1A570D004C2233 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 3868609F1A1A570D004C2233 /* HelloWorld.png */; };
-		386860BD1A1A570D004C2233 /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* f_0.dat */; };
-		386860BE1A1A570D004C2233 /* f_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 386860A61A1A570D004C2233 /* f_0.dat */; };
-		386860BF1A1A570D004C2233 /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A71A1A570D004C2233 /* PICROSS IDS.txt */; };
-		386860C01A1A570D004C2233 /* PICROSS IDS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 386860A71A1A570D004C2233 /* PICROSS IDS.txt */; };
 		386860C51A1A570D004C2233 /* Play_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 386860AB1A1A570D004C2233 /* Play_Button.png */; };
 		386860C61A1A570D004C2233 /* Play_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 386860AB1A1A570D004C2233 /* Play_Button.png */; };
 		386860C71A1A570D004C2233 /* Play_Button(Click).png in Resources */ = {isa = PBXBuildFile; fileRef = 386860AC1A1A570D004C2233 /* Play_Button(Click).png */; };
@@ -69,8 +73,6 @@
 		38AEEFB51A2CCB510001744F /* boton_pausa.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AEEFB31A2CCB510001744F /* boton_pausa.png */; };
 		38E60BFA1A2CB39F003A629B /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38E60BF81A2CB39F003A629B /* PauseScene.cpp */; };
 		38E60BFB1A2CB39F003A629B /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38E60BF81A2CB39F003A629B /* PauseScene.cpp */; };
-		38E60BFF1A2CB52C003A629B /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38E60BFE1A2CB52C003A629B /* n_0.dat */; };
-		38E60C001A2CB52C003A629B /* n_0.dat in Resources */ = {isa = PBXBuildFile; fileRef = 38E60BFE1A2CB52C003A629B /* n_0.dat */; };
 		38E60C021A2CC035003A629B /* boton_pausa.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C011A2CC035003A629B /* boton_pausa.jpg */; };
 		38E60C031A2CC035003A629B /* boton_pausa.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C011A2CC035003A629B /* boton_pausa.jpg */; };
 		38E60C0C1A2CC337003A629B /* boton_continuar_pulsado.png in Resources */ = {isa = PBXBuildFile; fileRef = 38E60C041A2CC337003A629B /* boton_continuar_pulsado.png */; };
@@ -297,11 +299,14 @@
 		385E7F7F1A1A50CF00451C10 /* PicrossGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicrossGameScene.h; path = ../Classes/PicrossGameScene.h; sourceTree = "<group>"; };
 		385E7F801A1A50CF00451C10 /* PicrossSelectorScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PicrossSelectorScene.cpp; path = ../Classes/PicrossSelectorScene.cpp; sourceTree = "<group>"; };
 		385E7F811A1A50CF00451C10 /* PicrossSelectorScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PicrossSelectorScene.h; path = ../Classes/PicrossSelectorScene.h; sourceTree = "<group>"; };
+		38619B331A30C376002038BA /* f_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = f_0.dat; sourceTree = "<group>"; };
+		38619B341A30C376002038BA /* n_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = n_0.dat; sourceTree = "<group>"; };
+		38619B351A30C376002038BA /* PICROSS IDS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PICROSS IDS.txt"; sourceTree = "<group>"; };
+		38619B3C1A30C3DC002038BA /* MarkerFelt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarkerFelt.ttf; sourceTree = "<group>"; };
+		38619B3F1A30C457002038BA /* TutorialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TutorialScene.cpp; path = ../Classes/TutorialScene.cpp; sourceTree = "<group>"; };
+		38619B401A30C457002038BA /* TutorialScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TutorialScene.h; path = ../Classes/TutorialScene.h; sourceTree = "<group>"; };
 		3868609A1A1A570D004C2233 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
-		3868609E1A1A570D004C2233 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		3868609F1A1A570D004C2233 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
-		386860A61A1A570D004C2233 /* f_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = f_0.dat; path = n/f_0.dat; sourceTree = "<group>"; };
-		386860A71A1A570D004C2233 /* PICROSS IDS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PICROSS IDS.txt"; sourceTree = "<group>"; };
 		386860AB1A1A570D004C2233 /* Play_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play_Button.png; sourceTree = "<group>"; };
 		386860AC1A1A570D004C2233 /* Play_Button(Click).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play_Button(Click).png"; sourceTree = "<group>"; };
 		38826D991A237A6E00110E88 /* boton_click_lapiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_click_lapiz.png; sourceTree = "<group>"; };
@@ -317,7 +322,6 @@
 		38AEEFB31A2CCB510001744F /* boton_pausa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_pausa.png; sourceTree = "<group>"; };
 		38E60BF81A2CB39F003A629B /* PauseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PauseScene.cpp; path = ../Classes/PauseScene.cpp; sourceTree = "<group>"; };
 		38E60BF91A2CB39F003A629B /* PauseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseScene.h; path = ../Classes/PauseScene.h; sourceTree = "<group>"; };
-		38E60BFE1A2CB52C003A629B /* n_0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = n_0.dat; sourceTree = "<group>"; };
 		38E60C011A2CC035003A629B /* boton_pausa.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = boton_pausa.jpg; sourceTree = "<group>"; };
 		38E60C041A2CC337003A629B /* boton_continuar_pulsado.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_continuar_pulsado.png; sourceTree = "<group>"; };
 		38E60C051A2CC337003A629B /* boton_continuar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boton_continuar.png; sourceTree = "<group>"; };
@@ -448,6 +452,8 @@
 				385E7F811A1A50CF00451C10 /* PicrossSelectorScene.h */,
 				38E60BF81A2CB39F003A629B /* PauseScene.cpp */,
 				38E60BF91A2CB39F003A629B /* PauseScene.h */,
+				38619B3F1A30C457002038BA /* TutorialScene.cpp */,
+				38619B401A30C457002038BA /* TutorialScene.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -518,7 +524,7 @@
 		3868609D1A1A570D004C2233 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				3868609E1A1A570D004C2233 /* Marker Felt.ttf */,
+				38619B3C1A30C3DC002038BA /* MarkerFelt.ttf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -526,9 +532,9 @@
 		386860A11A1A570D004C2233 /* picross_data */ = {
 			isa = PBXGroup;
 			children = (
-				38E60BFE1A2CB52C003A629B /* n_0.dat */,
-				386860A61A1A570D004C2233 /* f_0.dat */,
-				386860A71A1A570D004C2233 /* PICROSS IDS.txt */,
+				38619B331A30C376002038BA /* f_0.dat */,
+				38619B341A30C376002038BA /* n_0.dat */,
+				38619B351A30C376002038BA /* PICROSS IDS.txt */,
 			);
 			path = picross_data;
 			sourceTree = "<group>";
@@ -787,8 +793,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38E60BFF1A2CB52C003A629B /* n_0.dat in Resources */,
-				386860BD1A1A570D004C2233 /* f_0.dat in Resources */,
+				38619B3A1A30C376002038BA /* PICROSS IDS.txt in Resources */,
 				38826DA91A237A6E00110E88 /* boton_X.png in Resources */,
 				38826DA31A237A6E00110E88 /* boton_click_lapiz.png in Resources */,
 				38826DA51A237A6E00110E88 /* boton_click_X.png in Resources */,
@@ -800,6 +805,7 @@
 				38E60C101A2CC337003A629B /* boton_libre_pulsado.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				38E60C141A2CC337003A629B /* boton_normal_pulsado.png in Resources */,
+				38619B361A30C376002038BA /* f_0.dat in Resources */,
 				38826DA71A237A6E00110E88 /* boton_lapiz.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				386860C71A1A570D004C2233 /* Play_Button(Click).png in Resources */,
@@ -809,7 +815,6 @@
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				38E60C161A2CC337003A629B /* boton_normal.png in Resources */,
-				386860BF1A1A570D004C2233 /* PICROSS IDS.txt in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
@@ -819,6 +824,7 @@
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				38E60C0E1A2CC337003A629B /* boton_continuar.png in Resources */,
 				386860C51A1A570D004C2233 /* Play_Button.png in Resources */,
+				38619B3D1A30C3DC002038BA /* MarkerFelt.ttf in Resources */,
 				38826DB11A237A6E00110E88 /* empty.png in Resources */,
 				38E60C1A1A2CC337003A629B /* boton_salir.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
@@ -828,7 +834,7 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
-				386860B31A1A570D004C2233 /* Marker Felt.ttf in Resources */,
+				38619B381A30C376002038BA /* n_0.dat in Resources */,
 				386860AD1A1A570D004C2233 /* Background.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
@@ -845,16 +851,16 @@
 				38E60C0D1A2CC337003A629B /* boton_continuar_pulsado.png in Resources */,
 				38E60C1B1A2CC337003A629B /* boton_salir.png in Resources */,
 				38E60C151A2CC337003A629B /* boton_normal_pulsado.png in Resources */,
+				38619B371A30C376002038BA /* f_0.dat in Resources */,
 				38826DB41A237A6E00110E88 /* markX_picross.png in Resources */,
 				38826DB21A237A6E00110E88 /* empty.png in Resources */,
 				38E60C111A2CC337003A629B /* boton_libre_pulsado.png in Resources */,
-				38E60C001A2CB52C003A629B /* n_0.dat in Resources */,
+				38619B391A30C376002038BA /* n_0.dat in Resources */,
 				38826DAE1A237A6E00110E88 /* empty_picross.png in Resources */,
-				386860B41A1A570D004C2233 /* Marker Felt.ttf in Resources */,
+				38619B3B1A30C376002038BA /* PICROSS IDS.txt in Resources */,
 				386860C81A1A570D004C2233 /* Play_Button(Click).png in Resources */,
 				5087E75317EB910900C73F5D /* CloseNormal.png in Resources */,
 				38826DAA1A237A6E00110E88 /* boton_X.png in Resources */,
-				386860C01A1A570D004C2233 /* PICROSS IDS.txt in Resources */,
 				38E60C0F1A2CC337003A629B /* boton_continuar.png in Resources */,
 				38E60C171A2CC337003A629B /* boton_normal.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
@@ -866,7 +872,7 @@
 				386860B61A1A570D004C2233 /* HelloWorld.png in Resources */,
 				38826DA81A237A6E00110E88 /* boton_lapiz.png in Resources */,
 				38826DB61A237A6E00110E88 /* unknown.png in Resources */,
-				386860BE1A1A570D004C2233 /* f_0.dat in Resources */,
+				38619B3E1A30C3DC002038BA /* MarkerFelt.ttf in Resources */,
 				386860C61A1A570D004C2233 /* Play_Button.png in Resources */,
 				38826DB01A237A6E00110E88 /* empty_selector.png in Resources */,
 				38826DA41A237A6E00110E88 /* boton_click_lapiz.png in Resources */,
@@ -881,6 +887,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38619B411A30C457002038BA /* TutorialScene.cpp in Sources */,
 				385E7F881A1A50CF00451C10 /* PicrossGameScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				385E7F861A1A50CF00451C10 /* Picross.cpp in Sources */,
@@ -901,6 +908,7 @@
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				385E7F891A1A50CF00451C10 /* PicrossGameScene.cpp in Sources */,
 				385E7F851A1A50CF00451C10 /* MainMenuScene.cpp in Sources */,
+				38619B421A30C457002038BA /* TutorialScene.cpp in Sources */,
 				385E7F871A1A50CF00451C10 /* Picross.cpp in Sources */,
 				385E7F8B1A1A50CF00451C10 /* PicrossSelectorScene.cpp in Sources */,
 				38E60BFB1A2CB39F003A629B /* PauseScene.cpp in Sources */,
