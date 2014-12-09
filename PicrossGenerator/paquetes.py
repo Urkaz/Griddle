@@ -35,8 +35,6 @@ try:
 			continue
 		else:
 			num += c
-	
-	w_file.write("\xFF")
 
 	#Nombre paquete
 	while True:
@@ -46,6 +44,9 @@ try:
 		else:
 			w_file.write(c)
 	
+	r_file.close()
+	w_file.close()
+
 	print("---------------------------")
 	print("Se ha generado el Paquete \""+file+".dat"+"\" correctamente!")
 	raw_input("Pulsa Enter para salir.")

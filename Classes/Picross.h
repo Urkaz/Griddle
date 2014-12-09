@@ -5,8 +5,6 @@
 #include <string>
 #include <iostream>
 
-
-
 enum class GameMode {NORMAL, FREE, BOMB, TRIANGLES};
 
 class Picross

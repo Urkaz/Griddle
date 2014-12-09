@@ -1,0 +1,28 @@
+ - (PICROSS::GAMEMODE)
+   |
+   |- (PUZZLE_NUMBER)->(PICROSS::NOMBRE)
+
+ --------------------------------------
+
+ - n (NORMAL)
+   |
+   |- 0		-> Tostadora (Test)
+   |- 1		-> Cuchillo
+   |- 2		-> Tenedor
+   |- 3		-> Sartén
+   |- 4		-> Vitrocerámica
+   |- 5		-> Cuchara
+   |- 6		-> Horno
+   |- 7		-> Plato
+   |- 8		-> Olla
+   |- 9		-> Jarra de agua
+   |- 10	-> Salero
+   |- 11	-> Copa
+   |- 12	-> Tostadora
+
+ --------------------------------------
+
+  - f (FREE)
+   |
+   |- 0		-> Tostadora (Test)
+   |- 1		-> XXXXXX

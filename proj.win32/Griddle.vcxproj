@@ -137,6 +137,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\MainMenuScene.cpp" />
+    <ClCompile Include="..\Classes\PanelSelector.cpp" />
     <ClCompile Include="..\Classes\PauseScene.cpp" />
     <ClCompile Include="..\Classes\Picross.cpp" />
     <ClCompile Include="..\Classes\PicrossGameScene.cpp" />
@@ -147,6 +148,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Constant.h" />
     <ClInclude Include="..\Classes\MainMenuScene.h" />
+    <ClInclude Include="..\Classes\PanelSelector.h" />
     <ClInclude Include="..\Classes\PauseScene.h" />
     <ClInclude Include="..\Classes\Picross.h" />
     <ClInclude Include="..\Classes\PicrossGameScene.h" />

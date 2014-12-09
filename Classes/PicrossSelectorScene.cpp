@@ -1,6 +1,7 @@
 #include "PicrossSelectorScene.h"
 #include "MainMenuScene.h"
 #include "PicrossGameScene.h"
+#include "PanelSelector.h"
 
 USING_NS_CC;
 
@@ -20,6 +21,12 @@ bool PicrossSelectorScene::init()
 	{
 		return false;
 	}
+
+	//Test Selector
+	PanelSelector(1);
+	PanelSelector(1);
+	PanelSelector(1);
+
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();

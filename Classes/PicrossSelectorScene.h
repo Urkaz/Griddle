@@ -19,4 +19,7 @@ public:
     // Added
 	void goToPicrossGame(Ref *pSender);
 	void returnToMainMenu(Ref *pSender);
+
+private:
+
 };

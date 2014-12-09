@@ -10,6 +10,12 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Utils">
+      <UniqueIdentifier>{7c89a24a-ec45-4225-ac04-7e9acc02110a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scenes">
+      <UniqueIdentifier>{02f37171-59de-47ba-9d0b-e0b64bc9b92a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,20 +24,23 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MainMenuScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Picross.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PicrossSelectorScene.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\PanelSelector.cpp">
+      <Filter>Classes\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PicrossGameScene.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\MainMenuScene.cpp">
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PauseScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PicrossGameScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PicrossSelectorScene.cpp">
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,23 +50,26 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MainMenuScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PicrossSelectorScene.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\Constant.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Picross.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Constant.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\PanelSelector.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PicrossGameScene.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\MainMenuScene.h">
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PauseScene.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PicrossGameScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PicrossSelectorScene.h">
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

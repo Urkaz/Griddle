@@ -56,6 +56,9 @@ try:
 		else:
 				w_file.write(c)
 
+	r_file.close()
+	w_file.close()
+
 	print("---------------------------")
 	print("Se ha generado el Picross \""+file+".dat"+"\" correctamente!")
 	raw_input("Pulsa Enter para salir.")
