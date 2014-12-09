@@ -51,7 +51,14 @@ bool PauseScene::init()
 void PauseScene::goToPicrossGameScene(Ref *pSender) {
     
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
-    Director::getInstance()->popScene();
+
+	Director::getInstance()->popScene();Director::getInstance()->popScene();
+
+	/*
+	ESTO NO OS FUNCIONARÁ, getPreviousScene ES UNA FUNCIÓN NUEVA EN EL Director para obtener la escena anterior en la pila de escenas y poderla cambiar con una transicion.
+	Scene * nextScene = Director::getInstance()->getPreviousScene();
+	Scene * fadeScene = TransitionFade::create(1.0, nextScene);
+	Director::getInstance()->replaceScene(fadeScene);*/
 }
 
 void PauseScene::goToPicrossSelector(Ref *pSender) {

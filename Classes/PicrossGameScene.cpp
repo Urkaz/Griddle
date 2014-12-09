@@ -282,7 +282,7 @@ void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vec
 		for (unsigned int j = 0; j < columns[i].size(); j++)
 		{
 			columns[i][j]->setPosition(colOffsetX+15 + (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i,
-				colOffsetY+10 + Constant::FONT_SIZE * (-j + columns[i].size()));
+				colOffsetY+10 + Constant::FONT_SIZE * (-j + (int)columns[i].size()));
 			this->addChild(columns[i][j]);
 		}
 	}
@@ -400,6 +400,6 @@ void PicrossGameScene::goToPauseScene(Ref *pSender) {
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
     
     auto scene = PauseScene::createScene();
-    Director::getInstance()->pushScene(scene);
+	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
     
 }
