@@ -2,7 +2,7 @@
 
 #include "cocos2d.h"
 #include "Picross.h"
-
+#include "PanelSelector.h"
 
 class PicrossSelectorScene: public cocos2d::Layer
 {
@@ -20,6 +20,14 @@ public:
 	void goToPicrossGame(Ref *pSender);
 	void returnToMainMenu(Ref *pSender);
 
-private:
+	void onMouseDown(cocos2d::Event* event);
 
+private:
+	PanelSelector* rightPanel;
+	PanelSelector* mainPanel;
+	PanelSelector* leftPanel;
+
+	Layer* rightLayer;
+	Layer* mainLayer;
+	Layer* leftLayer;
 };

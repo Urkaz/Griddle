@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Picross.h"
+
 class Constant
 {
 public:
@@ -7,6 +9,7 @@ public:
 	static short PUZZLE_NUMBER;
 
 	static short PICROSS_SQUARE_SIDE;
+	static short SELECTOR_SQUARE_SIDE;
 
 	static const short FONT_SIZE = 60;
 };

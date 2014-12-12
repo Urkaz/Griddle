@@ -49,8 +49,7 @@ bool PicrossGameScene::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	//Carga de texturas
-	Texture2D::TexParams tp = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-	textureParams = tp;
+	textureParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 	texMarkX = Director::getInstance()->getTextureCache()->addImage("markX_picross.png");
 	texDraw = Director::getInstance()->getTextureCache()->addImage("draw_picross.png");
 	texEmpty = Director::getInstance()->getTextureCache()->addImage("empty_picross.png");
@@ -190,7 +189,7 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 	int layerOffsetX = visibleSize.width  /2 + spriteLayer->getBoundingBox().size.width/2;
 	int layerOffsetY = visibleSize.height /2 + spriteLayer->getBoundingBox().size.height/2;
 
-	spriteLayer->setPosition(Vec2(layerOffsetX, layerOffsetY));
+	spriteLayer->setPosition(layerOffsetX, layerOffsetY);
 
 	for(unsigned int i = 0; i < spriteVector.size(); i++) //Fila
 		for(unsigned int j = 0; j < spriteVector[i].size(); j++) //Columna
@@ -277,12 +276,12 @@ void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vec
 	}
 
 	//COLUMNAS
-	for (unsigned int i = 0; i < columns.size(); i++)
+	for (int i = 0; i < (int)columns.size(); i++)
 	{
-		for (unsigned int j = 0; j < columns[i].size(); j++)
+		for (int j = 0; j < (int)columns[i].size(); j++)
 		{
 			columns[i][j]->setPosition(colOffsetX+15 + (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i,
-				colOffsetY+10 + Constant::FONT_SIZE * (-j + (int)columns[i].size()));
+				colOffsetY+10 + Constant::FONT_SIZE * (-j + columns[i].size()));
 			this->addChild(columns[i][j]);
 		}
 	}
@@ -391,14 +390,10 @@ void PicrossGameScene::onMouseDown(Event* event)
 	}
 }
 
-
-
-
-void PicrossGameScene::goToPauseScene(Ref *pSender) {
-    
-    
+void PicrossGameScene::goToPauseScene(Ref *pSender)
+{
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
-    
+
     auto scene = PauseScene::createScene();
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
     
