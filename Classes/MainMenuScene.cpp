@@ -1,5 +1,6 @@
 #include "MainMenuScene.h"
 #include "PicrossSelectorScene.h"
+#include "TutorialScene.h"
 
 USING_NS_CC;
 
@@ -32,11 +33,17 @@ bool MainMenuScene::init()
 	auto playItem2 = MenuItemImage::create("boton_libre.png",
 			"boton_libre_pulsado.png",
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
+    
+    auto playItem3 = MenuItemImage::create("boton_pausa.png",
+                                           "boton_pausa.png",
+                                           CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
 
-	auto menu = Menu::create(playItem, playItem2 , NULL);
+	auto menu = Menu::create(playItem, playItem2, NULL);
+    auto menu2 = Menu::create(playItem3, NULL);
 
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
 	this->addChild(menu, 1);
+    this->addChild(menu2,1);
 
 	// Adding background
 	auto background = Sprite::create("Background.png");
@@ -78,3 +85,13 @@ void MainMenuScene::goToFreeSelector(Ref *pSender) {
 	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5,scene));
 }
 
+void MainMenuScene::goToTutorialScene(Ref *pSender) {
+    
+    Constant::GAMEMODE = GameMode::FREE;
+    
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+    
+    auto scene = TutorialScene::createScene();
+    
+    Director::getInstance()->pushScene(TransitionSlideInB::create(0.5,scene));
+}
