@@ -19,4 +19,5 @@ public:
     // Added
 	void goToNormalSelector(Ref *pSender);
 	void goToFreeSelector(Ref *pSender);
+    void goToTutorialScene(Ref *pSender);
 };
