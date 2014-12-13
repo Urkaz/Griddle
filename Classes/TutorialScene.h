@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "Picross.h"
 #include "Constant.h"
+#include "UIWidget.h"
 
 class TutorialScene: public cocos2d::Layer
 {
@@ -18,4 +19,7 @@ public:
     
     // Added
     void goToMainMenu(Ref *pSender);
+    void TexturaSiguiente(Ref *pSender);
+    void TexturaAnterior(Ref *pSender);
+
 };
