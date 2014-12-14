@@ -45,6 +45,9 @@
     <ClCompile Include="..\Classes\TutorialScene.cpp">
       <Filter>Classes\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\EndScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -77,10 +80,17 @@
     <ClInclude Include="..\Classes\TutorialScene.h">
       <Filter>Classes\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\EndScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

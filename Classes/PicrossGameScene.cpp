@@ -1,6 +1,7 @@
 #include "PicrossGameScene.h"
 #include "Constant.h"
 #include "PauseScene.h"
+#include "EndScene.h"
 
 
 using namespace cocos2d;
@@ -26,6 +27,9 @@ bool drawEnabled = true;
 bool markXEnabled = false;
 
 Size visibleSize;
+
+int life = 3;
+LabelTTF *lifeLabel;
 
 Scene* PicrossGameScene::createScene()
 {
@@ -116,6 +120,14 @@ bool PicrossGameScene::init()
 	addChild(button_draw);
 	addChild(button_X);
 	addChild(menu, 0);
+
+	//Se muestran las vidas
+	if (Constant::GAMEMODE == GameMode::NORMAL){
+		__String *text = __String::createWithFormat("Lifes %d ", life);
+		lifeLabel = LabelTTF::create(text->getCString(), "Arial", 24);
+		lifeLabel->setPosition(Vec2(visibleSize.width - 150, visibleSize.height - 30));
+		addChild(lifeLabel);
+	}
 
 	if (Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
@@ -364,6 +376,13 @@ void PicrossGameScene::onMouseDown(Event* event)
 			case 1: //Pintado
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
+				life -= 1;
+				__String *text = __String::createWithFormat("Lifes %d", life);
+				if (life == 0){
+					goToEndScene(this);
+				}
+				
+				lifeLabel->setString(text->getCString());
 				break;
 			}
 		}
@@ -386,6 +405,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 				break;
 			}
 		}
+
 		//ELSE (ninguna de las dos cosas marcadas)
 				//MOVER EL TABLERO
 	}
@@ -402,4 +422,15 @@ void PicrossGameScene::goToPauseScene(Ref *pSender) {
     auto scene = PauseScene::createScene();
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
     
+}
+
+
+void PicrossGameScene::goToEndScene(Ref *pSender) {
+
+
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+
+	auto scene = EndScene::createScene();
+	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
+
 }

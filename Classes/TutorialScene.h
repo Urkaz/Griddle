@@ -4,7 +4,6 @@
 #include "Picross.h"
 #include "Constant.h"
 
-
 class TutorialScene: public cocos2d::Layer
 {
 public:
