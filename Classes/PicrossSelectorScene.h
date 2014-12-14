@@ -17,17 +17,27 @@ public:
     CREATE_FUNC(PicrossSelectorScene);
     
     // Added
+	void movePanelsToLeft(float mov);
+	void movePanelsToRight(float mov);
+
+	void enableLeftAnim();
+	void enableRightAnim();
+
 	void goToPicrossGame(Ref *pSender);
 	void returnToMainMenu(Ref *pSender);
 
 	void onMouseDown(cocos2d::Event* event);
 
+	void update(float dt);
+
 private:
 	PanelSelector* rightPanel;
 	PanelSelector* mainPanel;
 	PanelSelector* leftPanel;
+	PanelSelector* auxPanel;
 
 	Layer* rightLayer;
 	Layer* mainLayer;
 	Layer* leftLayer;
+	Layer* auxLayer;
 };
