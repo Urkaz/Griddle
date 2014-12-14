@@ -32,6 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Sets the search path for images
 	resDirOrders.push_back("picross_images");
     resDirOrders.push_back("picross_data");
+	resDirOrders.push_back("ImagenesTutorial");
 
 	//glview->setFrameSize(768, 1024);
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::EXACT_FIT);

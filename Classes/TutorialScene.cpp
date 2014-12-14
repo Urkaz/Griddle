@@ -114,7 +114,7 @@ bool TutorialScene::init()
 
 void TutorialScene::TexturaAnterior(Ref *pSender){
     
-    printf("%i ", indice);
+    log("%i ", indice);
     
     switch (indice) {
         case 2:
@@ -254,7 +254,7 @@ void TutorialScene::TexturaAnterior(Ref *pSender){
 
 void TutorialScene::TexturaSiguiente(Ref *pSender){
     
-    printf("%i ", indice);
+    log("%i ", indice);
     
     switch (indice) {
         case 2:
