@@ -1,6 +1,7 @@
 #include "PicrossGameScene.h"
 #include "Constant.h"
 #include "PauseScene.h"
+#include "EndScene.h"
 
 
 using namespace cocos2d;
@@ -377,6 +378,10 @@ void PicrossGameScene::onMouseDown(Event* event)
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				life -= 1;
 				__String *text = __String::createWithFormat("Lifes %d", life);
+				if (life == 0){
+					goToEndScene(this);
+				}
+				
 				lifeLabel->setString(text->getCString());
 				break;
 			}
@@ -400,6 +405,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 				break;
 			}
 		}
+
 		//ELSE (ninguna de las dos cosas marcadas)
 				//MOVER EL TABLERO
 	}
@@ -416,4 +422,15 @@ void PicrossGameScene::goToPauseScene(Ref *pSender) {
     auto scene = PauseScene::createScene();
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
     
+}
+
+
+void PicrossGameScene::goToEndScene(Ref *pSender) {
+
+
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+
+	auto scene = EndScene::createScene();
+	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
+
 }
