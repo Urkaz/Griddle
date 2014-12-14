@@ -12,5 +12,7 @@ public:
 	static short SELECTOR_SQUARE_SIDE;
 
 	static const short FONT_SIZE = 60;
+
+	static const int MAX_PACK_INDEX = 5;
 };
 
