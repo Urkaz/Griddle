@@ -34,16 +34,14 @@ bool MainMenuScene::init()
 			"boton_libre_pulsado.png",
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
     
-    auto playItem3 = MenuItemImage::create("boton_pausa.png",
-                                           "boton_pausa.png",
+    auto playItem3 = MenuItemImage::create("tutorial.png",
+                                           "tutorial.png",
                                            CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
 
-	auto menu = Menu::create(playItem, playItem2, NULL);
-    auto menu2 = Menu::create(playItem3, NULL);
+	auto menu = Menu::create(playItem, playItem2, playItem3, NULL);
 
-	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
+	menu->alignItemsVerticallyWithPadding(visibleSize.height / 7);
 	this->addChild(menu, 1);
-    this->addChild(menu2,1);
 
 	// Adding background
 	auto background = Sprite::create("Background.png");
