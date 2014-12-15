@@ -29,7 +29,7 @@ bool markXEnabled = false;
 Size visibleSize;
 
 int life = 3;
-LabelTTF *lifeLabel;
+Label* lifeLabel;
 
 Scene* PicrossGameScene::createScene()
 {
@@ -122,10 +122,10 @@ bool PicrossGameScene::init()
 	addChild(menu, 0);
 
 	//Se muestran las vidas
-	if (Constant::GAMEMODE == GameMode::NORMAL){
-		__String *text = __String::createWithFormat("Lifes %d ", life);
-		lifeLabel = LabelTTF::create(text->getCString(), "Arial", 24);
-		lifeLabel->setPosition(Vec2(visibleSize.width - 150, visibleSize.height - 30));
+	if (Constant::GAMEMODE == GameMode::NORMAL)
+	{
+		lifeLabel = Label::create("Lifes "+ to_string(life), "MarkerFelt", 24);
+		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
 		addChild(lifeLabel);
 	}
 
@@ -370,19 +370,27 @@ void PicrossGameScene::onMouseDown(Event* event)
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				break;
 			case 0: //Vacio
-				userSolution[i][j] = 1;
-				picrossGridVector[i][j]->setTexture(texDraw);
+				if (Constant::GAMEMODE == GameMode::NORMAL && picross->getSolution()[i][j] == 0)
+				{
+					userSolution[i][j] = -1;
+					picrossGridVector[i][j]->setTexture(texMarkX);
+
+					life -= 1;
+					lifeLabel->setString("Lifes " + to_string(life));
+					
+					if (life == 0){
+						goToEndScene(this);
+					}
+				}
+				else
+				{
+					userSolution[i][j] = 1;
+					picrossGridVector[i][j]->setTexture(texDraw);
+				}
 				break;
 			case 1: //Pintado
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
-				life -= 1;
-				__String *text = __String::createWithFormat("Lifes %d", life);
-				if (life == 0){
-					goToEndScene(this);
-				}
-				
-				lifeLabel->setString(text->getCString());
 				break;
 			}
 		}

@@ -24,7 +24,6 @@ bool EndScene::init()
 	}
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	
 
 	auto menuItem = MenuItemImage::create("boton_pausa.png",
 		"boton_click_pausa.png",
@@ -34,6 +33,7 @@ bool EndScene::init()
 
 	menu->setPosition(visibleSize.width - menuItem->getBoundingBox().size.width / 2, visibleSize.height - menuItem->getBoundingBox().size.height / 2);
 
+	addChild(menu);
 }
 
 void EndScene::goToMainMenu(Ref *pSender) {
