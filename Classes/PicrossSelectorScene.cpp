@@ -58,7 +58,7 @@ bool PicrossSelectorScene::init()
 	mainLayer->setPosition(layerOffsetX, layerOffsetY);
 
 	//Derecho
-	if (mainIndex + 1 < Constant::MAX_PACK_INDEX && Constant::MAX_PACK_INDEX != 1)
+	if (mainIndex + 1 <= Constant::MAX_PACK_INDEX && Constant::MAX_PACK_INDEX != 1)
 	{
 		rightPanel = new PanelSelector(mainIndex+1);
 		rightLayer = rightPanel->getLayer();

@@ -11,9 +11,9 @@
    |- 2		-> Tenedor
    |- 3		-> Sartén
    |- 4		-> Vitrocerámica
-   |- 5		-> Cuchara
+   |- 5		-> Cuchara //NO SE PUEDE HACER
    |- 6		-> Horno
-   |- 7		-> Plato
+   |- 7		-> Plato //REHACER IMAGEN
    |- 8		-> Olla
    |- 9		-> Jarra de agua
    |- 10	-> Salero
