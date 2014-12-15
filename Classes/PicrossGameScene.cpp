@@ -23,7 +23,7 @@ Texture2D::TexParams textureParams;
 Sprite* button_draw;
 Sprite* button_X;
 
-Label* lifeLabel;
+LabelTTF* lifeLabel;
 
 Scene* PicrossGameScene::createScene()
 {
@@ -120,7 +120,7 @@ bool PicrossGameScene::init()
 	if (Constant::GAMEMODE == GameMode::NORMAL)
 	{
 		lifes = 3;
-		lifeLabel = Label::create("Lifes "+ to_string(lifes), "MarkerFelt", 24);
+		lifeLabel = LabelTTF::create("Vidas " + to_string(lifes), "MarkerFelt", 24);
 		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
 		addChild(lifeLabel);
 	}
@@ -208,7 +208,7 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 	return spriteLayer;
 }
 
-vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool columnsEnabled)
+vector<vector<LabelTTF*>> PicrossGameScene::generateNumbers(Picross* picross, bool columnsEnabled)
 {
 	//Según columnsEnabled esté a true o false, se invertirán o no las filas y columnas
 	int rows, cols;
@@ -226,10 +226,10 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 	//Generar etiquetas de texto, cada una con un sólo número
 	int value, count = 0;
 
-	vector<vector<Label*>> nums = vector<vector<Label*>>(rows);
+	vector<vector<LabelTTF*>> nums = vector<vector<LabelTTF*>>(rows);
 	for(unsigned int i = 0; i < nums.size(); i++)
 	{
-		vector<Label*> individual = vector<Label*>();
+		vector<LabelTTF*> individual = vector<LabelTTF*>();
 		for(int j = 0; j < cols; j++)
 		{
 			//intercambiar filas por columnas
@@ -245,7 +245,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 			{
 				if (count > 0) // Si encuentra un 0 por el medio crea una etiqueta y reinicia el contador
 				{
-					auto label = Label::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
+					LabelTTF* label = LabelTTF::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
 					individual.push_back(label);
 					count = 0;
 				}
@@ -255,7 +255,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 		//Para cuando haya una fila toda de 1 y ningun 0; O no haya ningun 1.
 		if (individual.size() == 0 || count != 0)
 		{
-			auto label = Label::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
+			LabelTTF* label = LabelTTF::create(to_string(count) + " ", "MarkerFelt", Constant::FONT_SIZE);
 			individual.push_back(label);
 		}
 		//Reinicia contador para empezar de nuevo
@@ -266,7 +266,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 	return nums;
 }
 
-void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vector<Label*>> columns)
+void PicrossGameScene::drawSquareNumbers(vector<vector<LabelTTF*>> rows, vector<vector<LabelTTF*>> columns)
 {
 	int rowOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 	int rowOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
@@ -373,7 +373,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 					picrossGridVector[i][j]->setTexture(texMarkX);
 
 					lifes -= 1;
-					lifeLabel->setString("Lifes " + to_string(lifes));
+					lifeLabel->setString("Vidas " + to_string(lifes));
 					
 					if (lifes == 0){
 						goToEndScene(this);

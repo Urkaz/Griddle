@@ -110,3 +110,8 @@ int PanelSelector::getPicrossID(int row, int col)
 {
 	return picrossID[row][col];
 }
+
+string PanelSelector::getPanelName()
+{
+	return name;
+}

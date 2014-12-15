@@ -8,8 +8,10 @@ class PanelSelector
 public:
 	PanelSelector(int num);
 
+	//funciones
 	cocos2d::Layer* getLayer();
 	int getPicrossID(int row, int col);
+	std::string getPanelName();
 
 private:
 	cocos2d::Layer* gridLayer;
@@ -19,6 +21,7 @@ private:
 	std::string name;
 	int packID;
 
+	//Funciones
 	void readPanel(int num);
 	void createLayer();
 };

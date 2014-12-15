@@ -7,6 +7,8 @@ USING_NS_CC;
 short Constant::PUZZLE_NUMBER = 0;
 const int mainScale = 5;
 
+LabelTTF* packNameLabel;
+
 Scene* PicrossSelectorScene::createScene()
 {
 	auto scene = Scene::create();
@@ -75,6 +77,12 @@ bool PicrossSelectorScene::init()
 	}
 
 	addChild(mainLayer);
+
+	//Nombre del paquete
+	packNameLabel = LabelTTF::create(mainPanel->getPanelName(), "MarkerFelt", Constant::FONT_SIZE);
+	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE-10);
+
+	addChild(packNameLabel);
 
 	//Botón jugar
 	auto playItem = MenuItemImage::create("Play_Button.png",
@@ -294,6 +302,8 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 		auxPanel = NULL;
 		auxLayer = NULL;
 
+		packNameLabel->setString(mainPanel->getPanelName());
+
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
 		leftFinish = mainFinish = rightFinish = scaleFinish = auxFinish = false;
@@ -417,6 +427,8 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 
 		auxPanel = NULL;
 		auxLayer = NULL;
+
+		packNameLabel->setString(mainPanel->getPanelName());
 
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
