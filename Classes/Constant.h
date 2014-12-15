@@ -13,6 +13,6 @@ public:
 
 	static const short FONT_SIZE = 60;
 
-	static const int MAX_PACK_INDEX = 1;
+	static const int MAX_PACK_INDEX = 2;
 };
 

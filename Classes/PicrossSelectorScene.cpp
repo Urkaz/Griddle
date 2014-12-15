@@ -58,7 +58,7 @@ bool PicrossSelectorScene::init()
 	mainLayer->setPosition(layerOffsetX, layerOffsetY);
 
 	//Derecho
-	if (mainIndex + 1 != Constant::MAX_PACK_INDEX)
+	if (mainIndex + 1 < Constant::MAX_PACK_INDEX && Constant::MAX_PACK_INDEX != 1)
 	{
 		rightPanel = new PanelSelector(mainIndex+1);
 		rightLayer = rightPanel->getLayer();
@@ -69,7 +69,7 @@ bool PicrossSelectorScene::init()
 		addChild(rightLayer);
 	}
 	//Izquierdo
-	if (mainIndex - 1 != 0)
+	if (mainIndex - 1 > 0 && Constant::MAX_PACK_INDEX != 1)
 	{
 		leftPanel = new PanelSelector(mainIndex-1);
 		leftLayer = leftPanel->getLayer();
@@ -112,7 +112,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 		float cursorX = e->getCursorX();
 
 		//RIGHT PANEL
-		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX  && Constant::MAX_PACK_INDEX != 1)
 		{
 			//Offset del rightPanel respecto al 0,0
 			int rightSide = (int)(Constant::SELECTOR_SQUARE_SIDE * rightLayer->getScale());
@@ -128,7 +128,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 			}
 		}
 		//LEFT PANEL
-		if (mainIndex - 1 != 0)
+		if (mainIndex - 1 > 0 && Constant::MAX_PACK_INDEX != 1)
 		{
 			//Offset del leftPanel respecto al 0,0
 			int leftSide = (int)(Constant::SELECTOR_SQUARE_SIDE * leftLayer->getScale());
