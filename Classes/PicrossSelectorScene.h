@@ -40,4 +40,12 @@ private:
 	Layer* mainLayer;
 	Layer* leftLayer;
 	Layer* auxLayer;
+
+	int mainIndex;
+
+	bool moveLeft, moveRight;
+	float leftCount, mainCount, rightCount, auxCount;
+	float mainCountScale;
+	float sideSpace, mainSpace, mainScaleSpace, mov;
+	bool leftFinish, mainFinish, rightFinish, scaleFinish, auxFinish;
 };

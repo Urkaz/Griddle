@@ -11,7 +11,8 @@ Picross::Picross(short num, GameMode gm)
 	if(gm == GameMode::NORMAL)
 		mode = "n";
 	else if(gm == GameMode::FREE)
-		mode = "f";
+		//mode = "f";
+		mode = "n";
     
 	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat");
 

@@ -25,6 +25,9 @@ private:
 	//Variables
 	Layer* picrossGridLayer;
 	Picross* picross;
+	int lifes;
+	bool drawEnabled;
+	bool markXEnabled;
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 

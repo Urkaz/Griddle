@@ -9,7 +9,7 @@
    |- 0		-> Tostadora (Test)
    |- 1		-> Cuchillo
    |- 2		-> Tenedor
-   |- 3		-> Sartén
+   |- 3		-> Sartén //NO SE PUEDE HACER
    |- 4		-> Vitrocerámica
    |- 5		-> Cuchara //NO SE PUEDE HACER
    |- 6		-> Horno

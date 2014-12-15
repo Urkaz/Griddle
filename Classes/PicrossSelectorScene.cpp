@@ -7,21 +7,6 @@ USING_NS_CC;
 short Constant::PUZZLE_NUMBER = 0;
 const int mainScale = 5;
 
-int mainIndex = 1;
-
-//Variables para la animación de scroll
-bool moveLeft = false;
-bool moveRight = false;
-float leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
-float mainCountScale = 0;
-float sideSpace, mainSpace, mainScaleSpace, mov;
-bool leftFinish = false;
-bool mainFinish = false;
-bool rightFinish = false;
-bool scaleFinish = false;
-bool auxFinish = false;
-bool initAnim = true;
-
 Scene* PicrossSelectorScene::createScene()
 {
 	auto scene = Scene::create();
@@ -37,6 +22,15 @@ bool PicrossSelectorScene::init()
 		return false;
 	}
 
+	//Inicializar variables
+	mainIndex = 1;
+
+		//Animacióm
+	moveLeft = moveRight = false;
+	leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
+	mainCountScale = 0;
+	leftFinish = mainFinish = rightFinish = scaleFinish = auxFinish = false;
+
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossSelectorScene::onMouseDown, this);
@@ -46,7 +40,7 @@ bool PicrossSelectorScene::init()
 	//Posición inicial
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	//Main
+	//Main Panel
 	mainPanel = new PanelSelector(mainIndex);
 	mainLayer = mainPanel->getLayer();
 
@@ -57,24 +51,24 @@ bool PicrossSelectorScene::init()
 
 	mainLayer->setPosition(layerOffsetX, layerOffsetY);
 
-	//Derecho
+	//Panel Derecho
 	if (mainIndex + 1 <= Constant::MAX_PACK_INDEX && Constant::MAX_PACK_INDEX != 1)
 	{
 		rightPanel = new PanelSelector(mainIndex+1);
 		rightLayer = rightPanel->getLayer();
 
-		rightLayer->setScale(mainScale / 1.7);
+		rightLayer->setScale((float)(mainScale / 1.7));
 		rightLayer->setPosition(visibleSize.width + rightLayer->getBoundingBox().size.width/2, mainLayer->getPositionY());
 
 		addChild(rightLayer);
 	}
-	//Izquierdo
+	//Panel Izquierdo
 	if (mainIndex - 1 > 0 && Constant::MAX_PACK_INDEX != 1)
 	{
 		leftPanel = new PanelSelector(mainIndex-1);
 		leftLayer = leftPanel->getLayer();
 
-		leftLayer->setScale(mainScale / 1.7);
+		leftLayer->setScale((float)(mainScale / 1.7));
 		leftLayer->setPosition(0 + leftLayer->getBoundingBox().size.width / 2, mainLayer->getPositionY());
 
 		addChild(leftLayer);
@@ -97,7 +91,7 @@ bool PicrossSelectorScene::init()
 	menu->setPosition(visibleSize.width / 2, 60);
 	this->addChild(menu, 1);
 
-
+	//Activar el método update
 	this->scheduleUpdate();
 
 	return true;
@@ -194,7 +188,7 @@ void PicrossSelectorScene::enableLeftAnim()
 	//desplazamientos totales a realizar
 	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
 	mainSpace = mainLayer->getPositionX();
-	mainScaleSpace = mainScale - mainScale / 1.7;
+	mainScaleSpace = (float)(mainScale - mainScale / 1.7);
 
 	if (mainIndex + 2 <= Constant::MAX_PACK_INDEX)
 	{
@@ -295,7 +289,7 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 		mainLayer->setScale(mainScale);
 
 		leftLayer->setPositionX(0);
-		leftLayer->setScale(mainScale / 1.7);
+		leftLayer->setScale((float)(mainScale / 1.7));
 
 		auxPanel = NULL;
 		auxLayer = NULL;
@@ -317,7 +311,7 @@ void PicrossSelectorScene::enableRightAnim()
 	//Desplazamientos totales a realizar
 	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
 	mainSpace = mainLayer->getPositionX();
-	mainScaleSpace = mainScale - mainScale / 1.7;
+	mainScaleSpace = (float)(mainScale - mainScale / 1.7);
 
 	if (mainIndex - 2 > 0)
 	{
@@ -406,7 +400,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 			leftLayer = leftPanel->getLayer();
 
 			leftLayer->setPositionX(0);
-			leftLayer->setScale(mainScale / 1.7);
+			leftLayer->setScale((float)(mainScale / 1.7));
 		}
 		else
 		{

@@ -23,12 +23,6 @@ Texture2D::TexParams textureParams;
 Sprite* button_draw;
 Sprite* button_X;
 
-bool drawEnabled = true;
-bool markXEnabled = false;
-
-Size visibleSize;
-
-int life = 3;
 Label* lifeLabel;
 
 Scene* PicrossGameScene::createScene()
@@ -63,9 +57,7 @@ bool PicrossGameScene::init()
 	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("boton_click_lapiz.png");
 	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("boton_click_X.png");
 
-    //texButtonClickPause = Director::getInstance()->getTextureCache()->addImage("boton_pausa.jpg");
-
-	texMarkX->setTexParameters(textureParams);
+    texMarkX->setTexParameters(textureParams);
 	texDraw->setTexParameters(textureParams);
 	texEmpty->setTexParameters(textureParams);
 
@@ -98,7 +90,8 @@ bool PicrossGameScene::init()
 
 	//Se define la constante del lado de cada cuadrado del tablero.
 	Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
-
+	
+	//Botón de pausa
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	auto pauseItem = MenuItemImage::create("boton_pausa.png",
@@ -109,6 +102,9 @@ bool PicrossGameScene::init()
 
 	menu->setPosition(visibleSize.width - pauseItem->getBoundingBox().size.width / 2, visibleSize.height - pauseItem->getBoundingBox().size.height / 2);
 
+	//Botones pintar y marcar X
+	drawEnabled = true;
+	markXEnabled = false;
 	button_draw = Sprite::create("boton_click_lapiz.png");
 	button_X = Sprite::create("boton_X.png");
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
@@ -123,11 +119,13 @@ bool PicrossGameScene::init()
 	//Se muestran las vidas
 	if (Constant::GAMEMODE == GameMode::NORMAL)
 	{
-		lifeLabel = Label::create("Lifes "+ to_string(life), "MarkerFelt", 24);
+		lifes = 3;
+		lifeLabel = Label::create("Lifes "+ to_string(lifes), "MarkerFelt", 24);
 		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
 		addChild(lifeLabel);
 	}
 
+	//Se dibuja el tablero
 	if (Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
 		drawSquareNumbers(rowNumbers, columnNumbers);
@@ -374,10 +372,10 @@ void PicrossGameScene::onMouseDown(Event* event)
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
 
-					life -= 1;
-					lifeLabel->setString("Lifes " + to_string(life));
+					lifes -= 1;
+					lifeLabel->setString("Lifes " + to_string(lifes));
 					
-					if (life == 0){
+					if (lifes == 0){
 						goToEndScene(this);
 					}
 				}
