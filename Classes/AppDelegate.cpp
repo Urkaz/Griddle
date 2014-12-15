@@ -31,6 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	// Sets the search path for images
 	resDirOrders.push_back("picross_images");
+	resDirOrders.push_back("picross_images/mini_pics");
     resDirOrders.push_back("picross_data");
 	resDirOrders.push_back("ImagenesTutorial");
 

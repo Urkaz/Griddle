@@ -21,9 +21,6 @@ public:
     void goToPauseScene(Ref *pSender);
 	void goToEndScene(Ref *pSender);
 
-	//void goToPicrossGame(Ref *pSender);
-	//void returnToMainMenu(Ref *pSender);
-
 private:
 	//Variables
 	Layer* picrossGridLayer;
