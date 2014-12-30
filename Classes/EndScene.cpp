@@ -10,6 +10,7 @@ USING_NS_CC;
 Sprite* gameOver;
 
 
+
 Scene* EndScene::createScene()
 {
 	auto scene = Scene::create();
