@@ -9,6 +9,22 @@ const int mainScale = 5;
 
 LabelTTF* packNameLabel;
 
+Sprite* personaje_selector;
+Sprite* personaje_selector_cara;
+
+
+Texture2D::TexParams textparams;
+Texture2D* textura_personaje;
+Texture2D* textura_personaje_cara;
+
+
+TTFConfig labelParams;
+TTFConfig labelParamsTitulo;
+Label* labelPersonaje;
+Label* labelTitulo;
+
+
+
 Scene* PicrossSelectorScene::createScene()
 {
 	auto scene = Scene::create();
@@ -23,7 +39,16 @@ bool PicrossSelectorScene::init()
 	{
 		return false;
 	}
-
+    
+    Texture2D::TexParams tpms = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
+    textparams = tpms;
+    
+    labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
+    labelParams.fontSize = 25;
+    
+    labelParamsTitulo.fontFilePath = "LondrinaSolid-Regular.otf";
+    labelParamsTitulo.fontSize = 70;
+    
 	//Inicializar variables
 	mainIndex = 1;
 
@@ -41,6 +66,41 @@ bool PicrossSelectorScene::init()
 
 	//Posición inicial
 	Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    auto background = Sprite::create("fondo_prueba2.png");
+    background->setScale(2, 2);
+    background->setPosition(Point((visibleSize.width  /2),
+                                  (visibleSize.height /2)));
+    addChild(background, 0);
+    
+    auto avion = Sprite::create("AvionDestrozado.png");
+    //avion->setScale();
+    avion->setPosition(Point((visibleSize.width  /1.15),
+                                  (visibleSize.height /8)));
+    addChild(avion, 1);
+    
+    auto labelbackground = Sprite::create("labeltutorial.png");
+    labelbackground->setScale(1.5, 0.15);
+    
+    labelbackground->setPosition(Point((visibleSize.width  /2),
+                                       (visibleSize.height /80)));
+    addChild(labelbackground, 0);
+    
+    //Label
+    labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Picross y pulsa este panel para jugar");
+    labelPersonaje->setPosition(Point((visibleSize.width  /2), (visibleSize.height /25)));
+    labelPersonaje->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+    labelPersonaje->setColor(Color3B(0, 100, 200));
+    addChild(labelPersonaje);
+
+    
+    personaje_selector = Sprite::create("personaje1.png");
+    textura_personaje = Director::getInstance()->getTextureCache()->addImage("personaje1.png");
+    textura_personaje->setTexParameters(textparams);
+    personaje_selector->setTexture(textura_personaje);
+    personaje_selector->setPosition(Point((visibleSize.width/8), (visibleSize.height/7)));
+    personaje_selector->setScale(8);
+    addChild(personaje_selector);
 
 	//Main Panel
 	mainPanel = new PanelSelector(mainIndex);
@@ -79,25 +139,45 @@ bool PicrossSelectorScene::init()
 	addChild(mainLayer);
 
 	//Nombre del paquete
-	packNameLabel = LabelTTF::create(mainPanel->getPanelName(), "MarkerFelt", Constant::FONT_SIZE);
+	packNameLabel = LabelTTF::create(mainPanel->getPanelName(), "LondrinaSolid-Regular.otf", Constant::FONT_SIZE);
 	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE-10);
+    packNameLabel->setFontName("LondrinaSolid-Regular.otf");
 
 	addChild(packNameLabel);
+     
+     
+    /*
+    labelTitulo = Label::createWithTTF(labelParamsTitulo, mainPanel->getPanelName());
+    labelTitulo->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE-10);
+    labelTitulo->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+    labelTitulo->setColor(Color3B(255, 255, 255));
+    addChild(labelTitulo);*/ //No me va al cambiar :(
 
 	//Botón jugar
-	auto playItem = MenuItemImage::create("Play_Button.png",
-		"Play_Button(Click).png",
+	auto playItem = MenuItemImage::create("FondoSelectorBoton.png",
+		"FondoSelectorBotonP.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
 
 	auto playItem2 = MenuItemImage::create("CloseNormal.png",
 		"CloseSelected.png",
 		CC_CALLBACK_1(PicrossSelectorScene::returnToMainMenu, this));
-
-	auto menu = Menu::create(playItem, playItem2, NULL);
-
-	menu->alignItemsVerticallyWithPadding(30);
-	menu->setPosition(visibleSize.width / 2, 60);
-	this->addChild(menu, 1);
+    
+    auto menu = Menu::create(playItem, NULL);
+    auto menu2 = Menu::create(playItem2,NULL);
+    
+    //menu->alignItemsVerticallyWithPadding(30);
+    menu->setPosition(visibleSize.width / 8, 45);
+    menu2->setPosition(visibleSize.width / 5, 45);
+    this->addChild(menu, 0);
+     this->addChild(menu2, 0);
+    
+    personaje_selector_cara = Sprite::create("personajeCara.png");
+    textura_personaje_cara = Director::getInstance()->getTextureCache()->addImage("personajeCara.png");
+    textura_personaje_cara->setTexParameters(textparams);
+    personaje_selector_cara->setTexture(textura_personaje_cara);
+    personaje_selector_cara->setPosition(Point((visibleSize.width/8), (visibleSize.height/7)));
+    personaje_selector_cara->setScale(8);
+    addChild(personaje_selector_cara);
 
 	//Activar el método update
 	this->scheduleUpdate();

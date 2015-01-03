@@ -22,6 +22,8 @@ EaseBackInOut* move_easy_in;
 DelayTime* delay;
 Sequence* seq1;
 
+bool tuturialactivo = true;
+
 RotateTo* rotacion;
 RotateTo* rotacionabajo;
 
@@ -55,6 +57,25 @@ bool MainMenuScene::init()
     
 
 	// Creating menu
+    if (tuturialactivo)
+    {
+        auto playItem = MenuItemImage::create("modo_normal.png",
+                                              "modo_normal_p.png",
+                                              CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+        
+        auto playItem2 = MenuItemImage::create("modo_libre.png",
+                                               "modo_libre_p.png",
+                                               CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+        
+        auto menu = Menu::create(playItem, playItem2, NULL);
+        
+        menu->alignItemsHorizontallyWithPadding(visibleSize.height / 7);
+        this->addChild(menu, 1);
+        
+        tuturialactivo=false;
+    }
+    else
+    {
 	auto playItem = MenuItemImage::create("modo_normal.png",
 			"modo_normal_p.png",
 			CC_CALLBACK_1(MainMenuScene::goToNormalSelector, this));
@@ -71,6 +92,7 @@ bool MainMenuScene::init()
 
 	menu->alignItemsHorizontallyWithPadding(visibleSize.height / 7);
 	this->addChild(menu, 1);
+    }
 
 	// Adding background
 	auto background = Sprite::create("fondonubes.png");
@@ -139,7 +161,8 @@ void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
 	auto scene = PicrossSelectorScene::createScene();
 
-	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5,scene));
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(1,scene));
+    
 }
 
 void MainMenuScene::goToFreeSelector(Ref *pSender) {
