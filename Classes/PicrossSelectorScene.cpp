@@ -143,10 +143,10 @@ bool PicrossSelectorScene::init()
 	
 	//Label título del panel
 	labelParamsTitulo.fontFilePath = "LondrinaSolid-Regular.otf";
-	labelParamsTitulo.fontSize = Constant::FONT_SIZE;
+	labelParamsTitulo.fontSize = 60;
 
 	packNameLabel = Label::createWithTTF(labelParamsTitulo, mainPanel->getPanelName());
-	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE - 10);
+	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - labelParamsTitulo.fontSize - 10);
 	packNameLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
 	packNameLabel->setColor(Color3B(255, 255, 255));
 	addChild(packNameLabel);

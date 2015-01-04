@@ -8,6 +8,7 @@ using namespace cocos2d;
 using namespace std;
 
 short Constant::PICROSS_SQUARE_SIDE;
+short Constant::FONT_SIZE;
 
 Texture2D* texMarkX;
 Texture2D* texDraw;
@@ -78,24 +79,26 @@ bool PicrossGameScene::init()
 		userSolution[i] = row;
 	}
 
-	//config del label de numeros
-	numbersLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
-	numbersLabelConfig.fontSize = Constant::FONT_SIZE;
-
 	//Se comprueba el GameMode para determinar el modo de creación de la matriz.
 	if(Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
 		picrossGridVector = createSquareMatrix(picross);
 		picrossGridLayer = createLayer(picrossGridVector);
+
+		//Se define la constante del lado de cada cuadrado del tablero.
+		Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+
+		//Config del label de numeros
+		numbersLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
+		Constant::FONT_SIZE = Constant::PICROSS_SQUARE_SIDE*7/8;
+		numbersLabelConfig.fontSize = Constant::FONT_SIZE;
+
 		rowNumbers = generateNumbers(picross, false);
 		columnNumbers = generateNumbers(picross, true);
 	}
 	//NO IMPLEMENTADO
 	/*else
 		picrossGridVector = createTriangleGrid();*/
-
-	//Se define la constante del lado de cada cuadrado del tablero.
-	Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 	
 	//Botón de pausa
 	Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -201,7 +204,7 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 	//Se crea una capa en el centro de la pantalla a la que se le añadiran los sprites
 	Layer* spriteLayer = Layer::create();
 	spriteLayer->setContentSize(Size(1, 1));
-	spriteLayer->setScale(5);
+	spriteLayer->setScale(3);
 
 	//Se establece la posición
 	Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -280,13 +283,13 @@ void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vec
 	int rowOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 	int rowOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 
-	int colOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
-	int colOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int colOffsetX = picrossGridLayer->getPosition().x + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE) + Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int colOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 
 	//FILAS
-	for (unsigned int i = 0; i < rows.size(); i++)
+	for (int i = 0; i < (int)rows.size(); i++)
 	{
-		for (unsigned int j = 0; j < rows[i].size(); j++)
+		for (int j = 0; j < (int)rows[i].size(); j++)
 		{
 			rows[i][j]->setPosition(rowOffsetX + Constant::FONT_SIZE * (j - rows[i].size()),
 				rowOffsetY - (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i);
@@ -299,8 +302,8 @@ void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vec
 	{
 		for (int j = 0; j < (int)columns[i].size(); j++)
 		{
-			columns[i][j]->setPosition(colOffsetX+15 + (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i,
-				colOffsetY+10 + Constant::FONT_SIZE * (-j + columns[i].size()));
+			columns[i][j]->setPosition(colOffsetX + Constant::PICROSS_SQUARE_SIDE * i,
+				colOffsetY + Constant::FONT_SIZE * (columns[i].size() - (j + 1)));
 			this->addChild(columns[i][j]);
 		}
 	}

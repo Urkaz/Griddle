@@ -11,7 +11,7 @@ public:
 	static short PICROSS_SQUARE_SIDE;
 	static short SELECTOR_SQUARE_SIDE;
 
-	static const short FONT_SIZE = 60;
+	static short FONT_SIZE;
 
 	static const short MAX_PACK_INDEX = 2;
 	static short CURRENT_PACK_INDEX;
