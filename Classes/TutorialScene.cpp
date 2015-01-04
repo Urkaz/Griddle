@@ -332,7 +332,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T18->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
 				T18->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
 
-            labelTutorial->setString("Aquí concluye el tutorial.\nEsperamos que te diviertas resolviendo puzzles,\ny recuerda aplicar todas las técnicas aprendidas.");
+            labelTutorial->setString("Aquí concluye el tutorial.\nEspero que te diviertas resolviendo puzzles,\ny recuerda aplicar todas las técnicas aprendidas.");
             break;
     };
     

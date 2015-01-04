@@ -239,7 +239,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 	int value, count = 0;
 
 	vector<vector<Label*>> nums = vector<vector<Label*>>(rows);
-	for(unsigned int i = 0; i < nums.size(); i++)
+	for(int i = 0; i < (int)nums.size(); i++)
 	{
 		vector<Label*> individual = vector<Label*>();
 		for(int j = 0; j < cols; j++)
@@ -264,12 +264,32 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 			}
 		}
 
+		// Marca las filas o columnas del Picross con una X si no hay ningun 1
+		if (individual.size() == 0 && count == 0)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				log("MARCAR %d, %d", i, j);
+				if (!columnsEnabled)
+				{
+					userSolution[i][j] = -1;
+					picrossGridVector[i][j]->setTexture(texMarkX);
+				}
+				else
+				{
+					userSolution[j][i] = -1;
+					picrossGridVector[j][i]->setTexture(texMarkX);
+				}
+			}
+		}
+
 		//Para cuando haya una fila toda de 1 y ningun 0; O no haya ningun 1.
 		if (individual.size() == 0 || count != 0)
 		{
 			Label* label = Label::createWithTTF(numbersLabelConfig, to_string(count) + " ");
 			individual.push_back(label);
 		}
+
 		//Reinicia contador para empezar de nuevo
 		count = 0;
 		nums[i] = individual;
@@ -281,7 +301,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 void PicrossGameScene::drawSquareNumbers(vector<vector<Label*>> rows, vector<vector<Label*>> columns)
 {
 	int rowOffsetX = picrossGridLayer->getPosition().x + Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
-	int rowOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE / 2 + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int rowOffsetY = picrossGridLayer->getPosition().y + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 
 	int colOffsetX = picrossGridLayer->getPosition().x + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE) + Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
 	int colOffsetY = picrossGridLayer->getPosition().y + Constant::FONT_SIZE + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
@@ -436,7 +456,6 @@ void PicrossGameScene::goToPauseScene(Ref *pSender)
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
     
 }
-
 
 void PicrossGameScene::goToEndScene(Ref *pSender) {
 
