@@ -30,6 +30,9 @@ Label* lifeLabel;
 
 int initialScale;
 
+bool mouseDown;
+float lastCursorX, lastCursorY;
+
 Scene* PicrossGameScene::createScene()
 {
 	auto scene = Scene::create();
@@ -48,6 +51,9 @@ bool PicrossGameScene::init()
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
+	mouseListener->onMouseMove = CC_CALLBACK_1(PicrossGameScene::onMouseMove, this);
+	mouseListener->onMouseUp = CC_CALLBACK_1(PicrossGameScene::onMouseUp, this);
+	mouseDown = false;
 
 	auto keyboardListener = EventListenerKeyboard::create();
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(PicrossGameScene::onKeyPressed, this);
@@ -116,9 +122,9 @@ bool PicrossGameScene::init()
 		"boton_click_pausa.png",
 		CC_CALLBACK_1(PicrossGameScene::goToPauseScene, this));
 
-	auto menu = Menu::create(pauseItem, NULL);
+	auto pauseMenu = Menu::create(pauseItem, NULL);
 
-	menu->setPosition(visibleSize.width - pauseItem->getBoundingBox().size.width / 2, visibleSize.height - pauseItem->getBoundingBox().size.height / 2);
+	pauseMenu->setPosition(visibleSize.width - pauseItem->getBoundingBox().size.width / 2, visibleSize.height - pauseItem->getBoundingBox().size.height / 2);
 
 	//Botones pintar y marcar X
 	drawEnabled = true;
@@ -127,12 +133,6 @@ bool PicrossGameScene::init()
 	button_X = Sprite::create("boton_X.png");
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
 	button_X->setPosition(button_X->getBoundingBox().size.width/2,button_X->getBoundingBox().size.height/2);
-
-	//Se dibuja el tablero.
-	this->addChild(picrossGridLayer);
-	this->addChild(button_draw);
-	this->addChild(button_X);
-	this->addChild(menu, 0);
 
 	//Se muestran las vidas
 	lifesLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
@@ -143,14 +143,20 @@ bool PicrossGameScene::init()
 		lifes = 3;
 		lifeLabel = Label::createWithTTF(lifesLabelConfig, "Vidas " + to_string(lifes));
 		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
-		this->addChild(lifeLabel);
+		this->addChild(lifeLabel,1);
 	}
 
 	//Se dibuja el tablero
+	this->addChild(button_draw, 1);
+	this->addChild(button_X, 1);
+	this->addChild(pauseMenu, 1);
+
+	this->addChild(picrossGridLayer, 0);
+
 	if (Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
 		numbersLayer = createSquareNumbersLayer(rowNumbers, columnNumbers);
-		this->addChild(numbersLayer);
+		this->addChild(numbersLayer, 0);
 	}
 
 	return true;
@@ -458,9 +464,49 @@ void PicrossGameScene::onMouseDown(Event* event)
 				break;
 			}
 		}
+		else
+		{
+			lastCursorX = cursorX;
+			lastCursorY = cursorY;
+			mouseDown = true;
+		}
+	}
+}
 
-		//ELSE (ninguna de las dos cosas marcadas)
-				//MOVER EL TABLERO
+void PicrossGameScene::onMouseUp(Event* event)
+{
+	mouseDown = false;
+}
+
+void PicrossGameScene::onMouseMove(Event* event)
+{
+	auto* e = (EventMouse*)event;
+	float cursorY = e->getCursorY();
+	float cursorX = e->getCursorX();
+
+	//Offset del tablero respecto al 0,0
+	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.height / 2;
+	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.width / 2;
+
+	//Dentro del tablero
+	if (cursorY > offSetY && cursorX > offSetX &&
+		cursorY < offSetY + Constant::PICROSS_SQUARE_SIDE*picrossGridVector.size() &&
+		cursorX < offSetX + Constant::PICROSS_SQUARE_SIDE*picrossGridVector[0].size())
+	{
+		if (!drawEnabled && !markXEnabled)
+		{
+			//MOVER
+			if (mouseDown)
+			{
+				picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
+					picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
+
+				numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
+
+				lastCursorX = cursorX;
+				lastCursorY = cursorY;
+			}
+		}
 	}
 }
 

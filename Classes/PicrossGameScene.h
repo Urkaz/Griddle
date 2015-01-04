@@ -18,10 +18,12 @@ public:
     
     // Added
 	void onMouseDown(cocos2d::Event* event);
+	void onMouseMove(cocos2d::Event* event);
+	void onMouseUp(cocos2d::Event* event);
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
-    void goToPauseScene(Ref *pSender);
+	void goToPauseScene(Ref *pSender);
 	void goToEndScene(Ref *pSender);
 
 private:
