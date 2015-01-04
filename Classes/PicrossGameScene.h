@@ -18,12 +18,16 @@ public:
     
     // Added
 	void onMouseDown(cocos2d::Event* event);
+	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+
     void goToPauseScene(Ref *pSender);
 	void goToEndScene(Ref *pSender);
 
 private:
 	//Variables
 	Layer* picrossGridLayer;
+	Layer* numbersLayer;
 	Picross* picross;
 	int lifes;
 	bool drawEnabled;
@@ -40,7 +44,7 @@ private:
 	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
 
 	std::vector<std::vector<cocos2d::Label*>> generateNumbers(Picross* picross, bool columnsEnabled);
-	void drawSquareNumbers(std::vector<std::vector<cocos2d::Label*>> rows, std::vector<std::vector<cocos2d::Label*>> columns);
+	cocos2d::Layer* createSquareNumbersLayer(std::vector<std::vector<cocos2d::Label*>> rows, std::vector<std::vector<cocos2d::Label*>> columns);
 
 	void pixelLocationSquareGrid();
 	void pixelLocationTriangleGrid();
