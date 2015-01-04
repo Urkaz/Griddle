@@ -22,7 +22,7 @@ EaseBackInOut* move_easy_in;
 DelayTime* delay;
 Sequence* seq1;
 
-bool tuturialactivo = true;
+bool tuturialactivo = false;
 
 RotateTo* rotacion;
 RotateTo* rotacionabajo;
@@ -49,11 +49,12 @@ bool MainMenuScene::init()
 		return false;
 	}
 
+	UserDefault::getInstance()->setBoolForKey("n_5", true);
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    Texture2D::TexParams tp = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    params = tp;
+    Texture2D::TexParams params = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     
 
 	// Creating menu

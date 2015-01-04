@@ -74,8 +74,19 @@ void PanelSelector::createLayer()
 			Sprite* sprite = Sprite::create("empty_selector.png");
 			if (picrossID[i][j] != 0)
 			{
-				Texture2D* texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+				//Texture2D* texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+				Texture2D* texture;
+
+				bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(picrossID[i][j])).c_str());
+				log("%s", completed ? "true" : "false");
+
+				if (!completed)
+					texture = Director::getInstance()->getTextureCache()->addImage("unknown.png");
+				else
+					texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+
 				sprite->setTexture(texture);
+
 			}
 			sprite->getTexture()->setTexParameters(texParams);
 

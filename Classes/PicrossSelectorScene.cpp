@@ -179,7 +179,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 				cursorY < rightOffSetY + rightSide * 5 &&
 				cursorX < rightOffSetX + rightSide * 5)
 			{
-				log("TOUCH RIGHT");
+				//log("TOUCH RIGHT");
 				enableLeftAnim();
 			}
 		}
@@ -195,7 +195,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 				cursorY < leftOffSetY + leftSide * 5 &&
 				cursorX < leftOffSetX + leftSide * 5)
 			{
-				log("TOUCH LEFT");
+				//log("TOUCH LEFT");
 				enableRightAnim();
 			}
 		}
@@ -225,7 +225,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 			if (id != 0)
 			{
 				Constant::PUZZLE_NUMBER = id;
-				log("%d", Constant::PUZZLE_NUMBER);
+				log("PICROSS SELECCIONADO: %d", Constant::PUZZLE_NUMBER);
 			}
 		}
 	}
@@ -363,7 +363,7 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 		leftFinish = mainFinish = rightFinish = scaleFinish = auxFinish = false;
 		mainIndex++;
 
-		log("INDEX MAIN - %d ", mainIndex);
+		//log("INDEX MAIN - %d ", mainIndex);
 		moveLeft = false;
 	}
 }
@@ -388,7 +388,7 @@ void PicrossSelectorScene::enableRightAnim()
 	if (mainIndex - 1 != 0)
 	{
 		moveRight = true;
-		log("RIGHT MOV");
+		//log("RIGHT MOV");
 	}
 }
 
@@ -475,7 +475,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 		Size visibleSize = Director::getInstance()->getVisibleSize();
 		rightLayer->setPositionX(visibleSize.width);
 
-		//recolocar en posiciones iniciales
+		//Recolocar en posiciones iniciales
 		mainLayer->setPositionX(mainSpace);
 		mainLayer->setScale(mainScale);
 
