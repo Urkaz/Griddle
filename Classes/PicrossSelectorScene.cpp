@@ -5,6 +5,7 @@
 USING_NS_CC;
 
 short Constant::PUZZLE_NUMBER = 0;
+short Constant::CURRENT_PACK_INDEX = 0;
 const int mainScale = 5;
 
 Sprite* personaje_selector;
@@ -41,7 +42,15 @@ bool PicrossSelectorScene::init()
     textparams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     
 	//Inicializar variables
-	mainIndex = 1;
+	if (Constant::CURRENT_PACK_INDEX == 0)
+	{
+		mainIndex = 1;
+		Constant::CURRENT_PACK_INDEX = mainIndex;
+	}
+	else
+	{
+		mainIndex = Constant::CURRENT_PACK_INDEX;
+	}
 
 	//Animacióm
 	moveLeft = moveRight = false;
@@ -71,8 +80,6 @@ bool PicrossSelectorScene::init()
                                   (visibleSize.height /8)));
     addChild(avion, 1);
     
-    
-	
 	auto labelbackground = Sprite::create("labeltutorial.png");
     labelbackground->setScale(1.5f, 0.15f);
     
@@ -128,7 +135,7 @@ bool PicrossSelectorScene::init()
 	labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
 	labelParams.fontSize = 25;
 
-	labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Griddle y pulsa este panel para jugar");
+	labelPersonaje = Label::createWithTTF(labelParams, "Elige el tema del panel y luego selecciona un Griddle.");
 	labelPersonaje->setPosition(visibleSize.width / 2, visibleSize.height / 25);
 	labelPersonaje->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
 	labelPersonaje->setColor(Color3B(0, 100, 200));
@@ -546,30 +553,27 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 
 void PicrossSelectorScene::goToPicrossGame(Ref *pSender)
 {
-	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
 	auto scene = PicrossGameScene::createScene();
 
-	Director::getInstance()->pushScene(TransitionFade::create(1.0, scene));
+	Director::getInstance()->pushScene(TransitionFadeTR::create(1, scene));
 }
 
 void PicrossSelectorScene::returnToMainMenu(Ref *pSender)
 {
-	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
-	//auto scene = MainMenuScene::createScene();
-
-	//Director::getInstance()->popScene();
-	//Director::getInstance()->replaceScene(scene);
+	Constant::CURRENT_PACK_INDEX = mainIndex;
 
 	auto scene = MainMenuScene::createScene();
 
-	Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, scene));
+	Director::getInstance()->replaceScene(TransitionFadeBL::create(1, scene));
 }
 
 void PicrossSelectorScene::enableSelect()
 {
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
 	mainSpace = sideSpace;
 
 	selectEnabled = true;
@@ -581,7 +585,7 @@ void PicrossSelectorScene::enableUnselect(Ref *pSender)
 	PlayMenu->setVisible(false);
 	PicrossPreview->setVisible(false);
 
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
 	mainSpace = sideSpace;
 
 	unselectEnabled = true;

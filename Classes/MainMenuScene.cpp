@@ -140,8 +140,12 @@ bool MainMenuScene::init()
     
     
     
-    
-    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("cancionmenu.mp3", true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("cancionmenu.wav", true);
+	}
 
 
 	// Sounds
@@ -158,7 +162,7 @@ void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
 	Constant::GAMEMODE = GameMode::NORMAL;
 
-	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
 	auto scene = PicrossSelectorScene::createScene();
 
@@ -170,18 +174,18 @@ void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
 	Constant::GAMEMODE = GameMode::FREE;
 
-	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
 	auto scene = PicrossSelectorScene::createScene();
 
-	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5,scene));
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, scene));
 }
 
 void MainMenuScene::goToTutorialScene(Ref *pSender) {
     
     //Constant::GAMEMODE = GameMode::FREE;
     
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
     
     auto scene = TutorialScene::createScene();
     
