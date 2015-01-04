@@ -17,11 +17,7 @@ public:
     CREATE_FUNC(PicrossSelectorScene);
     
     // Added
-	void movePanelsToLeft(float mov);
-	void movePanelsToRight(float mov);
-
-	void enableLeftAnim();
-	void enableRightAnim();
+	
 
 	void goToPicrossGame(Ref *pSender);
 	void returnToMainMenu(Ref *pSender);
@@ -48,4 +44,19 @@ private:
 	float mainCountScale;
 	float sideSpace, mainSpace, mainScaleSpace, mov;
 	bool leftFinish, mainFinish, rightFinish, scaleFinish, auxFinish;
+
+	bool selected;
+	bool selectEnabled, unselectEnabled;
+
+	//FUNCIONES
+	void movePanelsToLeft(float mov);
+	void movePanelsToRight(float mov);
+
+	void enableLeftAnim();
+	void enableRightAnim();
+
+	void enableSelect();
+	void enableUnselect(Ref *pSender);
+	void selectPanel(float mov);
+	void unselectPanel(float mov);
 };

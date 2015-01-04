@@ -10,15 +10,17 @@ const int mainScale = 5;
 Sprite* personaje_selector;
 Sprite* personaje_selector_cara;
 
-
 Texture2D::TexParams textparams;
-
 
 TTFConfig labelParams;
 TTFConfig labelParamsTitulo;
 Label* labelPersonaje;
 Label* packNameLabel;
 
+Menu* menuSelected;
+Menu* PlayMenu;
+
+Sprite* PicrossPreview;
 
 Scene* PicrossSelectorScene::createScene()
 {
@@ -40,11 +42,14 @@ bool PicrossSelectorScene::init()
 	//Inicializar variables
 	mainIndex = 1;
 
-		//Animacióm
+	//Animacióm
 	moveLeft = moveRight = false;
 	leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 	mainCountScale = 0;
 	leftFinish = mainFinish = rightFinish = scaleFinish = auxFinish = false;
+	mov = 0;
+
+	selected = selectEnabled = unselectEnabled = false;
 
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
@@ -115,11 +120,14 @@ bool PicrossSelectorScene::init()
 	}
 	addChild(mainLayer);
 
+	//Seleccionar primer picross del panel
+	Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
+
 	//Label del diálogo del personaje
 	labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
 	labelParams.fontSize = 25;
 
-	labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Picross y pulsa este panel para jugar");
+	labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Griddle y pulsa este panel para jugar");
 	labelPersonaje->setPosition(visibleSize.width / 2, visibleSize.height / 25);
 	labelPersonaje->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
 	labelPersonaje->setColor(Color3B(0, 100, 200));
@@ -140,18 +148,39 @@ bool PicrossSelectorScene::init()
 		"FondoSelectorBotonP.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
 
-	auto playItem2 = MenuItemImage::create("CloseNormal.png",
+	auto exit = MenuItemImage::create("CloseNormal.png",
 		"CloseSelected.png",
 		CC_CALLBACK_1(PicrossSelectorScene::returnToMainMenu, this));
     
-    auto menu = Menu::create(playItem, NULL);
-    auto menu2 = Menu::create(playItem2,NULL);
+    PlayMenu = Menu::create(playItem, NULL);
+    auto exitMenu = Menu::create(exit,NULL);
     
     //menu->alignItemsVerticallyWithPadding(30);
-    menu->setPosition(visibleSize.width / 8, 45);
-    menu2->setPosition(visibleSize.width / 5, 45);
-    this->addChild(menu, 0);
-    this->addChild(menu2, 0);
+	PlayMenu->setPosition(visibleSize.width / 8, 45);
+	PlayMenu->setVisible(false);
+
+	exitMenu->setPosition(visibleSize.width / 5, 45);
+	
+	addChild(PlayMenu, 0);
+    addChild(exitMenu, 0);
+
+	//Menu para cuando está seleccionado un panel
+	auto playItemX = MenuItemImage::create("CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(PicrossSelectorScene::enableUnselect, this));
+	menuSelected = Menu::create(playItemX, NULL);
+	menuSelected->setPosition(visibleSize.width * 4 / 5, visibleSize.height * 1.5 / 5);
+	menuSelected->setVisible(false);
+	addChild(menuSelected, 0);
+
+	//Vista previa del picross seleccionado
+	PicrossPreview = Sprite::create("empty_selector.png");
+	PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
+	PicrossPreview->setScale(mainScale);
+	PicrossPreview->setPosition(visibleSize.width * 4 / 5, visibleSize.height * 3.5 / 5);
+	PicrossPreview->setVisible(false);
+
+	addChild(PicrossPreview);
 
 	//Activar el método update
 	this->scheduleUpdate();
@@ -180,7 +209,8 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 				cursorX < rightOffSetX + rightSide * 5)
 			{
 				//log("TOUCH RIGHT");
-				enableLeftAnim();
+				if (!selectEnabled && !selected)
+					enableLeftAnim();
 			}
 		}
 		//LEFT PANEL
@@ -196,7 +226,8 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 				cursorX < leftOffSetX + leftSide * 5)
 			{
 				//log("TOUCH LEFT");
-				enableRightAnim();
+				if (!selectEnabled && !selected)
+					enableRightAnim();
 			}
 		}
 
@@ -210,22 +241,29 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 			cursorY < mainOffSetY + mainSide * 5 &&
 			cursorX < mainOffSetX + mainSide * 5)
 		{
-			//SI ESTÁ SELECCIONADO
-
-			//Coordenadas fila(i),columna(j)
-			short i = (cursorY - mainOffSetY) / mainSide;
-			short j = (cursorX - mainOffSetX) / mainSide;
-
-			i = std::abs(i - 5 + 1);
-
-			//log("ROW:(i): %d , COL(j) %d",i,j);
-
-			int id = mainPanel->getPicrossID(i, j);
-
-			if (id != 0)
+			if (selected)
 			{
-				Constant::PUZZLE_NUMBER = id;
-				log("PICROSS SELECCIONADO: %d", Constant::PUZZLE_NUMBER);
+				//Coordenadas fila(i),columna(j)
+				short i = (cursorY - mainOffSetY) / mainSide;
+				short j = (cursorX - mainOffSetX) / mainSide;
+
+				i = std::abs(i - 5 + 1);
+
+				//log("ROW:(i): %d , COL(j) %d",i,j);
+
+				int id = mainPanel->getPicrossID(i, j);
+
+				if (id != 0)
+				{
+					PicrossPreview->setTexture(mainPanel->getPicrossTextureIndex(i,j));
+
+					Constant::PUZZLE_NUMBER = id;
+					log("PICROSS SELECCIONADO: %d", Constant::PUZZLE_NUMBER);
+				}
+			}
+			else
+			{
+				enableSelect();
 			}
 		}
 	}
@@ -240,6 +278,14 @@ void PicrossSelectorScene::update(float dt)
 	else if (moveRight)
 	{
 		movePanelsToRight(dt);
+	}
+	else if (selectEnabled)
+	{
+		selectPanel(dt);
+	}
+	else if (unselectEnabled)
+	{
+		unselectPanel(dt);
 	}
 }
 
@@ -357,6 +403,8 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 		auxLayer = NULL;
 
 		packNameLabel->setString(mainPanel->getPanelName());
+		PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
+		Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
 
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
@@ -402,7 +450,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 		leftLayer->setPositionX(leftLayer->getPositionX() + mov*1.3);
 		leftCount += mov*1.3;
 	}
-	else rightFinish = true;
+	else leftFinish = true;
 
 	//Principal se va a la izquerda
 	if (mainSpace > mainCount + mov*1.3)
@@ -418,7 +466,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 		rightLayer->setPositionX(rightLayer->getPositionX() + mov);
 		rightCount += mov;
 	}
-	else leftFinish = true;
+	else rightFinish = true;
 
 	//SCALE
 	if (mainScaleSpace > mainCountScale + 2 * dt)
@@ -483,6 +531,8 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 		auxLayer = NULL;
 
 		packNameLabel->setString(mainPanel->getPanelName());
+		PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
+		Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
 
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
@@ -514,4 +564,128 @@ void PicrossSelectorScene::returnToMainMenu(Ref *pSender)
 	auto scene = MainMenuScene::createScene();
 
 	Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, scene));
+}
+
+void PicrossSelectorScene::enableSelect()
+{
+	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	mainSpace = sideSpace;
+
+	selectEnabled = true;
+}
+
+void PicrossSelectorScene::enableUnselect(Ref *pSender)
+{
+	menuSelected->setVisible(false);
+	PlayMenu->setVisible(false);
+	PicrossPreview->setVisible(false);
+
+	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	mainSpace = sideSpace;
+
+	unselectEnabled = true;
+}
+
+void PicrossSelectorScene::selectPanel(float dt)
+{
+	mov = 300 * dt;
+
+	//Principal se mueve un poco hacia la izquierda
+	if (mainSpace > mainCount + mov*1.3)
+	{
+		mainLayer->setPositionX(mainLayer->getPositionX() - mov*1.3);
+		mainCount += mov * 1.3;
+	}
+	else mainFinish = true;
+
+	//Izquiero sale de la pantalla
+	if (sideSpace > leftCount + mov*1.3 && mainIndex - 1 > 0)
+	{
+		leftLayer->setPositionX(leftLayer->getPositionX() - mov*1.3);
+		leftCount += mov*1.3;
+	}
+	else leftFinish = true;
+
+	//Derecho se sale de la pantalla
+	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	{
+		rightLayer->setPositionX(rightLayer->getPositionX() + mov*1.3);
+		rightCount += mov*1.3;
+	}
+	else rightFinish = true;
+
+	//Todos han terminado = reiniciar variables y desactivar animación.
+	if (leftFinish && mainFinish && rightFinish)
+	{
+		Size visibleSize = Director::getInstance()->getVisibleSize();
+		//Recolocar en posiciones iniciales
+		if (mainIndex - 1 > 0)
+		{
+			leftLayer->setPositionX(-sideSpace);
+		}
+		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+		{
+			rightLayer->setPositionX(visibleSize.width+sideSpace);
+		}
+		mainLayer->setPositionX(visibleSize.width/2-mainSpace);
+		
+		menuSelected->setVisible(true);
+		PlayMenu->setVisible(true);
+		PicrossPreview->setVisible(true);
+
+		leftCount = 0, mainCount = 0, rightCount = 0;
+		leftFinish = mainFinish = rightFinish = false;
+		selectEnabled = false;
+		selected = true;
+	}
+}
+
+void PicrossSelectorScene::unselectPanel(float dt)
+{
+	mov = 300 * dt;
+
+	//Principal se mueve un poco hacia la derecha
+	if (mainSpace > mainCount + mov*1.3)
+	{
+		mainLayer->setPositionX(mainLayer->getPositionX() + mov*1.3);
+		mainCount += mov * 1.3;
+	}
+	else mainFinish = true;
+
+	//Izquiero entra en la pantalla
+	if (sideSpace > leftCount + mov*1.3 && mainIndex - 1 > 0)
+	{
+		leftLayer->setPositionX(leftLayer->getPositionX() + mov*1.3);
+		leftCount += mov*1.3;
+	}
+	else leftFinish = true;
+
+	//Derecho entra en la pantalla
+	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	{
+		rightLayer->setPositionX(rightLayer->getPositionX() - mov*1.3);
+		rightCount += mov*1.3;
+	}
+	else rightFinish = true;
+
+	//Todos han terminado = reiniciar variables y desactivar animación.
+	if (leftFinish && mainFinish && rightFinish)
+	{
+		Size visibleSize = Director::getInstance()->getVisibleSize();
+		//Recolocar en posiciones iniciales
+		if (mainIndex - 1 > 0)
+		{
+			leftLayer->setPositionX(0);
+		}
+		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+		{
+			rightLayer->setPositionX(visibleSize.width);
+		}
+		mainLayer->setPositionX(visibleSize.width / 2);
+
+		leftCount = 0, mainCount = 0, rightCount = 0;
+		leftFinish = mainFinish = rightFinish = false;
+		unselectEnabled = false;
+		selected = false;
+	}
 }

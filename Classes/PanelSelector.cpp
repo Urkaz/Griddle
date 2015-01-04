@@ -13,6 +13,8 @@ PanelSelector::PanelSelector(int num)
 {
 	texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 
+	setFirst = false;
+
 	packID = num;
 	readPanel(packID);
 	createLayer();
@@ -74,11 +76,17 @@ void PanelSelector::createLayer()
 			Sprite* sprite = Sprite::create("empty_selector.png");
 			if (picrossID[i][j] != 0)
 			{
+				if (!setFirst)
+				{
+					firstPicrossSpriteIndexRow = i;
+					firstPicrossSpriteIndexCol = j;
+					setFirst = true;
+				}
 				//Texture2D* texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
 				Texture2D* texture;
 
 				bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(picrossID[i][j])).c_str());
-				log("%s", completed ? "true" : "false");
+				//log("Completed %s", completed ? "true" : "false");
 
 				if (!completed)
 					texture = Director::getInstance()->getTextureCache()->addImage("unknown.png");
@@ -125,4 +133,19 @@ int PanelSelector::getPicrossID(int row, int col)
 string PanelSelector::getPanelName()
 {
 	return name;
+}
+
+Texture2D* PanelSelector::getFirstPicrossTexture()
+{
+	return gridVector[firstPicrossSpriteIndexRow][firstPicrossSpriteIndexCol]->getTexture();
+}
+
+int PanelSelector::getFirstPicrossID()
+{
+	return picrossID[firstPicrossSpriteIndexRow][firstPicrossSpriteIndexCol];
+}
+
+Texture2D* PanelSelector::getPicrossTextureIndex(int i, int j)
+{
+	return gridVector[i][j]->getTexture();
 }

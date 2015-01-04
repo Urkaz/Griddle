@@ -10,8 +10,14 @@ public:
 
 	//funciones
 	cocos2d::Layer* getLayer();
+
 	int getPicrossID(int row, int col);
+	int getFirstPicrossID();
+
 	std::string getPanelName();
+
+	cocos2d::Texture2D* getFirstPicrossTexture();
+	cocos2d::Texture2D* getPicrossTextureIndex(int i, int j);
 
 private:
 	cocos2d::Layer* gridLayer;
@@ -21,8 +27,12 @@ private:
 	std::string name;
 	int packID;
 
+	int firstPicrossSpriteIndexRow, firstPicrossSpriteIndexCol;
+
 	//Funciones
 	void readPanel(int num);
 	void createLayer();
+
+	bool setFirst;
 };
 
