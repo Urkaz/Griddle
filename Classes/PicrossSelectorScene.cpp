@@ -22,6 +22,7 @@ Menu* PlayMenu;
 
 Sprite* PicrossPreview;
 
+
 Scene* PicrossSelectorScene::createScene()
 {
 	auto scene = Scene::create();
@@ -70,13 +71,13 @@ bool PicrossSelectorScene::init()
                                   (visibleSize.height /8)));
     addChild(avion, 1);
     
-    /*La imagen no está y no funciona :/
+    
 	
 	auto labelbackground = Sprite::create("labeltutorial.png");
     labelbackground->setScale(1.5f, 0.15f);
     
     labelbackground->setPosition(visibleSize.width/2, visibleSize.height /80);
-    addChild(labelbackground, 0);*/
+    addChild(labelbackground, 0);
 
     personaje_selector = Sprite::create("personaje1.png");
 	personaje_selector->getTexture()->setTexParameters(textparams);
@@ -143,7 +144,7 @@ bool PicrossSelectorScene::init()
 	packNameLabel->setColor(Color3B(255, 255, 255));
 	addChild(packNameLabel);
 
-	//Botón jugar y volver atrás (cambiar)
+	//Botón jugar y volver atrás (cambiar) Lo tengo hecho, lo cambiarŽ
 	auto playItem = MenuItemImage::create("FondoSelectorBoton.png",
 		"FondoSelectorBotonP.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
