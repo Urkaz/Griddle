@@ -85,7 +85,7 @@ bool MainMenuScene::init()
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
     
     auto playItem3 = MenuItemImage::create("boton_nube_tutorial.png",
-                                           "boton_tutorial_p.png",
+             "boton_tutorial_p.png",
                                            CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
 
 	auto menu = Menu::create(playItem, playItem2, playItem3, NULL);
@@ -107,7 +107,7 @@ bool MainMenuScene::init()
     titulotexture->setTexParameters(params);
     titulo->setTexture(titulotexture);
     titulo->setPosition(Point((visibleSize.width/2), (visibleSize.height/1.3)));
-    titulo->setScale(0.9);
+    titulo->setScale(0.9f);
     fIn = FadeIn::create(1.0f);
     titulo->runAction(fIn);
     addChild(titulo);
@@ -178,7 +178,7 @@ void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
 void MainMenuScene::goToTutorialScene(Ref *pSender) {
     
-    Constant::GAMEMODE = GameMode::FREE;
+    //Constant::GAMEMODE = GameMode::FREE;
     
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
     

@@ -34,6 +34,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	resDirOrders.push_back("picross_images/mini_pics");
     resDirOrders.push_back("picross_data");
 	resDirOrders.push_back("ImagenesTutorial");
+	resDirOrders.push_back("Tutorial");
+	resDirOrders.push_back("fonts");
 
 	//glview->setFrameSize(768, 1024);
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::EXACT_FIT);

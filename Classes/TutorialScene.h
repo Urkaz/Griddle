@@ -18,7 +18,15 @@ public:
     
     // Added
     void goToMainMenu(Ref *pSender);
-    void TexturaSiguiente(Ref *pSender);
-    void TexturaAnterior(Ref *pSender);
+
+private:
+	int indice;
+
+	void Siguiente(Ref *pSender);
+	void Anterior(Ref *pSender);
+	void ActualizarTextura(int index);
+
+	void TexturaSiguiente(Ref *pSender);
+	void TexturaAnterior(Ref *pSender);
 
 };

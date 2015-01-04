@@ -31,16 +31,16 @@ private:
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 
-	std::vector<std::vector<cocos2d::LabelTTF*>> rowNumbers;
-	std::vector<std::vector<cocos2d::LabelTTF*>> columnNumbers;
+	std::vector<std::vector<cocos2d::Label*>> rowNumbers;
+	std::vector<std::vector<cocos2d::Label*>> columnNumbers;
 
 	//Funciones
 	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
 
 	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
 
-	std::vector<std::vector<cocos2d::LabelTTF*>> generateNumbers(Picross* picross, bool columnsEnabled);
-	void drawSquareNumbers(std::vector<std::vector<cocos2d::LabelTTF*>> rows, std::vector<std::vector<cocos2d::LabelTTF*>> columns);
+	std::vector<std::vector<cocos2d::Label*>> generateNumbers(Picross* picross, bool columnsEnabled);
+	void drawSquareNumbers(std::vector<std::vector<cocos2d::Label*>> rows, std::vector<std::vector<cocos2d::Label*>> columns);
 
 	void pixelLocationSquareGrid();
 	void pixelLocationTriangleGrid();

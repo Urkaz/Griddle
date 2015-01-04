@@ -7,22 +7,17 @@ USING_NS_CC;
 short Constant::PUZZLE_NUMBER = 0;
 const int mainScale = 5;
 
-LabelTTF* packNameLabel;
-
 Sprite* personaje_selector;
 Sprite* personaje_selector_cara;
 
 
 Texture2D::TexParams textparams;
-Texture2D* textura_personaje;
-Texture2D* textura_personaje_cara;
 
 
 TTFConfig labelParams;
 TTFConfig labelParamsTitulo;
 Label* labelPersonaje;
-Label* labelTitulo;
-
+Label* packNameLabel;
 
 
 Scene* PicrossSelectorScene::createScene()
@@ -40,14 +35,7 @@ bool PicrossSelectorScene::init()
 		return false;
 	}
     
-    Texture2D::TexParams tpms = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    textparams = tpms;
-    
-    labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
-    labelParams.fontSize = 25;
-    
-    labelParamsTitulo.fontFilePath = "LondrinaSolid-Regular.otf";
-    labelParamsTitulo.fontSize = 70;
+    textparams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     
 	//Inicializar variables
 	mainIndex = 1;
@@ -64,44 +52,34 @@ bool PicrossSelectorScene::init()
 
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
-	//Posición inicial
+	//Tamaño pantalla
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     
     auto background = Sprite::create("fondo_prueba2.png");
     background->setScale(2, 2);
-    background->setPosition(Point((visibleSize.width  /2),
-                                  (visibleSize.height /2)));
+    background->setPosition(visibleSize.width/2, visibleSize.height /2);
     addChild(background, 0);
     
     auto avion = Sprite::create("AvionDestrozado.png");
-    //avion->setScale();
     avion->setPosition(Point((visibleSize.width  /1.15),
                                   (visibleSize.height /8)));
     addChild(avion, 1);
     
-    auto labelbackground = Sprite::create("labeltutorial.png");
-    labelbackground->setScale(1.5, 0.15);
+    /*La imagen no está y no funciona :/
+	
+	auto labelbackground = Sprite::create("labeltutorial.png");
+    labelbackground->setScale(1.5f, 0.15f);
     
-    labelbackground->setPosition(Point((visibleSize.width  /2),
-                                       (visibleSize.height /80)));
-    addChild(labelbackground, 0);
-    
-    //Label
-    labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Picross y pulsa este panel para jugar");
-    labelPersonaje->setPosition(Point((visibleSize.width  /2), (visibleSize.height /25)));
-    labelPersonaje->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
-    labelPersonaje->setColor(Color3B(0, 100, 200));
-    addChild(labelPersonaje);
+    labelbackground->setPosition(visibleSize.width/2, visibleSize.height /80);
+    addChild(labelbackground, 0);*/
 
-    
     personaje_selector = Sprite::create("personaje1.png");
-    textura_personaje = Director::getInstance()->getTextureCache()->addImage("personaje1.png");
-    textura_personaje->setTexParameters(textparams);
-    personaje_selector->setTexture(textura_personaje);
+	personaje_selector->getTexture()->setTexParameters(textparams);
     personaje_selector->setPosition(Point((visibleSize.width/8), (visibleSize.height/7)));
     personaje_selector->setScale(8);
     addChild(personaje_selector);
 
+	//Posición inicial paneles
 	//Main Panel
 	mainPanel = new PanelSelector(mainIndex);
 	mainLayer = mainPanel->getLayer();
@@ -135,25 +113,29 @@ bool PicrossSelectorScene::init()
 
 		addChild(leftLayer);
 	}
-
 	addChild(mainLayer);
 
-	//Nombre del paquete
-	packNameLabel = LabelTTF::create(mainPanel->getPanelName(), "LondrinaSolid-Regular.otf", Constant::FONT_SIZE);
-	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE-10);
-    packNameLabel->setFontName("LondrinaSolid-Regular.otf");
+	//Label del diálogo del personaje
+	labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
+	labelParams.fontSize = 25;
 
+	labelPersonaje = Label::createWithTTF(labelParams, "Selecciona el Picross y pulsa este panel para jugar");
+	labelPersonaje->setPosition(visibleSize.width / 2, visibleSize.height / 25);
+	labelPersonaje->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+	labelPersonaje->setColor(Color3B(0, 100, 200));
+	addChild(labelPersonaje);
+	
+	//Label título del panel
+	labelParamsTitulo.fontFilePath = "LondrinaSolid-Regular.otf";
+	labelParamsTitulo.fontSize = Constant::FONT_SIZE;
+
+	packNameLabel = Label::createWithTTF(labelParamsTitulo, mainPanel->getPanelName());
+	packNameLabel->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE - 10);
+	packNameLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+	packNameLabel->setColor(Color3B(255, 255, 255));
 	addChild(packNameLabel);
-     
-     
-    /*
-    labelTitulo = Label::createWithTTF(labelParamsTitulo, mainPanel->getPanelName());
-    labelTitulo->setPosition(visibleSize.width / 2, visibleSize.height - Constant::FONT_SIZE-10);
-    labelTitulo->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
-    labelTitulo->setColor(Color3B(255, 255, 255));
-    addChild(labelTitulo);*/ //No me va al cambiar :(
 
-	//Botón jugar
+	//Botón jugar y volver atrás (cambiar)
 	auto playItem = MenuItemImage::create("FondoSelectorBoton.png",
 		"FondoSelectorBotonP.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
@@ -169,15 +151,7 @@ bool PicrossSelectorScene::init()
     menu->setPosition(visibleSize.width / 8, 45);
     menu2->setPosition(visibleSize.width / 5, 45);
     this->addChild(menu, 0);
-     this->addChild(menu2, 0);
-    
-    personaje_selector_cara = Sprite::create("personajeCara.png");
-    textura_personaje_cara = Director::getInstance()->getTextureCache()->addImage("personajeCara.png");
-    textura_personaje_cara->setTexParameters(textparams);
-    personaje_selector_cara->setTexture(textura_personaje_cara);
-    personaje_selector_cara->setPosition(Point((visibleSize.width/8), (visibleSize.height/7)));
-    personaje_selector_cara->setScale(8);
-    addChild(personaje_selector_cara);
+    this->addChild(menu2, 0);
 
 	//Activar el método update
 	this->scheduleUpdate();
