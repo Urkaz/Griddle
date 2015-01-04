@@ -66,17 +66,17 @@ bool TutorialScene::init()
 	T5 = Director::getInstance()->getTextureCache()->addImage("T5.png");
 	T6 = Director::getInstance()->getTextureCache()->addImage("T6.png");
 	T7 = Director::getInstance()->getTextureCache()->addImage("T7.png");
-	T8 = Director::getInstance()->getTextureCache()->addImage("FALTA.png");
+	T8 = Director::getInstance()->getTextureCache()->addImage("T8.png");
 	T9 = Director::getInstance()->getTextureCache()->addImage("T9.png");
 	T10 = Director::getInstance()->getTextureCache()->addImage("T10.png");
 	T11 = Director::getInstance()->getTextureCache()->addImage("T11.png");
 	T12 = Director::getInstance()->getTextureCache()->addImage("T12.png");
-	T13 = Director::getInstance()->getTextureCache()->addImage("Tutorial13.png");
+	T13 = Director::getInstance()->getTextureCache()->addImage("T13.png");
 	T14 = Director::getInstance()->getTextureCache()->addImage("T14.png");
-	T15 = Director::getInstance()->getTextureCache()->addImage("FALTA.png");
-	T16 = Director::getInstance()->getTextureCache()->addImage("FALTA.png");
+	T15 = Director::getInstance()->getTextureCache()->addImage("T15.png");
+	T16 = Director::getInstance()->getTextureCache()->addImage("T16.png");
 	T17 = Director::getInstance()->getTextureCache()->addImage("T17.png");
-	T18 = Director::getInstance()->getTextureCache()->addImage("FALTA.png");
+	T18 = Director::getInstance()->getTextureCache()->addImage("T18.png");
 
 	T1->setTexParameters(textpar);
 	T2->setTexParameters(textpar);
@@ -119,7 +119,6 @@ bool TutorialScene::init()
 	this->addChild(menusalir,1);
     
     // Adding background
-    /* Las imagenes no están y no va :/
 	
 	auto background = Sprite::create("fondopato.png");
     auto labelbackground = Sprite::create("labeltutorial.png");
@@ -132,14 +131,24 @@ bool TutorialScene::init()
     labelbackground->setPosition(visibleSize.width/2, visibleSize.height /2);
 
     addChild(background, 0);
-    addChild(labelbackground, 0);*/
+    addChild(labelbackground, 0);
 
     
     //Primera imagen del tutorial
+
+    
+    imagen_tutorial = Sprite::create("T0.png");
+    imagen = Director::getInstance()->getTextureCache()->addImage("T0.png");
+    imagen->setTexParameters(textpar);
+    imagen_tutorial->setTexture(imagen);
+    imagen_tutorial->setPosition(Point((visibleSize.width  /2), (visibleSize.height /1.5)));
+    imagen_tutorial->setScale(3);
+
     imagen_tutorial = Sprite::create("T1.png");
 	imagen_tutorial->getTexture()->setTexParameters(textpar);
 	imagen_tutorial->setPosition(visibleSize.width / 2, visibleSize.height / 1.5);
     //imagen_tutorial->setScale(3);
+
     addChild(imagen_tutorial);
     
     panel = Sprite::create("panel.png");
@@ -153,6 +162,7 @@ bool TutorialScene::init()
     personaje->setPosition(visibleSize.width/9, visibleSize.height/5);
     personaje->setScale(11);
     addChild(personaje);
+    
     
     //Label del tutorial
 	labelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
@@ -304,7 +314,9 @@ void TutorialScene::Siguiente(Ref *pSender)
             labelTutorial->setString("Aquí concluye el tutorial. ""\n""Esperamos que te diviertas resolviendo puzzles, y recuerda aplicar todas las técnicas aprendidas.");
             break;
     };
+<<<<<<< Updated upstream
 }*/
+
 
 void TutorialScene::ActualizarTextura(int index)
 {
@@ -366,7 +378,7 @@ void TutorialScene::ActualizarTextura(int index)
             labelTutorial->setString("textolargo");
             break;
         case 9:
-			imagen_tutorial->setTexture(T9);
+            imagen_tutorial->setTexture(T9);
 			imagen_tutorial->setScale(T9->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
 				T9->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
 
@@ -394,11 +406,11 @@ void TutorialScene::ActualizarTextura(int index)
             labelTutorial->setString("Con las marcas realizadas, ""\n""podemos resolver la columna del 3. Y hecho esto, ""\n""marcaremos las casillas restantes para asegurar la columna.");
             break;
         case 13:
-			imagen_tutorial->setTexture(T13);
-			imagen_tutorial->setScale(T13->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
-				T13->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
-
-            labelTutorial->setString("A continuación, vemos la columna 2.""\n"" Está claro que no podemos rellenar dos casillas consecutivas""\n"" contando desde arriba. Cada vez que esto ocurra,""\n"" marcaremos dichas casillas.");
+            imagen_tutorial->setTexture(T13);
+            imagen_tutorial->setScale(T13->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
+                                      T13->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
+            labelTutorial->setString("Falta el texto");
+            
             break;
         case 14:
 			imagen_tutorial->setTexture(T14);
@@ -414,8 +426,9 @@ void TutorialScene::ActualizarTextura(int index)
 
             labelTutorial->setString("En este espacio vacío, sólo hay dos formas ""\n""en las cuales podemos rellenar las dos casillas, ""\n""por lo tanto rellenaremos cualquier casilla común a ambas posibilidades.");
             break;
+
         case 16:
-			imagen_tutorial->setTexture(T16);
+			imagen_tutorial->setTexture(T16); //PONER BIEN LA ESCALA
 			imagen_tutorial->setScale(T16->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
 				T16->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
 
@@ -428,6 +441,7 @@ void TutorialScene::ActualizarTextura(int index)
 
             labelTutorial->setString("Ahora, aseguramos la columna con 1, ya que está completa.""\n"" Y tras hacer esto, ""\n""poco a poco iremos rellenando y marcando las demás casillas""\n"" hasta completar la figura.");
             break;
+
         case 18:
 			imagen_tutorial->setTexture(T18);
 			imagen_tutorial->setScale(T18->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
