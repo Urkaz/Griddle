@@ -15,5 +15,7 @@ public:
 
 	static const short MAX_PACK_INDEX = 2;
 	static short CURRENT_PACK_INDEX;
+
+	static const short TIME_LIMIT = 5;
 };
 

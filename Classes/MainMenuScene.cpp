@@ -50,6 +50,9 @@ bool MainMenuScene::init()
 	}
 
 	UserDefault::getInstance()->setBoolForKey("n_5", true);
+	UserDefault::getInstance()->setIntegerForKey("n_5_fallos", 2);
+	UserDefault::getInstance()->setIntegerForKey("n_5_tiempo", 600);
+	UserDefault::getInstance()->flush();
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -131,15 +134,6 @@ bool MainMenuScene::init()
     seq1 = Sequence::create(rotacion, move_easy_in, rotacionabajo, delay, move_back, delay->clone(),rotacion, nullptr);
     avion->runAction(RepeatForever::create(seq1));
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
 	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
 	{
@@ -193,4 +187,17 @@ void MainMenuScene::goToTutorialScene(Ref *pSender) {
     //Director::getInstance()->pushScene(TransitionTurnOffTiles::create(0.5, scene));
     Director::getInstance()->pushScene(TransitionFadeTR::create(1, scene));
 
+}
+
+void MainMenuScene::deleteSaveData(Ref *pSender)
+{
+	//Borrar datos picross
+	for (int i = 0; i < 24; i++)
+	{
+		UserDefault::getInstance()->setBoolForKey(("n_" + to_string(i)).c_str(), false);
+		UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(i) + "_fallos").c_str(), -1);
+		UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(i) + "_tiempo").c_str(), 0);
+	}
+
+	UserDefault::getInstance()->flush();
 }

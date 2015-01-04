@@ -86,12 +86,18 @@ void PanelSelector::createLayer()
 				Texture2D* texture;
 
 				bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(picrossID[i][j])).c_str());
+				int tiempo = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(picrossID[i][j])+"_tiempo").c_str());
 				//log("Completed %s", completed ? "true" : "false");
 
 				if (!completed)
 					texture = Director::getInstance()->getTextureCache()->addImage("unknown.png");
 				else
-					texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+				{
+					if (tiempo < Constant::TIME_LIMIT*60)
+						texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+					else
+						texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + "_u.png");
+				}
 
 				sprite->setTexture(texture);
 

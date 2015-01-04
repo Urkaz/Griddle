@@ -32,11 +32,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Sets the search path for images
 	resDirOrders.push_back("picross_images");
 	resDirOrders.push_back("picross_images/mini_pics");
+	resDirOrders.push_back("picross_images/mini_pics_unsolved");
     resDirOrders.push_back("picross_data");
-	resDirOrders.push_back("Tutorial");
+	resDirOrders.push_back("imagenes/Tutorial");
 	resDirOrders.push_back("fonts");
-	resDirOrders.push_back("Fondos");
-	resDirOrders.push_back("interfaz");
+	resDirOrders.push_back("imagenes/Fondos");
+	resDirOrders.push_back("imagenes/interfaz");
 	resDirOrders.push_back("sonidos");
 
 	//glview->setFrameSize(768, 1024);
