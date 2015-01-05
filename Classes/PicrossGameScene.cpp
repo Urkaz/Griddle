@@ -28,6 +28,7 @@ Sprite* button_X;
 TTFConfig lifesLabelConfig;
 TTFConfig numbersLabelConfig;
 Label* lifeLabel;
+Label* timeLabel;
 
 int initialScale;
 
@@ -81,6 +82,8 @@ bool PicrossGameScene::init()
 	texEmpty->setTexParameters(textureParams);
 
 	texDeco->setTexParameters(textureParams);
+
+	tiempo_ms = 0;
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
@@ -151,8 +154,15 @@ bool PicrossGameScene::init()
 		lifes = 3;
 		lifeLabel = Label::createWithTTF(lifesLabelConfig, "Vidas " + to_string(lifes));
 		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
+		lifeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
 		this->addChild(lifeLabel,1);
 	}
+
+	//Tiempo
+	timeLabel = Label::createWithTTF(lifesLabelConfig, "Tiempo 0:00");
+	timeLabel->setPosition(visibleSize.width -  350, visibleSize.height - 30);
+	timeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+	this->addChild(timeLabel, 1);
 
 	//Se dibuja el tablero
 	this->addChild(button_draw, 1);
@@ -166,6 +176,9 @@ bool PicrossGameScene::init()
 		numbersLayer = createSquareNumbersLayer(rowNumbers, columnNumbers);
 		this->addChild(numbersLayer, 0);
 	}
+
+	//Activar el método update
+	this->scheduleUpdate();
 
 	return true;
 }
@@ -502,6 +515,14 @@ void PicrossGameScene::onMouseUp(Event* event)
 	mouseDown = false;
 }
 
+void PicrossGameScene::update(float dt)
+{
+	tiempo_ms += dt;
+
+	timeLabel->setString("Tiempo " + to_string((int)(tiempo_ms / 60)) + ":" +
+		(to_string((int)tiempo_ms % 60).length() < 2 ? "0" + to_string((int)tiempo_ms % 60) : to_string((int)tiempo_ms % 60)));
+}
+
 void PicrossGameScene::onMouseMove(Event* event)
 {
 	auto* e = (EventMouse*)event;
@@ -512,18 +533,24 @@ void PicrossGameScene::onMouseMove(Event* event)
 	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.height / 2;
 	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.width / 2;
 
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+
 	if (!drawEnabled && !markXEnabled)
 	{
 		//MOVER
 		if (mouseDown)
 		{
-			picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
-				picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
+			if (cursorX < visibleSize.width * 9 / 10 && cursorX > visibleSize.width * 1.5 / 10 &&
+				cursorY < visibleSize.height * 9 / 10 && cursorY > visibleSize.height / 10)
+			{
+				picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
+					picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
 
-			numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
+				numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
 
-			lastCursorX = cursorX;
-			lastCursorY = cursorY;
+				lastCursorX = cursorX;
+				lastCursorY = cursorY;
+			}
 		}
 	}
 }
@@ -551,19 +578,21 @@ void PicrossGameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event
 {
 	if (keyCode == EventKeyboard::KeyCode::KEY_KP_MINUS)
 	{
-		picrossGridLayer->setScale(picrossGridLayer->getScale() - 0.1f);
-		
-
-		numbersLayer->setScale(numbersLayer->getScale() - 0.1f / initialScale);
-
-		Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		if (picrossGridLayer->getScale() > 2)
+		{
+			picrossGridLayer->setScale(picrossGridLayer->getScale() - 0.1f);
+			numbersLayer->setScale(numbersLayer->getScale() - 0.1f / initialScale);
+			Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		}
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_KP_PLUS)
 	{
-		picrossGridLayer->setScale(picrossGridLayer->getScale() + 0.1f);
-		Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
-
-		numbersLayer->setScale(numbersLayer->getScale() + 0.1f / initialScale);
+		if (picrossGridLayer->getScale() < 5)
+		{
+			picrossGridLayer->setScale(picrossGridLayer->getScale() + 0.1f);
+			numbersLayer->setScale(numbersLayer->getScale() + 0.1f / initialScale);
+			Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		}
 	}
 }
 

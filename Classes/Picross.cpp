@@ -82,3 +82,13 @@ vector<vector<int>> Picross::getSolution()
 {
 	return matrixSolution;
 }
+
+string Picross::getName()
+{
+	return name;
+}
+
+string Picross::getAuthor()
+{
+	return author;
+}

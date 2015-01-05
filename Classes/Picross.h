@@ -15,6 +15,9 @@ public:
 	int getRowNumber();
 	int getColumnNumber();
 
+	std::string getName();
+	std::string getAuthor();
+
 	std::vector<std::vector<int>> getSolution();
 
 private:

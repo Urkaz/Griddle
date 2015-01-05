@@ -1,8 +1,10 @@
 #include "PicrossSelectorScene.h"
 #include "MainMenuScene.h"
+#include <string>
 #include "PicrossGameScene.h"
 
-USING_NS_CC;
+using namespace cocos2d;
+using namespace std;
 
 short Constant::PUZZLE_NUMBER = 0;
 short Constant::CURRENT_PACK_INDEX = 0;
@@ -19,9 +21,12 @@ Label* labelPersonaje;
 Label* packNameLabel;
 
 Menu* menuSelected;
-Menu* PlayMenu;
 
 Sprite* PicrossPreview;
+Label* picrossNameLabel;
+Label* picrossLivesLabel;
+Label* picrossTimeLabel;
+Label* picrossSizeLabel;
 
 
 Scene* PicrossSelectorScene::createScene()
@@ -151,34 +156,27 @@ bool PicrossSelectorScene::init()
 	packNameLabel->setColor(Color3B(255, 255, 255));
 	addChild(packNameLabel);
 
-	//Botón jugar y volver atrás (cambiar) Lo tengo hecho, lo cambiarŽ
-	auto playItem = MenuItemImage::create("FondoSelectorBoton.png",
-		"FondoSelectorBotonP.png",
-		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
-
+	//Botón volver atrás (cambiar) Lo tengo hecho, lo cambiaré
 	auto exit = MenuItemImage::create("CloseNormal.png",
 		"CloseSelected.png",
 		CC_CALLBACK_1(PicrossSelectorScene::returnToMainMenu, this));
     
-    PlayMenu = Menu::create(playItem, NULL);
-    auto exitMenu = Menu::create(exit,NULL);
-    
-    //menu->alignItemsVerticallyWithPadding(30);
-	PlayMenu->setPosition(visibleSize.width / 8, 45);
-	PlayMenu->setVisible(false);
-
+	auto exitMenu = Menu::create(exit,NULL);
 	exitMenu->setPosition(visibleSize.width / 5, 45);
-	
-	addChild(PlayMenu, 0);
     addChild(exitMenu, 0);
 
 	//Menu para cuando está seleccionado un panel
-	auto playItemX = MenuItemImage::create("CloseNormal.png",
+	auto playButton = MenuItemImage::create("FondoSelectorBoton.png",
+		"FondoSelectorBotonP.png",
+		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
+
+	auto unselectButton = MenuItemImage::create("CloseNormal.png",
 		"CloseSelected.png",
 		CC_CALLBACK_1(PicrossSelectorScene::enableUnselect, this));
-	menuSelected = Menu::create(playItemX, NULL);
+
+	menuSelected = Menu::create(playButton, unselectButton, NULL);
 	menuSelected->setPosition(visibleSize.width * 4 / 5, visibleSize.height * 1.5 / 5);
-	menuSelected->setVisible(false);
+	menuSelected->alignItemsVerticallyWithPadding(20);
 	addChild(menuSelected, 0);
 
 	//Vista previa del picross seleccionado
@@ -186,14 +184,100 @@ bool PicrossSelectorScene::init()
 	PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
 	PicrossPreview->setScale(mainScale);
 	PicrossPreview->setPosition(visibleSize.width * 4 / 5, visibleSize.height * 3.5 / 5);
-	PicrossPreview->setVisible(false);
 
 	addChild(PicrossPreview);
+
+	//Labels de vista previa
+	picrossNameLabel = Label::createWithTTF(labelParams, "????");
+	picrossNameLabel->setPosition(PicrossPreview->getPositionX(), PicrossPreview->getPositionY() - 70);
+	picrossNameLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+	picrossNameLabel->setColor(Color3B(0, 100, 200));
+
+	picrossSizeLabel = Label::createWithTTF(labelParams, "(?x?)");
+	picrossSizeLabel->setPosition(PicrossPreview->getPositionX(), PicrossPreview->getPositionY() - 100);
+	picrossSizeLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+	picrossSizeLabel->setColor(Color3B(0, 100, 200));
+
+	picrossTimeLabel = Label::createWithTTF(labelParams, "Tiempo: ?:??");
+	picrossTimeLabel->setPosition(PicrossPreview->getPositionX(), PicrossPreview->getPositionY() - 130);
+	picrossTimeLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+	picrossTimeLabel->setColor(Color3B(0, 100, 200));
+
+	if (Constant::GAMEMODE == GameMode::NORMAL)
+	{
+		picrossLivesLabel = Label::createWithTTF(labelParams, "Fallos: ?");
+		picrossLivesLabel->setPosition(PicrossPreview->getPositionX(), PicrossPreview->getPositionY() - 160);
+		picrossLivesLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+		picrossLivesLabel->setColor(Color3B(0, 100, 200));
+
+		this->addChild(picrossLivesLabel);
+	}
+
+	this->addChild(picrossNameLabel);
+	this->addChild(picrossTimeLabel);
+	this->addChild(picrossSizeLabel);
+
+	setPreviewData(Constant::PUZZLE_NUMBER);
+	setPreviewDataVisible(false);
 
 	//Activar el método update
 	this->scheduleUpdate();
 
 	return true;
+}
+
+void PicrossSelectorScene::setPreviewDataVisible(bool visible)
+{
+	PicrossPreview->setVisible(visible);
+	menuSelected->setVisible(visible);
+	picrossNameLabel->setVisible(visible);
+	picrossTimeLabel->setVisible(visible);
+	picrossSizeLabel->setVisible(visible);
+	if (Constant::GAMEMODE == GameMode::NORMAL)
+		picrossLivesLabel->setVisible(visible);
+}
+
+void PicrossSelectorScene::setPreviewData(int num)
+{
+	//Picross auxiliar para los datos de la vista previa
+	auxPicross = new Picross(num, Constant::GAMEMODE);
+
+	bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(Constant::PUZZLE_NUMBER)).c_str());
+
+	picrossSizeLabel->setString("(" + to_string(auxPicross->getRowNumber()) + "x" + to_string(auxPicross->getColumnNumber()) + ")");
+
+	if (!completed)
+	{
+		picrossNameLabel->setString("????");
+		picrossTimeLabel->setString("Tiempo: ?:??");
+		if (Constant::GAMEMODE == GameMode::NORMAL)
+			picrossLivesLabel->setString("Fallos: ?");
+	}
+	else
+	{
+		picrossNameLabel->setString(auxPicross->getName());
+
+		//TIEMPO
+		int pv_tiempo = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Constant::PUZZLE_NUMBER) + "_tiempo").c_str());
+		picrossTimeLabel->setString("Tiempo " + to_string((int)(pv_tiempo / 60)) + ":" +
+			(to_string((int)pv_tiempo % 60).length() < 2 ? "0" + to_string((int)pv_tiempo % 60) : to_string((int)pv_tiempo % 60)));
+		if (pv_tiempo < Constant::TIME_LIMIT*60)
+			picrossTimeLabel->setColor(Color3B(102, 255, 51));
+		else
+			picrossTimeLabel->setColor(Color3B(245, 51, 0));
+
+		//FALLOS
+		if (Constant::GAMEMODE == GameMode::NORMAL)
+		{
+			int pv_fallos = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Constant::PUZZLE_NUMBER) + "_fallos").c_str());
+			picrossLivesLabel->setString("Fallos: " + to_string(pv_fallos));
+			if (pv_fallos == 0)
+				picrossLivesLabel->setColor(Color3B(102, 255, 51));
+			else
+				picrossLivesLabel->setColor(Color3B(245, 51, 0));
+		}
+	}
+
 }
 
 void PicrossSelectorScene::onMouseDown(Event* event)
@@ -266,6 +350,9 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 					PicrossPreview->setTexture(mainPanel->getPicrossTextureIndex(i,j));
 
 					Constant::PUZZLE_NUMBER = id;
+
+					setPreviewData(Constant::PUZZLE_NUMBER);
+
 					log("PICROSS SELECCIONADO: %d", Constant::PUZZLE_NUMBER);
 				}
 			}
@@ -581,9 +668,7 @@ void PicrossSelectorScene::enableSelect()
 
 void PicrossSelectorScene::enableUnselect(Ref *pSender)
 {
-	menuSelected->setVisible(false);
-	PlayMenu->setVisible(false);
-	PicrossPreview->setVisible(false);
+	setPreviewDataVisible(false);
 
 	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
 	mainSpace = sideSpace;
@@ -634,9 +719,8 @@ void PicrossSelectorScene::selectPanel(float dt)
 		}
 		mainLayer->setPositionX(visibleSize.width/2-mainSpace);
 		
-		menuSelected->setVisible(true);
-		PlayMenu->setVisible(true);
-		PicrossPreview->setVisible(true);
+		setPreviewData(Constant::PUZZLE_NUMBER);
+		setPreviewDataVisible(true);
 
 		leftCount = 0, mainCount = 0, rightCount = 0;
 		leftFinish = mainFinish = rightFinish = false;

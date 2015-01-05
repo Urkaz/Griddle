@@ -26,12 +26,15 @@ public:
 	void goToPauseScene(Ref *pSender);
 	void goToEndScene(Ref *pSender);
 
+	void update(float dt);
+
 private:
 	//Variables
 	Layer* picrossGridLayer;
 	Layer* numbersLayer;
 	Picross* picross;
 	int lifes;
+	float tiempo_ms;
 	bool drawEnabled;
 	bool markXEnabled;
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;

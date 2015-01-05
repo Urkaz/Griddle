@@ -52,6 +52,11 @@ bool MainMenuScene::init()
 	UserDefault::getInstance()->setBoolForKey("n_5", true);
 	UserDefault::getInstance()->setIntegerForKey("n_5_fallos", 2);
 	UserDefault::getInstance()->setIntegerForKey("n_5_tiempo", 600);
+
+	UserDefault::getInstance()->setBoolForKey("n_1", true);
+	UserDefault::getInstance()->setIntegerForKey("n_1_fallos", 1);
+	UserDefault::getInstance()->setIntegerForKey("n_1_tiempo", 153);
+
 	UserDefault::getInstance()->flush();
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();

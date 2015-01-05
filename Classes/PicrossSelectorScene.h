@@ -48,6 +48,8 @@ private:
 	bool selected;
 	bool selectEnabled, unselectEnabled;
 
+	Picross* auxPicross;
+
 	//FUNCIONES
 	void movePanelsToLeft(float mov);
 	void movePanelsToRight(float mov);
@@ -59,4 +61,8 @@ private:
 	void enableUnselect(Ref *pSender);
 	void selectPanel(float mov);
 	void unselectPanel(float mov);
+
+	void setPreviewData(int num);
+
+	void setPreviewDataVisible(bool visible);
 };
