@@ -470,6 +470,35 @@ void PicrossGameScene::onMouseDown(Event* event)
 						goToEndScene(this);
 					}
 				}
+				else if (Constant::GAMEMODE == GameMode::BOMB && picross->getSolution()[i][j] == 0)
+				{
+					userSolution[i][j] = -1;
+					picrossGridVector[i][j]->setTexture(texMarkX);
+					int randRow = rand() % (picross->getRowNumber() - 0 + 1) + 0;
+					int randCol = rand() % (picross->getColumnNumber() - 0 + 1) + 0;
+
+					//Rango variable según la cantidad de filas/columnas
+					int radius = max(picross->getRowNumber(), picross->getColumnNumber()) * 1 / 4;
+
+					log("EXPLOSION EN (%d,%d). RADIO DE %d CASILLAS", randRow, randCol, radius);
+
+					//Explosión
+					for (int i = -radius; i <= radius; i++)
+					{
+						for (int j = -radius; j <= radius; j++)
+						{
+							if (abs(i) + abs(j) <= radius)
+							{
+								if (randRow + i >= 0 && randRow + i < picross->getRowNumber() &&
+									randCol + j >= 0 && randCol + j < picross->getColumnNumber())
+								{
+									userSolution[randRow + i][randCol + j] = 0;
+									picrossGridVector[randRow + i][randCol + j]->setTexture(texEmpty);
+								}
+							}
+						}
+					}
+				}
 				else
 				{
 					userSolution[i][j] = 1;

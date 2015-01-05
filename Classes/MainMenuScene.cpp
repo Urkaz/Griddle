@@ -68,39 +68,45 @@ bool MainMenuScene::init()
 	// Creating menu
     if (tuturialactivo)
     {
-        auto playItem = MenuItemImage::create("modo_normal.png",
-                                              "modo_normal_p.png",
-                                              CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+		auto normal = MenuItemImage::create("modo_normal.png",
+			"modo_normal_p.png",
+			CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+
+		auto libre = MenuItemImage::create("modo_libre.png",
+			"modo_libre_p.png",
+			CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+
+		auto bomba = MenuItemImage::create("modo_libre.png",
+			"modo_libre_p.png",
+			CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
         
-        auto playItem2 = MenuItemImage::create("modo_libre.png",
-                                               "modo_libre_p.png",
-                                               CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
-        
-        auto menu = Menu::create(playItem, playItem2, NULL);
+		auto menu = Menu::create(normal, libre, bomba, NULL);
         
         menu->alignItemsHorizontallyWithPadding(visibleSize.height / 7);
         this->addChild(menu, 1);
-        
-        tuturialactivo=false;
     }
     else
     {
-	auto playItem = MenuItemImage::create("modo_normal.png",
+		auto normal = MenuItemImage::create("modo_normal.png",
 			"modo_normal_p.png",
 			CC_CALLBACK_1(MainMenuScene::goToNormalSelector, this));
 
-	auto playItem2 = MenuItemImage::create("modo_libre.png",
+		auto libre = MenuItemImage::create("modo_libre.png",
 			"modo_libre_p.png",
 			CC_CALLBACK_1(MainMenuScene::goToFreeSelector, this));
-    
-    auto playItem3 = MenuItemImage::create("boton_nube_tutorial.png",
+
+		auto bomba = MenuItemImage::create("modo_bomba.png",
+			"modo_bomba_p.png",
+			CC_CALLBACK_1(MainMenuScene::goToBombSelector, this));
+
+		auto tutorial = MenuItemImage::create("boton_nube_tutorial.png",
              "boton_tutorial_p.png",
-                                           CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
+			 CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
 
-	auto menu = Menu::create(playItem, playItem2, playItem3, NULL);
+		auto menu = Menu::create(normal, libre, bomba, tutorial, NULL);
 
-	menu->alignItemsHorizontallyWithPadding(visibleSize.height / 7);
-	this->addChild(menu, 1);
+		menu->alignItemsHorizontallyWithPadding(visibleSize.height / 20);
+		this->addChild(menu, 1);
     }
 
 	// Adding background
@@ -172,6 +178,17 @@ void MainMenuScene::goToNormalSelector(Ref *pSender) {
 void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
 	Constant::GAMEMODE = GameMode::FREE;
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
+
+	auto scene = PicrossSelectorScene::createScene();
+
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, scene));
+}
+
+void MainMenuScene::goToBombSelector(Ref *pSender) {
+
+	Constant::GAMEMODE = GameMode::BOMB;
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 

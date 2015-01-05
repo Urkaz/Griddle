@@ -19,6 +19,7 @@ public:
     // Added
 	void goToNormalSelector(Ref *pSender);
 	void goToFreeSelector(Ref *pSender);
+	void goToBombSelector(Ref *pSender);
     void goToTutorialScene(Ref *pSender);
 
 	void deleteSaveData(Ref *pSender);

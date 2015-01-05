@@ -28,6 +28,7 @@ Label* picrossLivesLabel;
 Label* picrossTimeLabel;
 Label* picrossSizeLabel;
 
+Sprite* gameModeSprite;
 
 Scene* PicrossSelectorScene::createScene()
 {
@@ -96,6 +97,17 @@ bool PicrossSelectorScene::init()
     personaje_selector->setPosition(Point((visibleSize.width/8), (visibleSize.height/7)));
     personaje_selector->setScale(8);
     addChild(personaje_selector);
+
+	//Imagen que indica el modo de juego
+	if (Constant::GAMEMODE == GameMode::NORMAL)
+		gameModeSprite = Sprite::create("modo_normal.png");
+	else if (Constant::GAMEMODE == GameMode::FREE)
+		gameModeSprite = Sprite::create("modo_libre.png");
+	else if (Constant::GAMEMODE == GameMode::BOMB)
+		gameModeSprite = Sprite::create("modo_bomba.png");
+
+	gameModeSprite->setPosition(gameModeSprite->getBoundingBox().size.width/2, visibleSize.height - gameModeSprite->getBoundingBox().size.height/2);
+	this->addChild(gameModeSprite, 1);
 
 	//Posición inicial paneles
 	//Main Panel
