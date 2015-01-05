@@ -18,6 +18,7 @@ Texture2D* texButtonMarkX;
 Texture2D* texButtonClickDraw;
 Texture2D* texButtonClickMarkX;
 Texture2D* texButtonClickPause;
+Texture2D* texDeco;
 
 Texture2D::TexParams textureParams;
 
@@ -73,9 +74,13 @@ bool PicrossGameScene::init()
 	texButtonClickDraw = Director::getInstance()->getTextureCache()->addImage("boton_click_lapiz.png");
 	texButtonClickMarkX = Director::getInstance()->getTextureCache()->addImage("boton_click_X.png");
 
+	texDeco = Director::getInstance()->getTextureCache()->addImage("fuera_picross.png");
+
     texMarkX->setTexParameters(textureParams);
 	texDraw->setTexParameters(textureParams);
 	texEmpty->setTexParameters(textureParams);
+
+	texDeco->setTexParameters(textureParams);
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
@@ -96,7 +101,7 @@ bool PicrossGameScene::init()
 	if(Constant::GAMEMODE != GameMode::TRIANGLES)
 	{
 		picrossGridVector = createSquareMatrix(picross);
-		picrossGridLayer = createLayer(picrossGridVector);
+		picrossGridLayer = createGridLayer(picrossGridVector);
 
 		//Se define la constante del lado de cada cuadrado del tablero.
 		Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
@@ -110,6 +115,9 @@ bool PicrossGameScene::init()
 		//Filas y columnas
 		rowNumbers = generateNumbers(picross, false);
 		columnNumbers = generateNumbers(picross, true);
+
+		//Decoración
+		createDecoration(picrossGridVector, picrossGridLayer, picross);
 	}
 	//NO IMPLEMENTADO
 	/*else
@@ -191,11 +199,11 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
 			sprite->getTexture()->setTexParameters(textureParams);
 
 			//Se signa la posición al sprite relativa a la cuadrícula
-			float spriteOffsetX = sprite->getBoundingBox().size.width/2-sprite->getBoundingBox().size.width*picross->getColumnNumber()/2;
-			float spriteOffsetY = -sprite->getBoundingBox().size.height/2+sprite->getBoundingBox().size.height*picross->getRowNumber()/2;
+			int spriteOffsetX = sprite->getBoundingBox().size.width / 2 - sprite->getBoundingBox().size.width*picross->getColumnNumber() / 2;
+			int spriteOffsetY = -sprite->getBoundingBox().size.height / 2 + sprite->getBoundingBox().size.height*picross->getRowNumber() / 2;
 
-			float posX = spriteOffsetX+sprite->getBoundingBox().size.width*j;
-			float posY = spriteOffsetY+sprite->getBoundingBox().size.height*-i;
+			int posX = spriteOffsetX + sprite->getBoundingBox().size.width*j;
+			int posY = spriteOffsetY + sprite->getBoundingBox().size.height*-i;
 
 			sprite->setPosition(posX,posY);
 
@@ -215,12 +223,12 @@ vector<vector<Sprite*>> PicrossGameScene::createSquareMatrix(Picross* picross)
  * @param   spriteVector	Vector de filas de Sprites de un Picross de cualquier tipo.
  * @return  Layer con todos los Sprites que forman un Picross centrada en el medio de la pantalla.
  */
-Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
+Layer* PicrossGameScene::createGridLayer(vector<vector<Sprite*>> spriteVector)
 {
 	//Se crea una capa en el centro de la pantalla a la que se le añadiran los sprites
 	Layer* spriteLayer = Layer::create();
 	spriteLayer->setContentSize(Size(1, 1));
-	initialScale = 3;
+	initialScale = 5;
 	spriteLayer->setScale(initialScale);
 
 	//Se establece la posición
@@ -230,11 +238,27 @@ Layer* PicrossGameScene::createLayer(vector<vector<Sprite*>> spriteVector)
 
 	spriteLayer->setPosition(layerOffsetX, layerOffsetY);
 
-	for(unsigned int i = 0; i < spriteVector.size(); i++) //Fila
-		for(unsigned int j = 0; j < spriteVector[i].size(); j++) //Columna
+	for(int i = 0; i < (int)spriteVector.size(); i++) //Fila
+		for (int j = 0; j < (int)spriteVector[i].size(); j++) //Columna
 			spriteLayer->addChild(spriteVector[i][j],0);
 
 	return spriteLayer;
+}
+
+void PicrossGameScene::createDecoration(vector<vector<Sprite*>> picrossGridVector, cocos2d::Layer* picrossLayer, Picross* picross)
+{
+	int offsetX = picross->getColumnNumber() / 2 * picrossGridVector[0][0]->getBoundingBox().size.width - (picrossGridVector[0].size() + 1) % 2 * picrossGridVector[0][0]->getBoundingBox().size.width / 2;
+	int offsetY = 2 + picross->getRowNumber() / 2 * picrossGridVector[0][0]->getBoundingBox().size.height + picrossGridVector[0].size() % 2 * picrossGridVector[0][0]->getBoundingBox().size.height / 2;
+
+	for (int i = 0; i < picross->getColumnNumber(); i++)
+	{
+		Sprite* deco = Sprite::create("fuera_picross.png");
+
+		deco->setTexture(texDeco);
+		deco->setPosition(-offsetX + deco->getBoundingBox().size.width*i, -offsetY);
+
+		picrossLayer->addChild(deco);
+	}
 }
 
 vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool columnsEnabled)
@@ -488,24 +512,18 @@ void PicrossGameScene::onMouseMove(Event* event)
 	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.height / 2;
 	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.width / 2;
 
-	//Dentro del tablero
-	if (cursorY > offSetY && cursorX > offSetX &&
-		cursorY < offSetY + Constant::PICROSS_SQUARE_SIDE*picrossGridVector.size() &&
-		cursorX < offSetX + Constant::PICROSS_SQUARE_SIDE*picrossGridVector[0].size())
+	if (!drawEnabled && !markXEnabled)
 	{
-		if (!drawEnabled && !markXEnabled)
+		//MOVER
+		if (mouseDown)
 		{
-			//MOVER
-			if (mouseDown)
-			{
-				picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
-					picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
+			picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
+				picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
 
-				numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
+			numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
 
-				lastCursorX = cursorX;
-				lastCursorY = cursorY;
-			}
+			lastCursorX = cursorX;
+			lastCursorY = cursorY;
 		}
 	}
 }

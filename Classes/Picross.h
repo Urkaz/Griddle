@@ -12,8 +12,8 @@ class Picross
 public:
 	Picross(short num, GameMode gm);
 
-	short getRowNumber();
-	short getColumnNumber();
+	int getRowNumber();
+	int getColumnNumber();
 
 	std::vector<std::vector<int>> getSolution();
 

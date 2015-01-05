@@ -43,7 +43,9 @@ private:
 	//Funciones
 	std::vector<std::vector<cocos2d::Sprite*>> createSquareMatrix(Picross* picross);
 
-	cocos2d::Layer* createLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
+	cocos2d::Layer* createGridLayer(std::vector<std::vector<cocos2d::Sprite*>> vector);
+
+	void createDecoration(std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector, cocos2d::Layer* picrossLayer, Picross* picross);
 
 	std::vector<std::vector<cocos2d::Label*>> generateNumbers(Picross* picross, bool columnsEnabled);
 	cocos2d::Layer* createSquareNumbersLayer(std::vector<std::vector<cocos2d::Label*>> rows, std::vector<std::vector<cocos2d::Label*>> columns);
