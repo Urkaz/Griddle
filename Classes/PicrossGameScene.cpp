@@ -523,6 +523,11 @@ void PicrossGameScene::onMouseDown(Event* event)
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				userSquareNum -= 1;
+				if (userSquareNum == solutionNum / 2){
+					if (rightSquare(picross, userSolution) == true){
+						goToWinScene(this);
+					}
+				}
 				break;
 			}
 		}
@@ -543,6 +548,11 @@ void PicrossGameScene::onMouseDown(Event* event)
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				userSquareNum -= 1;
+				if (userSquareNum == solutionNum / 2){
+					if (rightSquare(picross, userSolution) == true){
+						goToWinScene(this);
+					}
+				}
 				break;
 			}
 		}
@@ -660,8 +670,9 @@ bool PicrossGameScene::rightSquare(Picross* picross, vector<vector<int>> userSol
 	{
 		for (int j = 0; j < (int)userSolution[i].size(); j++)
 		{
-			if (picross->getSolution()[i][j] != userSolution[i][j] && userSolution[i][j] != -1)
-				return false;
+			if (userSolution[i][j] == 1)
+				if (picross->getSolution()[i][j] != userSolution[i][j])
+					return false;
 		}
 	}
 	return true;
