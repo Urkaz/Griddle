@@ -2,6 +2,7 @@
 #include "Constant.h"
 #include "PauseScene.h"
 #include "EndScene.h"
+#include "WinScene.h"
 
 
 using namespace cocos2d;
@@ -34,6 +35,9 @@ int initialScale;
 
 bool mouseDown;
 float lastCursorX, lastCursorY;
+
+int solutionNum;
+int userSquareNum;
 
 Scene* PicrossGameScene::createScene()
 {
@@ -296,7 +300,7 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 	for(int i = 0; i < (int)nums.size(); i++)
 	{
 		vector<Label*> individual = vector<Label*>();
-		for(int j = 0; j < cols; j++)
+		for (int j = 0; j < cols; j++)
 		{
 			//intercambiar filas por columnas
 			if (!columnsEnabled)
@@ -306,7 +310,10 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 
 			//contar cantidad de unos
 			if (value == 1)
+			{
 				count++;
+				solutionNum += 1;
+		    }
 			else
 			{
 				if (count > 0) // Si encuentra un 0 por el medio crea una etiqueta y reinicia el contador
@@ -456,6 +463,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 			case -1: //X
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
+				userSquareNum -= 1;
 				break;
 			case 0: //Vacio
 				if (Constant::GAMEMODE == GameMode::NORMAL && picross->getSolution()[i][j] == 0)
@@ -503,11 +511,18 @@ void PicrossGameScene::onMouseDown(Event* event)
 				{
 					userSolution[i][j] = 1;
 					picrossGridVector[i][j]->setTexture(texDraw);
+					userSquareNum += 1;
+					if (userSquareNum == solutionNum / 2){
+						if (rightSquare(picross, userSolution) == true){
+							goToWinScene(this);
+						}
+					}
 				}
 				break;
 			case 1: //Pintado
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
+				userSquareNum -= 1;
 				break;
 			}
 		}
@@ -527,6 +542,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 			case 1: //Pintado
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
+				userSquareNum -= 1;
 				break;
 			}
 		}
@@ -603,6 +619,14 @@ void PicrossGameScene::goToEndScene(Ref *pSender) {
 
 }
 
+
+void PicrossGameScene::goToWinScene(Ref *pSender){
+
+	auto scene = WinScene::createScene();
+	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
+}
+
+
 void PicrossGameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	if (keyCode == EventKeyboard::KeyCode::KEY_KP_MINUS)
@@ -628,4 +652,17 @@ void PicrossGameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event
 void PicrossGameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	//log("Key with keycode %d released", keyCode);
+}
+
+bool PicrossGameScene::rightSquare(Picross* picross, vector<vector<int>> userSolution)
+{
+	for (int i = 0; i < (int)userSolution.size(); i++)
+	{
+		for (int j = 0; j < (int)userSolution[i].size(); j++)
+		{
+			if (picross->getSolution()[i][j] != userSolution[i][j] && userSolution[i][j] != -1)
+				return false;
+		}
+	}
+	return true;
 }

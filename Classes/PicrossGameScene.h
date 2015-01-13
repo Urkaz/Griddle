@@ -25,8 +25,10 @@ public:
 
 	void goToPauseScene(Ref *pSender);
 	void goToEndScene(Ref *pSender);
+	void goToWinScene(Ref *pSender);
 
 	void update(float dt);
+	bool rightSquare(Picross* picross, std::vector<std::vector<int>> userSolution);
 
 private:
 	//Variables
