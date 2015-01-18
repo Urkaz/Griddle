@@ -56,9 +56,6 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Constant.h">
-      <Filter>Classes\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Picross.h">
       <Filter>Classes\Utils</Filter>
     </ClInclude>
@@ -82,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\EndScene.h">
       <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Global.h">
+      <Filter>Classes\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

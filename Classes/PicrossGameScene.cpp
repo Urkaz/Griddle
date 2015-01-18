@@ -1,5 +1,5 @@
 #include "PicrossGameScene.h"
-#include "Constant.h"
+#include "Global.h"
 #include "PauseScene.h"
 #include "EndScene.h"
 
@@ -7,8 +7,8 @@
 using namespace cocos2d;
 using namespace std;
 
-short Constant::PICROSS_SQUARE_SIDE;
-short Constant::FONT_SIZE;
+short Global::PICROSS_SQUARE_SIDE;
+short Global::FONT_SIZE;
 
 Texture2D* texMarkX;
 Texture2D* texDraw;
@@ -86,7 +86,7 @@ bool PicrossGameScene::init()
 	tiempo_ms = 0;
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
-	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
+	picross = new Picross(Global::PUZZLE_NUMBER, Global::GAMEMODE);
 
 	//Inicializar matriz de solución del usuario
 	userSolution = vector<vector<int>>(picross->getRowNumber());
@@ -101,18 +101,18 @@ bool PicrossGameScene::init()
 	}
 
 	//Se comprueba el GameMode para determinar el modo de creación de la matriz.
-	if(Constant::GAMEMODE != GameMode::TRIANGLES)
+	if(Global::GAMEMODE != GameMode::TRIANGLES)
 	{
 		picrossGridVector = createSquareMatrix(picross);
 		picrossGridLayer = createGridLayer(picrossGridVector);
 
 		//Se define la constante del lado de cada cuadrado del tablero.
-		Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 
 		//Config del label de numeros
 		numbersLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
-		Constant::FONT_SIZE = Constant::PICROSS_SQUARE_SIDE*7/8;
-		numbersLabelConfig.fontSize = Constant::FONT_SIZE;
+		Global::FONT_SIZE = Global::PICROSS_SQUARE_SIDE*7/8;
+		numbersLabelConfig.fontSize = Global::FONT_SIZE;
 		numbersLabelConfig.distanceFieldEnabled = true;
 
 		//Filas y columnas
@@ -149,7 +149,7 @@ bool PicrossGameScene::init()
 	lifesLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
 	lifesLabelConfig.fontSize = 25;
 
-	if (Constant::GAMEMODE == GameMode::NORMAL)
+	if (Global::GAMEMODE == GameMode::NORMAL)
 	{
 		lifes = 3;
 		lifeLabel = Label::createWithTTF(lifesLabelConfig, "Vidas " + to_string(lifes));
@@ -171,7 +171,7 @@ bool PicrossGameScene::init()
 
 	this->addChild(picrossGridLayer, 0);
 
-	if (Constant::GAMEMODE != GameMode::TRIANGLES)
+	if (Global::GAMEMODE != GameMode::TRIANGLES)
 	{
 		numbersLayer = createSquareNumbersLayer(rowNumbers, columnNumbers);
 		this->addChild(numbersLayer, 0);
@@ -356,19 +356,19 @@ Layer* PicrossGameScene::createSquareNumbersLayer(vector<vector<Label*>> rows, v
 	Layer* numbers = Layer::create();
 	numbers->setContentSize(Size(1, 1));
 
-	int rowOffsetX = Constant::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
-	int rowOffsetY = picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int rowOffsetX = Global::FONT_SIZE / 2 - picrossGridVector[0].size() / 2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Global::PICROSS_SQUARE_SIDE / 2;
+	int rowOffsetY = picrossGridVector.size() / 2 * Global::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Global::PICROSS_SQUARE_SIDE / 2;
 
-	int colOffsetX = Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
-	int colOffsetY = Constant::FONT_SIZE + picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Constant::PICROSS_SQUARE_SIDE / 2;
+	int colOffsetX = Global::PICROSS_SQUARE_SIDE / 2 - picrossGridVector[0].size() / 2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Global::PICROSS_SQUARE_SIDE / 2;
+	int colOffsetY = Global::FONT_SIZE + picrossGridVector.size() / 2 * Global::PICROSS_SQUARE_SIDE - (picrossGridVector.size() + 1) % 2 * Global::PICROSS_SQUARE_SIDE / 2;
 
 	//FILAS
 	for (int i = 0; i < (int)rows.size(); i++)
 	{
 		for (int j = 0; j < (int)rows[i].size(); j++)
 		{
-			rows[i][j]->setPosition(rowOffsetX + Constant::FONT_SIZE * (j - (int)rows[i].size()),
-				rowOffsetY - (Constant::FONT_SIZE + (Constant::PICROSS_SQUARE_SIDE - Constant::FONT_SIZE)) * i);
+			rows[i][j]->setPosition(rowOffsetX + Global::FONT_SIZE * (j - (int)rows[i].size()),
+				rowOffsetY - (Global::FONT_SIZE + (Global::PICROSS_SQUARE_SIDE - Global::FONT_SIZE)) * i);
 			numbers->addChild(rows[i][j]);
 		}
 	}
@@ -378,8 +378,8 @@ Layer* PicrossGameScene::createSquareNumbersLayer(vector<vector<Label*>> rows, v
 	{
 		for (int j = 0; j < (int)columns[i].size(); j++)
 		{
-			columns[i][j]->setPosition(colOffsetX + Constant::PICROSS_SQUARE_SIDE * i,
-				colOffsetY + Constant::FONT_SIZE * (columns[i].size() - (j + 1)));
+			columns[i][j]->setPosition(colOffsetX + Global::PICROSS_SQUARE_SIDE * i,
+				colOffsetY + Global::FONT_SIZE * (columns[i].size() - (j + 1)));
 			numbers->addChild(columns[i][j]);
 		}
 	}
@@ -395,12 +395,12 @@ void PicrossGameScene::onMouseDown(Event* event)
 	float cursorX = e->getCursorX();
 
 	//Offset del tablero respecto al 0,0
-	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size()/2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.height/2;
-	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size()/2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size()%2 * Constant::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.width/2;
+	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size()/2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector[0].size()%2 * Global::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.height/2;
+	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size()/2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector.size()%2 * Global::PICROSS_SQUARE_SIDE/2 - picrossGridLayer->getBoundingBox().size.width/2;
 
 	//Coordenadas fila(i),columna(j)
-	short i = (cursorY-offSetY)/Constant::PICROSS_SQUARE_SIDE;
-	short j = (cursorX-offSetX)/Constant::PICROSS_SQUARE_SIDE;
+	short i = (cursorY-offSetY)/Global::PICROSS_SQUARE_SIDE;
+	short j = (cursorX-offSetX)/Global::PICROSS_SQUARE_SIDE;
 
 	i = std::abs(i-picross->getRowNumber()+1);
 
@@ -445,8 +445,8 @@ void PicrossGameScene::onMouseDown(Event* event)
 
 	//Dentro del tablero
 	if(cursorY > offSetY && cursorX > offSetX &&
-		cursorY < offSetY+Constant::PICROSS_SQUARE_SIDE*picrossGridVector.size() &&
-		cursorX < offSetX+Constant::PICROSS_SQUARE_SIDE*picrossGridVector[0].size())
+		cursorY < offSetY+Global::PICROSS_SQUARE_SIDE*picrossGridVector.size() &&
+		cursorX < offSetX+Global::PICROSS_SQUARE_SIDE*picrossGridVector[0].size())
 	{
 		//Pintar
 		if(drawEnabled && !markXEnabled)
@@ -458,19 +458,21 @@ void PicrossGameScene::onMouseDown(Event* event)
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				break;
 			case 0: //Vacio
-				if (Constant::GAMEMODE == GameMode::NORMAL && picross->getSolution()[i][j] == 0)
+				if (Global::GAMEMODE == GameMode::NORMAL && picross->getSolution()[i][j] == 0)
 				{
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
 
-					lifes -= 1;
+					if (!Global::DEBUG)
+						lifes -= 1;
+
 					lifeLabel->setString("Vidas " + to_string(lifes));
 					
 					if (lifes == 0){
 						goToEndScene(this);
 					}
 				}
-				else if (Constant::GAMEMODE == GameMode::BOMB && picross->getSolution()[i][j] == 0)
+				else if (Global::GAMEMODE == GameMode::BOMB && picross->getSolution()[i][j] == 0)
 				{
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
@@ -537,6 +539,12 @@ void PicrossGameScene::onMouseDown(Event* event)
 			mouseDown = true;
 		}
 	}
+	else
+	{
+		lastCursorX = cursorX;
+		lastCursorY = cursorY;
+		mouseDown = true;
+	}
 }
 
 void PicrossGameScene::onMouseUp(Event* event)
@@ -559,28 +567,27 @@ void PicrossGameScene::onMouseMove(Event* event)
 	float cursorX = e->getCursorX();
 
 	//Offset del tablero respecto al 0,0
-	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.height / 2;
-	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size() / 2 * Constant::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Constant::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.width / 2;
+	int offSetX = picrossGridLayer->getPosition().x - picrossGridVector[0].size() / 2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector[0].size() % 2 * Global::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.height / 2;
+	int offSetY = picrossGridLayer->getPosition().y - picrossGridVector.size() / 2 * Global::PICROSS_SQUARE_SIDE - picrossGridVector.size() % 2 * Global::PICROSS_SQUARE_SIDE / 2 - picrossGridLayer->getBoundingBox().size.width / 2;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	if (!drawEnabled && !markXEnabled)
+	//MOVER
+	if (mouseDown)
 	{
-		//MOVER
-		if (mouseDown)
+		if (picrossGridLayer->getPositionX() - (lastCursorX - cursorX) < visibleSize.width * 9 / 10 && picrossGridLayer->getPositionX() - (lastCursorX - cursorX) > visibleSize.width * 1.5 / 10)
 		{
-			if (cursorX < visibleSize.width * 9 / 10 && cursorX > visibleSize.width * 1.5 / 10 &&
-				cursorY < visibleSize.height * 9 / 10 && cursorY > visibleSize.height / 10)
-			{
-				picrossGridLayer->setPosition(picrossGridLayer->getPositionX() - (lastCursorX - cursorX),
-					picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
-
-				numbersLayer->setPosition(picrossGridLayer->getPositionX(), picrossGridLayer->getPositionY());
-
-				lastCursorX = cursorX;
-				lastCursorY = cursorY;
-			}
+			picrossGridLayer->setPositionX(picrossGridLayer->getPositionX() - (lastCursorX - cursorX));
+			numbersLayer->setPositionX(picrossGridLayer->getPositionX());
 		}
+		if (picrossGridLayer->getPositionY() - (lastCursorY - cursorY) < visibleSize.height * 9 / 10 && picrossGridLayer->getPositionY() - (lastCursorY - cursorY) > visibleSize.height / 10)
+		{
+			picrossGridLayer->setPositionY(picrossGridLayer->getPositionY() - (lastCursorY - cursorY));
+			numbersLayer->setPositionY(picrossGridLayer->getPositionY());
+		}
+
+		lastCursorX = cursorX;
+		lastCursorY = cursorY;
 	}
 }
 
@@ -611,7 +618,7 @@ void PicrossGameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event
 		{
 			picrossGridLayer->setScale(picrossGridLayer->getScale() - 0.1f);
 			numbersLayer->setScale(numbersLayer->getScale() - 0.1f / initialScale);
-			Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 		}
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_KP_PLUS)
@@ -620,7 +627,7 @@ void PicrossGameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event
 		{
 			picrossGridLayer->setScale(picrossGridLayer->getScale() + 0.1f);
 			numbersLayer->setScale(numbersLayer->getScale() + 0.1f / initialScale);
-			Constant::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 		}
 	}
 }

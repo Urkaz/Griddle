@@ -1,13 +1,13 @@
 #include "PanelSelector.h"
 #include <string>
 #include <iostream>
-#include "Constant.h"
+#include "Global.h"
 
 USING_NS_CC;
 using namespace std;
 
 Texture2D::TexParams texParams;
-short Constant::SELECTOR_SQUARE_SIDE;
+short Global::SELECTOR_SQUARE_SIDE;
 
 PanelSelector::PanelSelector(int num)
 {
@@ -82,10 +82,15 @@ void PanelSelector::createLayer()
 					firstPicrossSpriteIndexCol = j;
 					setFirst = true;
 				}
-				//Texture2D* texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
+				
 				Texture2D* texture;
+				bool completed;
 
-				bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(picrossID[i][j])).c_str());
+				if (!Global::DEBUG)
+					completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(picrossID[i][j])).c_str());
+				else
+					completed = true;
+
 				int tiempo = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(picrossID[i][j])+"_tiempo").c_str());
 				//log("Completed %s", completed ? "true" : "false");
 
@@ -93,7 +98,7 @@ void PanelSelector::createLayer()
 					texture = Director::getInstance()->getTextureCache()->addImage("unknown.png");
 				else
 				{
-					if (tiempo < Constant::TIME_LIMIT*60)
+					if (tiempo < Global::TIME_LIMIT*60)
 						texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + ".png");
 					else
 						texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(picrossID[i][j]) + "_u.png");
@@ -123,7 +128,7 @@ void PanelSelector::createLayer()
 	gridVector = matrix;
 	gridLayer = layer;
 
-	Constant::SELECTOR_SQUARE_SIDE = gridVector[0][0]->getBoundingBox().size.width;
+	Global::SELECTOR_SQUARE_SIDE = gridVector[0][0]->getBoundingBox().size.width;
 }
 
 Layer* PanelSelector::getLayer()

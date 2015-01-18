@@ -6,8 +6,8 @@
 using namespace cocos2d;
 using namespace std;
 
-short Constant::PUZZLE_NUMBER = 0;
-short Constant::CURRENT_PACK_INDEX = 0;
+short Global::PUZZLE_NUMBER = 0;
+short Global::CURRENT_PACK_INDEX = 0;
 const int mainScale = 5;
 
 Sprite* personaje_selector;
@@ -48,14 +48,14 @@ bool PicrossSelectorScene::init()
     textparams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     
 	//Inicializar variables
-	if (Constant::CURRENT_PACK_INDEX == 0)
+	if (Global::CURRENT_PACK_INDEX == 0)
 	{
 		mainIndex = 1;
-		Constant::CURRENT_PACK_INDEX = mainIndex;
+		Global::CURRENT_PACK_INDEX = mainIndex;
 	}
 	else
 	{
-		mainIndex = Constant::CURRENT_PACK_INDEX;
+		mainIndex = Global::CURRENT_PACK_INDEX;
 	}
 
 	//Animacióm
@@ -99,11 +99,11 @@ bool PicrossSelectorScene::init()
     addChild(personaje_selector);
 
 	//Imagen que indica el modo de juego
-	if (Constant::GAMEMODE == GameMode::NORMAL)
+	if (Global::GAMEMODE == GameMode::NORMAL)
 		gameModeSprite = Sprite::create("modo_normal.png");
-	else if (Constant::GAMEMODE == GameMode::FREE)
+	else if (Global::GAMEMODE == GameMode::FREE)
 		gameModeSprite = Sprite::create("modo_libre.png");
-	else if (Constant::GAMEMODE == GameMode::BOMB)
+	else if (Global::GAMEMODE == GameMode::BOMB)
 		gameModeSprite = Sprite::create("modo_bomba.png");
 
 	gameModeSprite->setPosition(gameModeSprite->getBoundingBox().size.width/2, visibleSize.height - gameModeSprite->getBoundingBox().size.height/2);
@@ -122,7 +122,7 @@ bool PicrossSelectorScene::init()
 	mainLayer->setPosition(layerOffsetX, layerOffsetY);
 
 	//Panel Derecho
-	if (mainIndex + 1 <= Constant::MAX_PACK_INDEX && Constant::MAX_PACK_INDEX != 1)
+	if (mainIndex + 1 <= Global::MAX_PACK_INDEX && Global::MAX_PACK_INDEX != 1)
 	{
 		rightPanel = new PanelSelector(mainIndex+1);
 		rightLayer = rightPanel->getLayer();
@@ -133,7 +133,7 @@ bool PicrossSelectorScene::init()
 		addChild(rightLayer);
 	}
 	//Panel Izquierdo
-	if (mainIndex - 1 > 0 && Constant::MAX_PACK_INDEX != 1)
+	if (mainIndex - 1 > 0 && Global::MAX_PACK_INDEX != 1)
 	{
 		leftPanel = new PanelSelector(mainIndex-1);
 		leftLayer = leftPanel->getLayer();
@@ -146,7 +146,7 @@ bool PicrossSelectorScene::init()
 	addChild(mainLayer);
 
 	//Seleccionar primer picross del panel
-	Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
+	Global::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
 
 	//Label del diálogo del personaje
 	labelParams.fontFilePath = "LondrinaSolid-Regular.otf";
@@ -215,7 +215,7 @@ bool PicrossSelectorScene::init()
 	picrossTimeLabel->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
 	picrossTimeLabel->setColor(Color3B(0, 100, 200));
 
-	if (Constant::GAMEMODE == GameMode::NORMAL)
+	if (Global::GAMEMODE == GameMode::NORMAL)
 	{
 		picrossLivesLabel = Label::createWithTTF(labelParams, "Fallos: ?");
 		picrossLivesLabel->setPosition(PicrossPreview->getPositionX(), PicrossPreview->getPositionY() - 160);
@@ -229,7 +229,7 @@ bool PicrossSelectorScene::init()
 	this->addChild(picrossTimeLabel);
 	this->addChild(picrossSizeLabel);
 
-	setPreviewData(Constant::PUZZLE_NUMBER);
+	setPreviewData(Global::PUZZLE_NUMBER);
 	setPreviewDataVisible(false);
 
 	//Activar el método update
@@ -245,16 +245,16 @@ void PicrossSelectorScene::setPreviewDataVisible(bool visible)
 	picrossNameLabel->setVisible(visible);
 	picrossTimeLabel->setVisible(visible);
 	picrossSizeLabel->setVisible(visible);
-	if (Constant::GAMEMODE == GameMode::NORMAL)
+	if (Global::GAMEMODE == GameMode::NORMAL)
 		picrossLivesLabel->setVisible(visible);
 }
 
 void PicrossSelectorScene::setPreviewData(int num)
 {
 	//Picross auxiliar para los datos de la vista previa
-	auxPicross = new Picross(num, Constant::GAMEMODE);
+	auxPicross = new Picross(num, Global::GAMEMODE);
 
-	bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(Constant::PUZZLE_NUMBER)).c_str());
+	bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(Global::PUZZLE_NUMBER)).c_str());
 
 	picrossSizeLabel->setString("(" + to_string(auxPicross->getRowNumber()) + "x" + to_string(auxPicross->getColumnNumber()) + ")");
 
@@ -262,26 +262,30 @@ void PicrossSelectorScene::setPreviewData(int num)
 	{
 		picrossNameLabel->setString("????");
 		picrossTimeLabel->setString("Tiempo: ?:??");
-		if (Constant::GAMEMODE == GameMode::NORMAL)
+		picrossTimeLabel->setColor(Color3B(0, 100, 200));
+		if (Global::GAMEMODE == GameMode::NORMAL)
+		{
 			picrossLivesLabel->setString("Fallos: ?");
+			picrossLivesLabel->setColor(Color3B(0, 100, 200));
+		}
 	}
 	else
 	{
 		picrossNameLabel->setString(auxPicross->getName());
 
 		//TIEMPO
-		int pv_tiempo = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Constant::PUZZLE_NUMBER) + "_tiempo").c_str());
+		int pv_tiempo = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_tiempo").c_str());
 		picrossTimeLabel->setString("Tiempo " + to_string((int)(pv_tiempo / 60)) + ":" +
 			(to_string((int)pv_tiempo % 60).length() < 2 ? "0" + to_string((int)pv_tiempo % 60) : to_string((int)pv_tiempo % 60)));
-		if (pv_tiempo < Constant::TIME_LIMIT*60)
+		if (pv_tiempo < Global::TIME_LIMIT*60)
 			picrossTimeLabel->setColor(Color3B(102, 255, 51));
 		else
 			picrossTimeLabel->setColor(Color3B(245, 51, 0));
 
 		//FALLOS
-		if (Constant::GAMEMODE == GameMode::NORMAL)
+		if (Global::GAMEMODE == GameMode::NORMAL)
 		{
-			int pv_fallos = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Constant::PUZZLE_NUMBER) + "_fallos").c_str());
+			int pv_fallos = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_fallos").c_str());
 			picrossLivesLabel->setString("Fallos: " + to_string(pv_fallos));
 			if (pv_fallos == 0)
 				picrossLivesLabel->setColor(Color3B(102, 255, 51));
@@ -301,10 +305,10 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 		float cursorX = e->getCursorX();
 
 		//RIGHT PANEL
-		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX  && Constant::MAX_PACK_INDEX != 1)
+		if (mainIndex + 1 <= Global::MAX_PACK_INDEX  && Global::MAX_PACK_INDEX != 1)
 		{
 			//Offset del rightPanel respecto al 0,0
-			int rightSide = (int)(Constant::SELECTOR_SQUARE_SIDE * rightLayer->getScale());
+			int rightSide = (int)(Global::SELECTOR_SQUARE_SIDE * rightLayer->getScale());
 			int rightOffSetX = rightLayer->getPosition().x - 5 / 2 * rightSide - 5 % 2 * rightSide / 2 - rightLayer->getBoundingBox().size.height / 2;
 			int rightOffSetY = rightLayer->getPosition().y - 5 / 2 * rightSide - 5 % 2 * rightSide / 2 - rightLayer->getBoundingBox().size.width / 2;
 
@@ -318,10 +322,10 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 			}
 		}
 		//LEFT PANEL
-		if (mainIndex - 1 > 0 && Constant::MAX_PACK_INDEX != 1)
+		if (mainIndex - 1 > 0 && Global::MAX_PACK_INDEX != 1)
 		{
 			//Offset del leftPanel respecto al 0,0
-			int leftSide = (int)(Constant::SELECTOR_SQUARE_SIDE * leftLayer->getScale());
+			int leftSide = (int)(Global::SELECTOR_SQUARE_SIDE * leftLayer->getScale());
 			int leftOffSetX = leftLayer->getPosition().x - 5 / 2 * leftSide - 5 % 2 * leftSide / 2 - leftLayer->getBoundingBox().size.height / 2;
 			int leftOffSetY = leftLayer->getPosition().y - 5 / 2 * leftSide - 5 % 2 * leftSide / 2 - leftLayer->getBoundingBox().size.width / 2;
 
@@ -336,7 +340,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 		}
 
 		//Offset del mainPanel respecto al 0,0
-		int mainSide = (int)(Constant::SELECTOR_SQUARE_SIDE * mainLayer->getScale());
+		int mainSide = (int)(Global::SELECTOR_SQUARE_SIDE * mainLayer->getScale());
 		int mainOffSetX = mainLayer->getPosition().x - 5 / 2 * mainSide - 5 % 2 * mainSide / 2 - mainLayer->getBoundingBox().size.height / 2;
 		int mainOffSetY = mainLayer->getPosition().y - 5 / 2 * mainSide - 5 % 2 * mainSide / 2 - mainLayer->getBoundingBox().size.width / 2;
 
@@ -361,11 +365,11 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 				{
 					PicrossPreview->setTexture(mainPanel->getPicrossTextureIndex(i,j));
 
-					Constant::PUZZLE_NUMBER = id;
+					Global::PUZZLE_NUMBER = id;
 
-					setPreviewData(Constant::PUZZLE_NUMBER);
+					setPreviewData(Global::PUZZLE_NUMBER);
 
-					log("PICROSS SELECCIONADO: %d", Constant::PUZZLE_NUMBER);
+					log("PICROSS SELECCIONADO: %d", Global::PUZZLE_NUMBER);
 				}
 			}
 			else
@@ -401,11 +405,11 @@ void PicrossSelectorScene::enableLeftAnim()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	//desplazamientos totales a realizar
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	sideSpace = Global::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
 	mainSpace = mainLayer->getPositionX();
 	mainScaleSpace = (float)(mainScale - mainScale / 1.7);
 
-	if (mainIndex + 2 <= Constant::MAX_PACK_INDEX)
+	if (mainIndex + 2 <= Global::MAX_PACK_INDEX)
 	{
 		auxPanel = new PanelSelector(mainIndex + 2);
 		auxLayer = auxPanel->getLayer();
@@ -413,7 +417,7 @@ void PicrossSelectorScene::enableLeftAnim()
 		auxLayer->setScale(rightLayer->getScale());
 		addChild(auxLayer);
 	}
-	if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	if (mainIndex + 1 <= Global::MAX_PACK_INDEX)
 	{
 		moveLeft = true;
 	}
@@ -460,7 +464,7 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 	//El nuevo panel entra en pantalla
 	if (scaleFinish)
 	{
-		if (mainIndex + 2 <= Constant::MAX_PACK_INDEX)
+		if (mainIndex + 2 <= Global::MAX_PACK_INDEX)
 		{
 			if (sideSpace > auxCount + mov)
 			{
@@ -485,7 +489,7 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 		mainPanel = rightPanel;
 		mainLayer = mainPanel->getLayer();
 
-		if (mainIndex + 1 < Constant::MAX_PACK_INDEX)
+		if (mainIndex + 1 < Global::MAX_PACK_INDEX)
 		{
 			rightPanel = auxPanel;
 			rightLayer = rightPanel->getLayer();
@@ -511,7 +515,7 @@ void PicrossSelectorScene::movePanelsToLeft(float dt)
 
 		packNameLabel->setString(mainPanel->getPanelName());
 		PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
-		Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
+		Global::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
 
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
@@ -528,7 +532,7 @@ void PicrossSelectorScene::enableRightAnim()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	//Desplazamientos totales a realizar
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
+	sideSpace = Global::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2;
 	mainSpace = mainLayer->getPositionX();
 	mainScaleSpace = (float)(mainScale - mainScale / 1.7);
 
@@ -568,7 +572,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 	else mainFinish = true;
 	
 	//Derecho se sale de la pantalla
-	if (sideSpace > rightCount + mov && mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	if (sideSpace > rightCount + mov && mainIndex + 1 <= Global::MAX_PACK_INDEX)
 	{
 		rightLayer->setPositionX(rightLayer->getPositionX() + mov);
 		rightCount += mov;
@@ -639,7 +643,7 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 
 		packNameLabel->setString(mainPanel->getPanelName());
 		PicrossPreview->setTexture(mainPanel->getFirstPicrossTexture());
-		Constant::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
+		Global::PUZZLE_NUMBER = mainPanel->getFirstPicrossID();
 
 		leftCount = 0, mainCount = 0, rightCount = 0, auxCount = 0;
 		mainCountScale = 0;
@@ -663,7 +667,7 @@ void PicrossSelectorScene::returnToMainMenu(Ref *pSender)
 {
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
-	Constant::CURRENT_PACK_INDEX = mainIndex;
+	Global::CURRENT_PACK_INDEX = mainIndex;
 
 	auto scene = MainMenuScene::createScene();
 
@@ -672,7 +676,7 @@ void PicrossSelectorScene::returnToMainMenu(Ref *pSender)
 
 void PicrossSelectorScene::enableSelect()
 {
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
+	sideSpace = Global::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
 	mainSpace = sideSpace;
 
 	selectEnabled = true;
@@ -682,7 +686,7 @@ void PicrossSelectorScene::enableUnselect(Ref *pSender)
 {
 	setPreviewDataVisible(false);
 
-	sideSpace = Constant::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
+	sideSpace = Global::SELECTOR_SQUARE_SIDE * mainScale / 1.7 * 5 / 2+5;
 	mainSpace = sideSpace;
 
 	unselectEnabled = true;
@@ -709,7 +713,7 @@ void PicrossSelectorScene::selectPanel(float dt)
 	else leftFinish = true;
 
 	//Derecho se sale de la pantalla
-	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Global::MAX_PACK_INDEX)
 	{
 		rightLayer->setPositionX(rightLayer->getPositionX() + mov*1.3);
 		rightCount += mov*1.3;
@@ -725,13 +729,13 @@ void PicrossSelectorScene::selectPanel(float dt)
 		{
 			leftLayer->setPositionX(-sideSpace);
 		}
-		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+		if (mainIndex + 1 <= Global::MAX_PACK_INDEX)
 		{
 			rightLayer->setPositionX(visibleSize.width+sideSpace);
 		}
 		mainLayer->setPositionX(visibleSize.width/2-mainSpace);
 		
-		setPreviewData(Constant::PUZZLE_NUMBER);
+		setPreviewData(Global::PUZZLE_NUMBER);
 		setPreviewDataVisible(true);
 
 		leftCount = 0, mainCount = 0, rightCount = 0;
@@ -762,7 +766,7 @@ void PicrossSelectorScene::unselectPanel(float dt)
 	else leftFinish = true;
 
 	//Derecho entra en la pantalla
-	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+	if (sideSpace > rightCount + mov*1.3 && mainIndex + 1 <= Global::MAX_PACK_INDEX)
 	{
 		rightLayer->setPositionX(rightLayer->getPositionX() - mov*1.3);
 		rightCount += mov*1.3;
@@ -778,7 +782,7 @@ void PicrossSelectorScene::unselectPanel(float dt)
 		{
 			leftLayer->setPositionX(0);
 		}
-		if (mainIndex + 1 <= Constant::MAX_PACK_INDEX)
+		if (mainIndex + 1 <= Global::MAX_PACK_INDEX)
 		{
 			rightLayer->setPositionX(visibleSize.width);
 		}

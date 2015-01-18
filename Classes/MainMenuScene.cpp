@@ -8,8 +8,8 @@ using namespace std;
 USING_NS_CC;
 
 //Constante redefinida
-GameMode Constant::GAMEMODE;
-
+GameMode Global::GAMEMODE;
+bool Global::DEBUG;
 
 Texture2D::TexParams params;
 Texture2D* titulotexture;
@@ -33,7 +33,6 @@ Sprite* titulo;
 Sprite* avion;
 
 
-
 Scene* MainMenuScene::createScene()
 {
 	auto scene = Scene::create();
@@ -48,6 +47,8 @@ bool MainMenuScene::init()
 	{
 		return false;
 	}
+
+	Global::DEBUG = true;
 
 	UserDefault::getInstance()->setBoolForKey("n_5", true);
 	UserDefault::getInstance()->setIntegerForKey("n_5_fallos", 2);
@@ -165,7 +166,7 @@ bool MainMenuScene::init()
 
 void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
-	Constant::GAMEMODE = GameMode::NORMAL;
+	Global::GAMEMODE = GameMode::NORMAL;
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
@@ -177,7 +178,7 @@ void MainMenuScene::goToNormalSelector(Ref *pSender) {
 
 void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
-	Constant::GAMEMODE = GameMode::FREE;
+	Global::GAMEMODE = GameMode::FREE;
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
@@ -188,7 +189,7 @@ void MainMenuScene::goToFreeSelector(Ref *pSender) {
 
 void MainMenuScene::goToBombSelector(Ref *pSender) {
 
-	Constant::GAMEMODE = GameMode::BOMB;
+	Global::GAMEMODE = GameMode::BOMB;
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
@@ -199,7 +200,7 @@ void MainMenuScene::goToBombSelector(Ref *pSender) {
 
 void MainMenuScene::goToTutorialScene(Ref *pSender) {
     
-    //Constant::GAMEMODE = GameMode::FREE;
+    //Global::GAMEMODE = GameMode::FREE;
     
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
     

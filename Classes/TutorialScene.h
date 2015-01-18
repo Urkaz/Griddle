@@ -2,7 +2,7 @@
 
 #include "cocos2d.h"
 #include "Picross.h"
-#include "Constant.h"
+#include "Global.h"
 
 class TutorialScene: public cocos2d::Layer
 {

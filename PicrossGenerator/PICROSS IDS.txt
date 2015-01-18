@@ -1,24 +1,49 @@
  - (PICROSS::GAMEMODE)
    |
-   |- (PUZZLE_NUMBER)->(PICROSS::NOMBRE)
+   |- PACK.(PUZZLE_NUMBER)->(PICROSS::NOMBRE)
 
  --------------------------------------
 
  - n (NORMAL)
    |
-   |- 0		-> Tostadora (Test)
-   |- 1		-> Cuchillo
-   |- 2		-> Tenedor
-   |- 3		-> Sartén //NO SE PUEDE HACER
-   |- 4		-> Vitrocerámica
-   |- 5		-> Cuchara //NO SE PUEDE HACER
-   |- 6		-> Horno
-   |- 7		-> Plato //REHACER IMAGEN
-   |- 8		-> Olla
-   |- 9		-> Jarra de agua
-   |- 10	-> Salero
-   |- 11	-> Copa
-   |- 12	-> Tostadora
+   |- 0.0	-> Tostadora (Test)
+   |- 1.1	-> Cuchillo
+   |- 1.2	-> Tenedor
+   |- 1.3	-> Sartén			//NO SE PUEDE COMPLETAR
+   |- 1.4	-> Vitrocerámica
+   |- 1.5	-> Cuchara			//NO SE PUEDE COMPLETAR
+   |- 1.6	-> Horno
+   |- 1.7	-> Plato			//REHACER IMAGEN
+   |- 1.8	-> Olla
+   |- 1.9	-> Jarra de agua
+   |- 1.10	-> Salero
+   |- 1.11	-> Copa
+   |- 1.12	-> Tostadora
+   |- 2.13	-> Uvas				//NO SE PUEDE COMPLETAR
+   |- 2.14	-> Cerezas	//VOLVER		//REHACER IMAGEN
+   |- 2.15	-> Naranja
+   |- 2.16	-> Pera		//VOLVER		//REHACER IMAGEN
+   |- 2.17	-> Plátanos	//VOLVER		//REHACER IMAGEN
+   |- 2.18	-> Piña
+   |- 2.19	-> Sandía
+   |- 2.20	-> Kiwi
+   |- 2.21	-> Fresa
+   |- 2.22	-> Tamarillo		//NO SE PUEDE COMPLETAR
+   |- 2.23	-> Durión
+   |- 2.24	-> 
+   |- 3.25	-> Ancla
+   |- 3.26	-> (NO SE PUEDE USAR ESTE ID: Buscar "Substitute character" en Wikipedia)
+   |- 3.27	-> Timón
+   |- 3.28	-> Ballena
+   |- 3.29	-> Barco
+   |- 3.30	-> Isla
+   |- 3.31	-> Pez linterna //FALTA
+   |- 3.32	-> Pez de coral
+   |- 3.33	-> Calamar //VOLVER
+   |- 3.34	-> Cangrejo
+   |- 3.35	-> 
+   |- 3.36	-> 
+   |- 3.37	-> 
 
  --------------------------------------
 
