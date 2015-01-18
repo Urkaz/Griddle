@@ -473,6 +473,11 @@ void PicrossGameScene::onMouseDown(Event* event)
 
 					lifes -= 1;
 					lifeLabel->setString("Vidas " + to_string(lifes));
+					if (userSquareNum == solutionNum / 2){
+						if (rightSquare(picross, userSolution) == true){
+							goToWinScene(this);
+						}
+					}
 					
 					if (lifes == 0){
 						goToEndScene(this);
@@ -489,7 +494,11 @@ void PicrossGameScene::onMouseDown(Event* event)
 					int radius = max(picross->getRowNumber(), picross->getColumnNumber()) * 1 / 4;
 
 					log("EXPLOSION EN (%d,%d). RADIO DE %d CASILLAS", randRow, randCol, radius);
-
+					if (userSquareNum == solutionNum / 2){
+						if (rightSquare(picross, userSolution) == true){
+							goToWinScene(this);
+						}
+					}
 					//Explosión
 					for (int i = -radius; i <= radius; i++)
 					{
