@@ -1,5 +1,6 @@
 #include "EndScene.h"
 #include "MainMenuScene.h"
+#include "PicrossSelectorScene.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -28,33 +29,40 @@ bool EndScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto menuItem = MenuItemImage::create("boton_anterior.png",
-		"boton_anterior.png",
-		CC_CALLBACK_1(EndScene::goToMainMenu, this));
-
-	auto menu = Menu::create(menuItem, NULL);
-
-	menu->setPosition(visibleSize.width - menuItem->getBoundingBox().size.width / 2, visibleSize.height - menuItem->getBoundingBox().size.height / 2);
-
-	addChild(menu);
+	auto menuItem = MenuItemImage::create("salir2.png",
+		"salir2p.png",
+		CC_CALLBACK_1(EndScene::goToPicrossSelectorScene, this));
     
-    gameOver = Sprite::create("gameover.png");
-    gameOver->setPosition(Point((visibleSize.width  /2), (visibleSize.height /2)));
-    addChild(gameOver);
+    auto menuItem2 = MenuItemImage::create("perder.png", "perder.png");
+
+	auto menu = Menu::create(menuItem2, menuItem, NULL);
     
+    menuItem->setScale(0.3);
+    
+    menuItem2->setScale(0.18);
+
+    menu->alignItemsVerticallyWithPadding(visibleSize.height / 20);
+    
+	
+    
+    auto background = Sprite::create("fondo_prueba2.png");
+    background->setScale(2, 2);
+    background->setPosition(visibleSize.width/2, visibleSize.height /2);
+    addChild(background, 0);
+    addChild(menu);
     
     return true;
 
     
 }
 
-void EndScene::goToMainMenu(Ref *pSender) {
+void EndScene::goToPicrossSelectorScene(Ref *pSender) {
 
 	//Constant::GAMEMODE = GameMode::NORMAL;
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 
-	auto scene = MainMenuScene::createScene();
+    auto scene = PicrossSelectorScene::createScene();
 
 	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5, scene));
 }

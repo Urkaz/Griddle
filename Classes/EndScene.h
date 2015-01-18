@@ -18,6 +18,6 @@ public:
 	CREATE_FUNC(EndScene);
 
 	// Added
-	void goToMainMenu(Ref *pSender);
+	void goToPicrossSelectorScene(Ref *pSender);
 
 };

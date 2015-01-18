@@ -53,7 +53,7 @@ bool PicrossGameScene::init()
 	{
 		return false;
 	}
-
+   
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
@@ -141,6 +141,13 @@ bool PicrossGameScene::init()
 
 	pauseMenu->setPosition(visibleSize.width - pauseItem->getBoundingBox().size.width / 2, visibleSize.height - pauseItem->getBoundingBox().size.height / 2);
 
+   
+    auto background = Sprite::create("fondo_prueba.png");
+    background->setScale(2, 2);
+    background->setPosition(visibleSize.width/2, visibleSize.height /2);
+    addChild(background, 0);
+    
+    
 	//Botones pintar y marcar X
 	drawEnabled = true;
 	markXEnabled = false;
