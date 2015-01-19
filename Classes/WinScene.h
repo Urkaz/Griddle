@@ -1,5 +1,5 @@
 #include "Picross.h"
-#include "Constant.h"
+#include "Global.h"
 //#include "UIWidget.h"
 
 class WinScene : public cocos2d::Layer

@@ -1,6 +1,6 @@
 #include "TutorialScene.h"
 #include "MainMenuScene.h"
-#include "Constant.h"
+#include "Global.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -254,7 +254,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T7->getPixelsWide() / imagen_tutorial->getContentSize().width*3,
 				T7->getPixelsHigh() / imagen_tutorial->getContentSize().height*3);
 
-            labelTutorial->setString("Una vez rellenadas todas las casillas, se descubrirá la ilustración oculta,\nsiempre y cuando lo termines sin fallar\no en menos de "+to_string(Constant::TIME_LIMIT)+" minutos.\n(Dependiendo del modo de juego)");
+            labelTutorial->setString("Una vez rellenadas todas las casillas, se descubrirá la ilustración oculta,\nsiempre y cuando lo termines sin fallar\no en menos de "+to_string(Global::TIME_LIMIT)+" minutos.\n(Dependiendo del modo de juego)");
             break;
         case 8:
 			imagen_tutorial->setTexture(T8);

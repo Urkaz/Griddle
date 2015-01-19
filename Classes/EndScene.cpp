@@ -58,7 +58,7 @@ bool EndScene::init()
 
 void EndScene::goToPicrossSelectorScene(Ref *pSender) {
 
-	//Constant::GAMEMODE = GameMode::NORMAL;
+	//Global::GAMEMODE = GameMode::NORMAL;
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 

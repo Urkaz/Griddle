@@ -2,7 +2,7 @@
 
 #include "Picross.h"
 
-class Constant
+class Global
 {
 public:
 	static GameMode GAMEMODE;
@@ -13,9 +13,11 @@ public:
 
 	static short FONT_SIZE;
 
-	static const short MAX_PACK_INDEX = 2;
+	static const short MAX_PACK_INDEX = 3;
 	static short CURRENT_PACK_INDEX;
 
 	static const short TIME_LIMIT = 5;
+
+	static bool DEBUG;
 };
 
