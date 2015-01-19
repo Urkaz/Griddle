@@ -21,21 +21,26 @@ bool PauseScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     // Creating menu
-    auto playItem = MenuItemImage::create("boton_continuar.png",
-                                          "boton_continuar_pulsado.png",
+    auto playItem = MenuItemImage::create("continuar.png",
+                                          "continuarpulsado.png",
                                           CC_CALLBACK_1(PauseScene::goToPicrossGameScene, this));
     
-    auto playItem2 = MenuItemImage::create("boton_salir.png",
-                                           "boton_salir_pulsado.png",
+    auto playItem2 = MenuItemImage::create("salirs.png",
+                                           "salir.png",
                                            CC_CALLBACK_1(PauseScene::goToPicrossSelector, this));
+    auto playItem3= MenuItemImage::create("pausado.png", "pausado.png");
     
-    auto menu = Menu::create(playItem, playItem2 , NULL);
+    playItem->setScale(0.2);
+    playItem2->setScale(0.2);
+    playItem3->setScale(0.2);
     
-    menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
+    auto menu = Menu::create(playItem3,playItem, playItem2 , NULL);
+    
+    menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
     this->addChild(menu, 1);
     
     // Adding background
-    auto background = Sprite::create("Background.png");
+    auto background = Sprite::create("fondo_prueba2.png");
     
     background->setPosition(Point((visibleSize.width  /2),
                                   (visibleSize.height /2)));

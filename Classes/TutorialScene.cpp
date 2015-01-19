@@ -164,7 +164,7 @@ bool TutorialScene::init()
 	labelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
 	labelConfig.fontSize = 25;
 
-    labelTutorial = Label::createWithTTF(labelConfig, "\nBienvenido al tutorial.\nMe llaman LaraGay, seré tu tutor");
+    labelTutorial = Label::createWithTTF(labelConfig, "\nBienvenido al tutorial.\nMe llaman Pepe, seré tu tutor");
     labelTutorial->setPosition(Point((visibleSize.width  /1.8), (visibleSize.height /5)));
     labelTutorial->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
     labelTutorial->setColor(Color3B(0, 100, 200));

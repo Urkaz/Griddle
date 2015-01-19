@@ -15,6 +15,6 @@ public:
 	CREATE_FUNC(WinScene);
 
 	// Added
-	void goToMainMenu(Ref *pSender);
+	void goToSelectorScene(Ref *pSender);
 
 };
