@@ -1,5 +1,7 @@
 #include "WinScene.h"
 #include "PicrossSelectorScene.h"
+#include "PicrossGameScene.h"
+#include "Global.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -7,10 +9,11 @@ using namespace std;
 
 USING_NS_CC;
 
-
+TTFConfig LifesLabelConfig;
 TTFConfig labelConfiguracion;
 Label* labelGanador;
-
+Label* LifeLabel;
+Label* TimeLabel;
 
 Scene* WinScene::createScene()
 {
@@ -29,7 +32,28 @@ bool WinScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	
+	Life = Global::LIFE;
+	Time = Global::TIME;
+	//Se muestran las vidas
+	LifesLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
+	LifesLabelConfig.fontSize = 25;
 
+	if (Global::GAMEMODE == GameMode::NORMAL)
+	{
+		LifeLabel = Label::createWithTTF(LifesLabelConfig, "Vidas " + to_string(Life));
+		LifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
+		LifeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+		this->addChild(LifeLabel, 1);
+	}
+
+	TimeLabel = Label::createWithTTF(LifesLabelConfig, "Tiempo 0:00");
+	TimeLabel->setString("Tiempo " + to_string((int)(Time / 60)) + ":" +
+		(to_string((int)Time % 60).length() < 2 ? "0" + to_string((int)Time % 60) : to_string((int)Time % 60)));
+	TimeLabel->setPosition(visibleSize.width - 350, visibleSize.height - 30);
+	TimeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+	this->addChild(TimeLabel, 1);
+	
 	auto menuItem = MenuItemImage::create("salirs.png",
 		"salir.png",
 		CC_CALLBACK_1(WinScene::goToSelectorScene, this));
@@ -53,10 +77,7 @@ bool WinScene::init()
     addChild(background, 0);
 	addChild(menu);
     
-    
-    
-
-	return true;
+   	return true;
 
 
 }

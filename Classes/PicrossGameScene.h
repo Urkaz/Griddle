@@ -30,17 +30,20 @@ public:
 	void update(float dt);
 	bool rightSquare(Picross* picross, std::vector<std::vector<int>> userSolution);
 
+
+
 private:
 	//Variables
 	Layer* picrossGridLayer;
 	Layer* numbersLayer;
 	Picross* picross;
-	int lifes;
-	float tiempo_ms;
+	
 	bool drawEnabled;
 	bool markXEnabled;
 	int solutionNum;
 	int userSquareNum;
+	int lifes = NULL;
+	float tiempo_ms = NULL;
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 
