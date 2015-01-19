@@ -14,7 +14,9 @@ public:
 	// implement the "static create()" method manually
 	CREATE_FUNC(WinScene);
 
+	int Life = NULL;
+	float Time = NULL;
+	
 	// Added
 	void goToSelectorScene(Ref *pSender);
-
 };

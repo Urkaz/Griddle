@@ -10,6 +10,9 @@ using namespace std;
 
 short Global::PICROSS_SQUARE_SIDE;
 short Global::FONT_SIZE;
+short Global::LIFE;
+short Global::TIME;
+WinScene* Winscene;
 
 Texture2D* texMarkX;
 Texture2D* texDraw;
@@ -36,6 +39,7 @@ int initialScale;
 bool mouseDown;
 float lastCursorX, lastCursorY;
 
+
 Scene* PicrossGameScene::createScene()
 {
 	auto scene = Scene::create();
@@ -51,6 +55,10 @@ bool PicrossGameScene::init()
 		return false;
 	}
    
+	//Winscene = NULL;
+
+	Winscene = new WinScene();
+	
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
@@ -477,7 +485,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
 
-					if (!Global::DEBUG)
+					//if (!Global::DEBUG)
 						lifes -= 1;
 
 					lifeLabel->setString("Vidas " + to_string(lifes));
@@ -527,8 +535,9 @@ void PicrossGameScene::onMouseDown(Event* event)
 					picrossGridVector[i][j]->setTexture(texDraw);
 					userSquareNum += 1;
 					if (userSquareNum == solutionNum)
-						if (rightSquare(picross, userSolution) == true)
-							goToWinScene(this);
+					if (rightSquare(picross, userSolution) == true){
+						goToWinScene(this);
+					}
 				}
 				break;
 			case 1: //La casilla está pintada -> vaciar
@@ -688,5 +697,8 @@ bool PicrossGameScene::rightSquare(Picross* picross, vector<vector<int>> userSol
 					return false;
 		}
 	}
+	Global::LIFE = lifes;
+	Global::TIME = tiempo_ms;
 	return true;
 }
+

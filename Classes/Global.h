@@ -7,7 +7,7 @@ class Global
 public:
 	static GameMode GAMEMODE;
 	static short PUZZLE_NUMBER;
-
+	
 	static short PICROSS_SQUARE_SIDE;
 	static short SELECTOR_SQUARE_SIDE;
 
@@ -19,5 +19,8 @@ public:
 	static const short TIME_LIMIT = 5;
 
 	static bool DEBUG;
+
+	static short LIFE;
+	static short TIME;
 };
 
