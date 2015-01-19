@@ -14,6 +14,7 @@ TTFConfig labelConfiguracion;
 Label* labelGanador;
 Label* LifeLabel;
 Label* TimeLabel;
+Texture2D::TexParams txParams;
 
 Scene* WinScene::createScene()
 {
@@ -29,6 +30,8 @@ bool WinScene::init()
 	{
 		return false;
 	}
+
+	txParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -80,9 +83,15 @@ bool WinScene::init()
     
 	Sprite* Sprite = Sprite::create("empty_selector.png");
 	Texture2D* texture;
-	texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + ".png");
+	if (Global::TIME < Global::TIME_LIMIT * 60)
+		texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + ".png");
+	else
+		texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + "_u.png");
+	
+	texture->setTexParameters(txParams);
+
 	Sprite->setTexture(texture);
-	Sprite->setScale(16,16);
+	Sprite->setScale(16);
 	Sprite->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 35);
 	addChild(Sprite);
 

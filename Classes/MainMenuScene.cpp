@@ -206,8 +206,6 @@ void MainMenuScene::goToTutorialScene(Ref *pSender) {
     
     auto scene = TutorialScene::createScene();
     
-    //Director::getInstance()->pushScene(TransitionSlideInB::create(0.5,scene));
-    //Director::getInstance()->pushScene(TransitionTurnOffTiles::create(0.5, scene));
     Director::getInstance()->pushScene(TransitionFadeTR::create(1, scene));
 
 }

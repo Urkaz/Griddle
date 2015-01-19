@@ -137,9 +137,6 @@ bool PicrossGameScene::init()
 
 		if (picross->getRowNumber() >= picross->getColumnNumber())
 		{
-			log("GRD %f", picrossGridLayer->getScale() - picross->getRowNumber() / initialScale);
-			log("NUM %f", numbersLayer->getScale() - 0.2f * (picross->getRowNumber() / initialScale));
-
 			picrossGridLayer->setScale(picrossGridLayer->getScale() - picross->getRowNumber() / initialScale);
 			numbersLayer->setScale(numbersLayer->getScale() - 0.2f * (picross->getRowNumber() / initialScale));
 			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
