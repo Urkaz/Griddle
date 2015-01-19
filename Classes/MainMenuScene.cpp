@@ -48,17 +48,7 @@ bool MainMenuScene::init()
 		return false;
 	}
 
-	Global::DEBUG = true;
-
-	UserDefault::getInstance()->setBoolForKey("n_5", true);
-	UserDefault::getInstance()->setIntegerForKey("n_5_fallos", 2);
-	UserDefault::getInstance()->setIntegerForKey("n_5_tiempo", 600);
-
-	UserDefault::getInstance()->setBoolForKey("n_1", true);
-	UserDefault::getInstance()->setIntegerForKey("n_1_fallos", 1);
-	UserDefault::getInstance()->setIntegerForKey("n_1_tiempo", 153);
-
-	UserDefault::getInstance()->flush();
+	Global::DEBUG = false;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -104,10 +94,20 @@ bool MainMenuScene::init()
              "boton_tutorial_p.png",
 			 CC_CALLBACK_1(MainMenuScene::goToTutorialScene, this));
 
-		auto menu = Menu::create(normal, libre, bomba, tutorial, NULL);
+		auto borrar = MenuItemImage::create("boton_borrar.png",
+			"boton_borrar_p.png",
+			CC_CALLBACK_1(MainMenuScene::deleteSaveData, this));
 
-		menu->alignItemsHorizontallyWithPadding(visibleSize.height / 20);
+		auto menu = Menu::create(normal, libre, bomba, NULL);
+
+		menu->alignItemsHorizontallyWithPadding(visibleSize.height / 7);
 		this->addChild(menu, 1);
+
+		auto menu2 = Menu::create(tutorial, borrar, NULL);
+
+		menu2->alignItemsHorizontallyWithPadding(visibleSize.height / 20);
+		menu2->setPositionY(menu->getPositionY() -100);
+		this->addChild(menu2, 1);
     }
 
 	// Adding background

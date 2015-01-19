@@ -23,4 +23,3 @@ public:
 	static short LIFE;
 	static short TIME;
 };
-

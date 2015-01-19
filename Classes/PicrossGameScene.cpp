@@ -55,10 +55,6 @@ bool PicrossGameScene::init()
 		return false;
 	}
    
-	//Winscene = NULL;
-
-	Winscene = new WinScene();
-	
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
@@ -146,7 +142,6 @@ bool PicrossGameScene::init()
 
 			picrossGridLayer->setScale(picrossGridLayer->getScale() - picross->getRowNumber() / initialScale);
 			numbersLayer->setScale(numbersLayer->getScale() - 0.2f * (picross->getRowNumber() / initialScale));
-			//numbersLayer->setScale(0.8f);
 			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
 		}
 		else
@@ -523,7 +518,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 					//Rango variable según la cantidad de filas/columnas
 					int radius = max(picross->getRowNumber(), picross->getColumnNumber()) * 1 / 4;
 
-					log("EXPLOSION EN (%d,%d). RADIO DE %d CASILLAS", randRow, randCol, radius);
+					//log("EXPLOSION EN (%d,%d). RADIO DE %d CASILLAS", randRow, randCol, radius);
 
 					//Explosión
 					for (int i = -radius; i <= radius; i++)
@@ -671,6 +666,34 @@ void PicrossGameScene::goToEndScene(Ref *pSender) {
 
 void PicrossGameScene::goToWinScene(Ref *pSender){
 
+	Global::LIFE = lifes;
+	Global::TIME = tiempo_ms;
+
+	//Guardar partida
+	int saved_time = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_tiempo").c_str());
+	int saved_fallos = UserDefault::getInstance()->getIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_fallos").c_str());
+	bool completed = UserDefault::getInstance()->getBoolForKey(("n_" + to_string(Global::PUZZLE_NUMBER)).c_str());
+
+	log("%d", saved_time);
+
+	if (!completed)
+	{
+		UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_fallos").c_str(), 3 - lifes);
+		if (Global::GAMEMODE == GameMode::NORMAL)
+			UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_tiempo").c_str(), tiempo_ms);
+		UserDefault::getInstance()->setBoolForKey(("n_" + to_string(Global::PUZZLE_NUMBER)).c_str(), true);
+	}
+	else
+	{
+		if (saved_fallos > 3 - lifes || saved_time > tiempo_ms)
+			UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_fallos").c_str(), 3 - lifes);
+
+		if (Global::GAMEMODE == GameMode::NORMAL && saved_time > tiempo_ms)
+			UserDefault::getInstance()->setIntegerForKey(("n_" + to_string(Global::PUZZLE_NUMBER) + "_tiempo").c_str(), tiempo_ms);
+	}
+	UserDefault::getInstance()->flush();
+
+
 	auto scene = WinScene::createScene();
 	Director::getInstance()->pushScene(TransitionFade::create(0.5, scene));
 }
@@ -714,8 +737,6 @@ bool PicrossGameScene::rightSquare(Picross* picross, vector<vector<int>> userSol
 					return false;
 		}
 	}
-	Global::LIFE = lifes;
-	Global::TIME = tiempo_ms;
 	return true;
 }
 

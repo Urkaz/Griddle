@@ -56,7 +56,7 @@ Picross::Picross(short num, GameMode gm)
 				name = name + (char)c;
 		}
 
-		log("NOMBRE: %s", name.c_str());
+		//log("NOMBRE: %s", name.c_str());
 
 		//Leer autor
 		author = "";
@@ -67,7 +67,7 @@ Picross::Picross(short num, GameMode gm)
 				author = author + (char)c;
 		}
 
-		log("AUTOR: %s", author.c_str());
+		//log("AUTOR: %s", author.c_str());
     }
 }
 

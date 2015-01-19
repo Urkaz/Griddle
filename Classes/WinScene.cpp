@@ -35,6 +35,7 @@ bool WinScene::init()
 	
 	Life = Global::LIFE;
 	Time = Global::TIME;
+
 	//Se muestran las vidas
 	LifesLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
 	LifesLabelConfig.fontSize = 25;
@@ -78,13 +79,9 @@ bool WinScene::init()
 	addChild(menu);
     
    	return true;
-
-
 }
 
 void WinScene::goToSelectorScene(Ref *pSender) {
-
-	//Constant::GAMEMODE = GameMode::NORMAL;
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 

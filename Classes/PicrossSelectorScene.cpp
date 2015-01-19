@@ -371,7 +371,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 
 					setPreviewData(Global::PUZZLE_NUMBER);
 
-					log("PICROSS SELECCIONADO: %d", Global::PUZZLE_NUMBER);
+					//log("PICROSS SELECCIONADO: %d", Global::PUZZLE_NUMBER);
 				}
 
 				if (!selected)

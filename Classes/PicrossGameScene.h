@@ -42,8 +42,8 @@ private:
 	bool markXEnabled;
 	int solutionNum;
 	int userSquareNum;
-	int lifes = NULL;
-	float tiempo_ms = NULL;
+	int lifes;
+	float tiempo_ms;
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 
