@@ -26,7 +26,7 @@ Texture2D::TexParams textureParams;
 Sprite* button_draw;
 Sprite* button_X;
 
-TTFConfig lifesLabelConfig;
+TTFConfig fontLabelConfig;
 TTFConfig numbersLabelConfig;
 Label* lifeLabel;
 Label* timeLabel;
@@ -107,6 +107,8 @@ bool PicrossGameScene::init()
 	//Se comprueba el GameMode para determinar el modo de creación de la matriz.
 	if(Global::GAMEMODE != GameMode::TRIANGLES)
 	{
+		initialScale = 5;
+
 		picrossGridVector = createSquareMatrix(picross);
 		picrossGridLayer = createGridLayer(picrossGridVector);
 
@@ -123,8 +125,28 @@ bool PicrossGameScene::init()
 		rowNumbers = generateNumbers(picross, false);
 		columnNumbers = generateNumbers(picross, true);
 
+		numbersLayer = createSquareNumbersLayer(rowNumbers, columnNumbers);
+
 		//Decoración
 		createDecoration(picrossGridVector, picrossGridLayer, picross);
+
+
+		if (picross->getRowNumber() >= picross->getColumnNumber())
+		{
+			log("GRD %f", picrossGridLayer->getScale() - picross->getRowNumber() / initialScale);
+			log("NUM %f", numbersLayer->getScale() - 0.2f * (picross->getRowNumber() / initialScale));
+
+			picrossGridLayer->setScale(picrossGridLayer->getScale() - picross->getRowNumber() / initialScale);
+			numbersLayer->setScale(numbersLayer->getScale() - 0.2f * (picross->getRowNumber() / initialScale));
+			//numbersLayer->setScale(0.8f);
+			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		}
+		else
+		{
+			picrossGridLayer->setScale(picrossGridLayer->getScale() - picross->getColumnNumber() / initialScale);
+			numbersLayer->setScale(numbersLayer->getScale() - 0.2f * (picross->getColumnNumber() / initialScale));
+			Global::PICROSS_SQUARE_SIDE = picrossGridVector[0][0]->getBoundingBox().size.width*picrossGridLayer->getScale();
+		}
 	}
 	//NO IMPLEMENTADO
 	/*else
@@ -156,24 +178,25 @@ bool PicrossGameScene::init()
 	button_draw->setPosition(button_draw->getBoundingBox().size.width/2,visibleSize.height/2+button_draw->getBoundingBox().size.height/2);
 	button_X->setPosition(button_X->getBoundingBox().size.width/2,button_X->getBoundingBox().size.height/2);
 
-	//Se muestran las vidas
-	lifesLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
-	lifesLabelConfig.fontSize = 25;
+	//Config fuente
+	fontLabelConfig.fontFilePath = "LondrinaSolid-Regular.otf";
+	fontLabelConfig.fontSize = 25;
 
+	//Tiempo
+	timeLabel = Label::createWithTTF(fontLabelConfig, "0:00");
+	timeLabel->setPosition(pauseMenu->getPositionX()-5, pauseMenu->getPositionY() - 45);
+	timeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
+	this->addChild(timeLabel, 1);
+
+	//Se muestran las vidas
 	if (Global::GAMEMODE == GameMode::NORMAL)
 	{
 		lifes = 3;
-		lifeLabel = Label::createWithTTF(lifesLabelConfig, "Vidas " + to_string(lifes));
-		lifeLabel->setPosition(visibleSize.width - 150, visibleSize.height - 30);
+		lifeLabel = Label::createWithTTF(fontLabelConfig, "Vidas " + to_string(lifes));
+		lifeLabel->setPosition(timeLabel->getPositionX()-18, timeLabel->getPositionY() - 30);
 		lifeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-		this->addChild(lifeLabel,1);
+		this->addChild(lifeLabel, 1);
 	}
-
-	//Tiempo
-	timeLabel = Label::createWithTTF(lifesLabelConfig, "Tiempo 0:00");
-	timeLabel->setPosition(visibleSize.width -  350, visibleSize.height - 30);
-	timeLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::CENTER);
-	this->addChild(timeLabel, 1);
 
 	//Se dibuja el tablero
 	this->addChild(button_draw, 1);
@@ -181,12 +204,7 @@ bool PicrossGameScene::init()
 	this->addChild(pauseMenu, 1);
 
 	this->addChild(picrossGridLayer, 0);
-
-	if (Global::GAMEMODE != GameMode::TRIANGLES)
-	{
-		numbersLayer = createSquareNumbersLayer(rowNumbers, columnNumbers);
-		this->addChild(numbersLayer, 0);
-	}
+	this->addChild(numbersLayer, 0);
 
 	//Activar el método update
 	this->scheduleUpdate();
@@ -252,7 +270,6 @@ Layer* PicrossGameScene::createGridLayer(vector<vector<Sprite*>> spriteVector)
 	//Se crea una capa en el centro de la pantalla a la que se le añadiran los sprites
 	Layer* spriteLayer = Layer::create();
 	spriteLayer->setContentSize(Size(1, 1));
-	initialScale = 5;
 	spriteLayer->setScale(initialScale);
 
 	//Se establece la posición
@@ -588,7 +605,7 @@ void PicrossGameScene::update(float dt)
 {
 	tiempo_ms += dt;
 
-	timeLabel->setString("Tiempo " + to_string((int)(tiempo_ms / 60)) + ":" +
+	timeLabel->setString(to_string((int)(tiempo_ms / 60)) + ":" +
 		(to_string((int)tiempo_ms % 60).length() < 2 ? "0" + to_string((int)tiempo_ms % 60) : to_string((int)tiempo_ms % 60)));
 }
 

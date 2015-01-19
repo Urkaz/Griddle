@@ -351,7 +351,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 			cursorY < mainOffSetY + mainSide * 5 &&
 			cursorX < mainOffSetX + mainSide * 5)
 		{
-			if (selected)
+			if (!moveLeft && !moveRight && !selectEnabled && !unselectEnabled)
 			{
 				//Coordenadas fila(i),columna(j)
 				short i = (cursorY - mainOffSetY) / mainSide;
@@ -365,7 +365,7 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 
 				if (id != 0)
 				{
-					PicrossPreview->setTexture(mainPanel->getPicrossTextureIndex(i,j));
+					PicrossPreview->setTexture(mainPanel->getPicrossTextureIndex(i, j));
 
 					Global::PUZZLE_NUMBER = id;
 
@@ -373,10 +373,9 @@ void PicrossSelectorScene::onMouseDown(Event* event)
 
 					log("PICROSS SELECCIONADO: %d", Global::PUZZLE_NUMBER);
 				}
-			}
-			else
-			{
-				enableSelect();
+
+				if (!selected)
+					enableSelect();
 			}
 		}
 	}
