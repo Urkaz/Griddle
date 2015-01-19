@@ -67,7 +67,7 @@ bool WinScene::init()
 
 	auto menu = Menu::create(menuItem2, menuItem, NULL);
     
-    menu->alignItemsVerticallyWithPadding(visibleSize.height/10);
+    menu->alignItemsVerticallyWithPadding(visibleSize.height/3);
 
 	//menu->setPosition(visibleSize.width - menuItem->getBoundingBox().size.width, visibleSize.height - menuItem->getBoundingBox().size.height);
     
@@ -78,6 +78,15 @@ bool WinScene::init()
     addChild(background, 0);
 	addChild(menu);
     
+	Sprite* Sprite = Sprite::create("empty_selector.png");
+	Texture2D* texture;
+	texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + ".png");
+	Sprite->setTexture(texture);
+	Sprite->setScale(16,16);
+	Sprite->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 35);
+	addChild(Sprite);
+
+
    	return true;
 }
 
