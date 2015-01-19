@@ -7,6 +7,8 @@ using namespace std;
 
 Picross::Picross(short num, GameMode gm)
 {
+	solutionNum = 0;
+
 	string mode = "";
 	if(gm == GameMode::NORMAL)
 		mode = "n";
@@ -20,7 +22,7 @@ Picross::Picross(short num, GameMode gm)
 	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat");
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
-    
+
 	if(stream == nullptr) perror(("Error opening file: /picross_data/"+mode+"_"+to_string(num)+".dat").c_str());
 	else
 	{
@@ -39,7 +41,8 @@ Picross::Picross(short num, GameMode gm)
 			{
 				c = fgetc(stream);
 				row[j] = c;
-				//log("Fila %d - %d",j,row[j]);
+				if (c == 1)
+					solutionNum++;
 			}
 			matrixSolution[i] = row;
 		}
@@ -94,4 +97,9 @@ string Picross::getName()
 string Picross::getAuthor()
 {
 	return author;
+}
+
+int Picross::getSolutionNum()
+{
+	return solutionNum;
 }

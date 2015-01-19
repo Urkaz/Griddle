@@ -36,9 +36,6 @@ int initialScale;
 bool mouseDown;
 float lastCursorX, lastCursorY;
 
-int solutionNum;
-int userSquareNum;
-
 Scene* PicrossGameScene::createScene()
 {
 	auto scene = Scene::create();
@@ -91,6 +88,9 @@ bool PicrossGameScene::init()
 
 	//Se crea un Picross basado en los parámetros elegidos durante las pantallas de selección
 	picross = new Picross(Constant::PUZZLE_NUMBER, Constant::GAMEMODE);
+
+	solutionNum = picross->getSolutionNum();
+	userSquareNum = 0;
 
 	//Inicializar matriz de solución del usuario
 	userSolution = vector<vector<int>>(picross->getRowNumber());
@@ -312,7 +312,6 @@ vector<vector<Label*>> PicrossGameScene::generateNumbers(Picross* picross, bool 
 			if (value == 1)
 			{
 				count++;
-				solutionNum += 1;
 		    }
 			else
 			{
@@ -460,12 +459,12 @@ void PicrossGameScene::onMouseDown(Event* event)
 		{
 			switch(userSolution[i][j])
 			{
-			case -1: //X
+			case -1: //Hay una X en la casilla -> vaciar
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
-				userSquareNum -= 1;
 				break;
-			case 0: //Vacio
+			case 0: //La casilla está vacía -> pintar
+				//Modo normal y encuentra un error -> poner una X y restar vida
 				if (Constant::GAMEMODE == GameMode::NORMAL && picross->getSolution()[i][j] == 0)
 				{
 					userSolution[i][j] = -1;
@@ -473,20 +472,17 @@ void PicrossGameScene::onMouseDown(Event* event)
 
 					lifes -= 1;
 					lifeLabel->setString("Vidas " + to_string(lifes));
-					if (userSquareNum == solutionNum / 2){
-						if (rightSquare(picross, userSolution) == true){
-							goToWinScene(this);
-						}
-					}
-					
+
 					if (lifes == 0){
 						goToEndScene(this);
 					}
 				}
+				//Modo bomba y encuentra un error -> poner X y "explotar"
 				else if (Constant::GAMEMODE == GameMode::BOMB && picross->getSolution()[i][j] == 0)
 				{
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
+
 					int randRow = rand() % (picross->getRowNumber() - 0 + 1) + 0;
 					int randCol = rand() % (picross->getColumnNumber() - 0 + 1) + 0;
 
@@ -494,11 +490,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 					int radius = max(picross->getRowNumber(), picross->getColumnNumber()) * 1 / 4;
 
 					log("EXPLOSION EN (%d,%d). RADIO DE %d CASILLAS", randRow, randCol, radius);
-					if (userSquareNum == solutionNum / 2){
-						if (rightSquare(picross, userSolution) == true){
-							goToWinScene(this);
-						}
-					}
+
 					//Explosión
 					for (int i = -radius; i <= radius; i++)
 					{
@@ -509,6 +501,10 @@ void PicrossGameScene::onMouseDown(Event* event)
 								if (randRow + i >= 0 && randRow + i < picross->getRowNumber() &&
 									randCol + j >= 0 && randCol + j < picross->getColumnNumber())
 								{
+									//Si la casilla a borrar estaba pintada, restar para el recuento de la solución
+									if (userSolution[randRow + i][randCol + j] == 1)
+										userSquareNum -= 1;
+
 									userSolution[randRow + i][randCol + j] = 0;
 									picrossGridVector[randRow + i][randCol + j]->setTexture(texEmpty);
 								}
@@ -521,22 +517,18 @@ void PicrossGameScene::onMouseDown(Event* event)
 					userSolution[i][j] = 1;
 					picrossGridVector[i][j]->setTexture(texDraw);
 					userSquareNum += 1;
-					if (userSquareNum == solutionNum / 2){
-						if (rightSquare(picross, userSolution) == true){
+					if (userSquareNum == solutionNum)
+						if (rightSquare(picross, userSolution) == true)
 							goToWinScene(this);
-						}
-					}
 				}
 				break;
-			case 1: //Pintado
+			case 1: //La casilla está pintada -> vaciar
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				userSquareNum -= 1;
-				if (userSquareNum == solutionNum / 2){
-					if (rightSquare(picross, userSolution) == true){
+				if (userSquareNum == solutionNum)
+					if (rightSquare(picross, userSolution) == true)
 						goToWinScene(this);
-					}
-				}
 				break;
 			}
 		}
@@ -545,23 +537,21 @@ void PicrossGameScene::onMouseDown(Event* event)
 		{
 			switch(userSolution[i][j])
 			{
-			case -1: //X
+			case -1: //Hay una X en la casilla -> vaciar
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				break;
-			case 0: //Vacio
+			case 0: //La casilla está vacía -> poner X
 				userSolution[i][j] = -1;
 				picrossGridVector[i][j]->setTexture(texMarkX);
 				break;
-			case 1: //Pintado
+			case 1: //La casilla está pintada -> vaciar
 				userSolution[i][j] = 0;
 				picrossGridVector[i][j]->setTexture(texEmpty);
 				userSquareNum -= 1;
-				if (userSquareNum == solutionNum / 2){
-					if (rightSquare(picross, userSolution) == true){
+				if (userSquareNum == solutionNum)
+					if (rightSquare(picross, userSolution) == true)
 						goToWinScene(this);
-					}
-				}
 				break;
 			}
 		}

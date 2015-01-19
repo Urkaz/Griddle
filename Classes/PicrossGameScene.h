@@ -39,6 +39,8 @@ private:
 	float tiempo_ms;
 	bool drawEnabled;
 	bool markXEnabled;
+	int solutionNum;
+	int userSquareNum;
 	std::vector<std::vector<cocos2d::Sprite*>> picrossGridVector;
 	std::vector<std::vector<int>> userSolution;
 

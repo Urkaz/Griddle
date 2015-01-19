@@ -19,6 +19,7 @@ public:
 	std::string getAuthor();
 
 	std::vector<std::vector<int>> getSolution();
+	int Picross::getSolutionNum();
 
 private:
 
@@ -27,4 +28,5 @@ private:
 	short columns;
 	std::string name;
 	std::string author;
+	int solutionNum;
 };
