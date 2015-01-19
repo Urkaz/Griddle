@@ -181,16 +181,16 @@ bool PicrossSelectorScene::init()
 	auto playButton = MenuItemImage::create("ganarselector.png",
 		"ganarselector.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
-    playButton->setScale(0.1);
+    playButton->setScale(0.1f);
 
 	auto unselectButton = MenuItemImage::create("atrasselector.png",
 		"atrasselector.png",
 		CC_CALLBACK_1(PicrossSelectorScene::enableUnselect, this));
-    unselectButton->setScale(0.1);
+    unselectButton->setScale(0.1f);
 
 	menuSelected = Menu::create(playButton, unselectButton, NULL);
 	menuSelected->setPosition(visibleSize.width * 4 / 5, visibleSize.height * 1.5 / 5);
-	menuSelected->alignItemsVerticallyWithPadding(0.3);
+	menuSelected->alignItemsVerticallyWithPadding(0.3f);
 	addChild(menuSelected, 0);
 
 	//Vista previa del picross seleccionado

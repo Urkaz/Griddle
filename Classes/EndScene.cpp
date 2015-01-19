@@ -37,9 +37,9 @@ bool EndScene::init()
 
 	auto menu = Menu::create(menuItem2, menuItem, NULL);
     
-    menuItem->setScale(0.3);
+    menuItem->setScale(0.3f);
     
-    menuItem2->setScale(0.18);
+    menuItem2->setScale(0.18f);
 
     menu->alignItemsVerticallyWithPadding(visibleSize.height / 20);
     

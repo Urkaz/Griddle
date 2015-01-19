@@ -38,6 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	resDirOrders.push_back("fonts");
 	resDirOrders.push_back("imagenes/Fondos");
 	resDirOrders.push_back("imagenes/interfaz");
+	resDirOrders.push_back("imagenes/interfaz/Botonesnuevos");
 	resDirOrders.push_back("sonidos");
 
 	//glview->setFrameSize(768, 1024);

@@ -34,11 +34,11 @@ bool WinScene::init()
 		"salir.png",
 		CC_CALLBACK_1(WinScene::goToSelectorScene, this));
     
-    menuItem->setScale(0.2);
+    menuItem->setScale(0.2f);
     
     auto menuItem2 = MenuItemImage::create("superado.png", "superado.png");
     
-    menuItem2->setScale(0.2);
+    menuItem2->setScale(0.2f);
 
 	auto menu = Menu::create(menuItem2, menuItem, NULL);
     

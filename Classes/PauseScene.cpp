@@ -30,9 +30,9 @@ bool PauseScene::init()
                                            CC_CALLBACK_1(PauseScene::goToPicrossSelector, this));
     auto playItem3= MenuItemImage::create("pausado.png", "pausado.png");
     
-    playItem->setScale(0.2);
-    playItem2->setScale(0.2);
-    playItem3->setScale(0.2);
+    playItem->setScale(0.2f);
+    playItem2->setScale(0.2f);
+    playItem3->setScale(0.2f);
     
     auto menu = Menu::create(playItem3,playItem, playItem2 , NULL);
     
