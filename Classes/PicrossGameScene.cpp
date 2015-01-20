@@ -95,6 +95,14 @@ bool PicrossGameScene::init()
 
 	solutionNum = picross->getSolutionNum();
 	userSquareNum = 0;
+    
+    
+    //Musica
+    /*
+    CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("resolver.mp3");
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("resolver.mp3", true);
+     */
 
 	//Inicializar matriz de solución del usuario
 	userSolution = vector<vector<int>>(picross->getRowNumber());

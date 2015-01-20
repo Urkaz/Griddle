@@ -34,9 +34,9 @@ bool PauseScene::init()
     playItem2->setScale(0.2f);
     playItem3->setScale(0.2f);
     
-    auto menu = Menu::create(playItem3,playItem, playItem2 , NULL);
+    auto menu = Menu::create(playItem3, playItem, playItem2 , NULL);
     
-    menu->alignItemsVerticallyWithPadding(visibleSize.height / 15);
+    menu->alignItemsVerticallyWithPadding(visibleSize.height / 40);
     this->addChild(menu, 1);
     
     // Adding background

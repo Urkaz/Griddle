@@ -178,10 +178,10 @@ bool PicrossSelectorScene::init()
     addChild(exitMenu, 0);
 
 	//Menu para cuando está seleccionado un panel
-	auto playButton = MenuItemImage::create("ganarselector.png",
-		"ganarselector.png",
+	auto playButton = MenuItemImage::create("FondoSelectorBoton.png",
+		"FondoSelectorBotonP.png",
 		CC_CALLBACK_1(PicrossSelectorScene::goToPicrossGame, this));
-    playButton->setScale(0.1f);
+    //playButton->setScale(0.1f);
 
 	auto unselectButton = MenuItemImage::create("atrasselector.png",
 		"atrasselector.png",

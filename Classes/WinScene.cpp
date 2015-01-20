@@ -31,8 +31,19 @@ bool WinScene::init()
 		return false;
 	}
 
+<<<<<<< Updated upstream
 	txParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 
+=======
+<<<<<<< HEAD
+    Texture2D::TexParams textpar = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+
+    
+=======
+	txParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+
+>>>>>>> FETCH_HEAD
+>>>>>>> Stashed changes
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
@@ -83,6 +94,13 @@ bool WinScene::init()
     
 	Sprite* Sprite = Sprite::create("empty_selector.png");
 	Texture2D* texture;
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+	texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + ".png");
+    texture->setTexParameters(textpar);
+=======
+>>>>>>> Stashed changes
 	if (Global::TIME < Global::TIME_LIMIT * 60)
 		texture = Director::getInstance()->getTextureCache()->addImage("n_" + to_string(Global::PUZZLE_NUMBER) + ".png");
 	else
@@ -90,6 +108,10 @@ bool WinScene::init()
 	
 	texture->setTexParameters(txParams);
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> FETCH_HEAD
+>>>>>>> Stashed changes
 	Sprite->setTexture(texture);
 	Sprite->setScale(16);
 	Sprite->setPosition(visibleSize.width / 2, visibleSize.height / 2 - 35);
