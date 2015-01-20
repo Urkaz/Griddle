@@ -261,7 +261,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T8->getPixelsWide() / imagen_tutorial->getContentSize().width,
 				T8->getPixelsHigh() / imagen_tutorial->getContentSize().height);
 
-            labelTutorial->setString("Hay tres modos de juego: ""\n""Normal, libre y bomba");
+            labelTutorial->setString("textolargo");
             break;
         case 9:
             imagen_tutorial->setTexture(T9);

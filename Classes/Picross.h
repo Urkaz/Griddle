@@ -19,7 +19,7 @@ public:
 	std::string getAuthor();
 
 	std::vector<std::vector<int>> getSolution();
-	int getSolutionNum();
+	int Picross::getSolutionNum();
 
 private:
 
