@@ -205,7 +205,7 @@ void TutorialScene::ActualizarTextura(int index)
 		imagen_tutorial->setScale(T0->getPixelsWide() / imagen_tutorial->getContentSize().width *3,
 			T0->getPixelsHigh() / imagen_tutorial->getContentSize().height *3);
 
-		labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman LaraGay, seré tu tutor");
+		labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman Pepe, seré tu tutor");
 		break;
 	case 1:
 			imagen_tutorial->setTexture(T1);
@@ -261,7 +261,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T8->getPixelsWide() / imagen_tutorial->getContentSize().width,
 				T8->getPixelsHigh() / imagen_tutorial->getContentSize().height);
 
-            labelTutorial->setString("textolargo");
+            labelTutorial->setString("Hay tres modos de juego""\n""¡Normal, libre y bomba!");
             break;
         case 9:
             imagen_tutorial->setTexture(T9);
