@@ -211,7 +211,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T0->getPixelsWide() / imagen_tutorial->getContentSize().width *3,
 				T0->getPixelsHigh() / imagen_tutorial->getContentSize().height *3);
 
-			labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman Gridman, seré tu tutor");
+			labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman Pepe, seré tu tutor");
 			break;
 		case 1:
 			botonAnterior->setVisible(true);
