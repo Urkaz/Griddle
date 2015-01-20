@@ -146,7 +146,6 @@ bool MainMenuScene::init()
     seq1 = Sequence::create(rotacion, move_easy_in, rotacionabajo, delay, move_back, delay->clone(),rotacion, nullptr);
     avion->runAction(RepeatForever::create(seq1));
     
-	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
 	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
 	{
 		CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");

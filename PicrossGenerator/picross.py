@@ -1,4 +1,3 @@
-﻿# -*- coding: utf-8 -*-
 import sys
 import binascii
 
@@ -54,7 +53,7 @@ try:
 		if c == '\n':
 			w_file.write("\xFF")
 		else:
-				w_file.write(c)
+			w_file.write(c)
 
 	r_file.close()
 	w_file.close()

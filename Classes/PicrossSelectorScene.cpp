@@ -45,6 +45,12 @@ bool PicrossSelectorScene::init()
 		return false;
 	}
     
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("cancionmenu.wav", true);
+	}
+
     textparams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     
 	//Inicializar variables
@@ -656,9 +662,19 @@ void PicrossSelectorScene::movePanelsToRight(float dt)
 
 void PicrossSelectorScene::goToPicrossGame(Ref *pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("resolver_loop.wav");
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("resolver_loop.wav", true);
+	}
+
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
 
 	auto scene = PicrossGameScene::createScene();
+
+	Global::CURRENT_PACK_INDEX = mainIndex;
 
 	Director::getInstance()->pushScene(TransitionFadeTR::create(1, scene));
 }

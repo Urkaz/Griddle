@@ -53,10 +53,11 @@ Picross::Picross(short num, GameMode gm)
 		{
 			c = fgetc(stream);
 			if(c != 0xFF)
-				name = name + (char)c;
+				name = name + char(c);
+			log("%c: %d", char(c), c);
 		}
 
-		//log("NOMBRE: %s", name.c_str());
+		log("NOMBRE: %s", name.c_str());
 
 		//Leer autor
 		author = "";

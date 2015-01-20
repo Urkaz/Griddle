@@ -29,8 +29,8 @@ bool EndScene::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto menuItem = MenuItemImage::create("salir2.png",
-		"salir2p.png",
+	auto menuItem = MenuItemImage::create("salir2p.png",
+		"salir2.png",
 		CC_CALLBACK_1(EndScene::goToPicrossSelectorScene, this));
     
     auto menuItem2 = MenuItemImage::create("perder.png", "perder.png");
@@ -58,7 +58,7 @@ bool EndScene::init()
 
 void EndScene::goToPicrossSelectorScene(Ref *pSender) {
 
-	//Global::GAMEMODE = GameMode::NORMAL;
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 
 	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
 

@@ -13,6 +13,9 @@ Sprite* imagen_tutorial;
 Sprite* personaje;
 Sprite* panel;
 
+MenuItemImage* botonSiguiente;
+MenuItemImage* botonAnterior;
+
 Texture2D::TexParams textpar;
 Texture2D* imagen;
 
@@ -102,10 +105,12 @@ bool TutorialScene::init()
 	indice = 0;
 
     //Menu
-	auto botonSiguiente = MenuItemImage::create("derecha.png", "derecha.png", CC_CALLBACK_1(TutorialScene::Siguiente, this));
-	auto botonAnterior = MenuItemImage::create("izquierda.png", "izquierda.png", CC_CALLBACK_1(TutorialScene::Anterior, this));
+	botonSiguiente = MenuItemImage::create("derecha.png", "derecha.png", CC_CALLBACK_1(TutorialScene::Siguiente, this));
+	botonAnterior = MenuItemImage::create("izquierda.png", "izquierda.png", CC_CALLBACK_1(TutorialScene::Anterior, this));
     botonSiguiente->setScale(0.3f);
     botonAnterior->setScale(0.3f);
+
+	botonAnterior->setVisible(false);
     
 	auto menu = Menu::create(botonAnterior, botonSiguiente, NULL);
 	menu->setPosition(visibleSize.width / 1.8, visibleSize.height / 15);
@@ -200,14 +205,16 @@ void TutorialScene::Siguiente(Ref *pSender)
 void TutorialScene::ActualizarTextura(int index)
 {
     switch (index) {
-	case 0:
-		imagen_tutorial->setTexture(T0);
-		imagen_tutorial->setScale(T0->getPixelsWide() / imagen_tutorial->getContentSize().width *3,
-			T0->getPixelsHigh() / imagen_tutorial->getContentSize().height *3);
+		case 0:
+			botonAnterior->setVisible(false);
+			imagen_tutorial->setTexture(T0);
+			imagen_tutorial->setScale(T0->getPixelsWide() / imagen_tutorial->getContentSize().width *3,
+				T0->getPixelsHigh() / imagen_tutorial->getContentSize().height *3);
 
-		labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman LaraGay, seré tu tutor");
-		break;
-	case 1:
+			labelTutorial->setString("\nBienvenido al tutorial.\nMe llaman Gridman, seré tu tutor");
+			break;
+		case 1:
+			botonAnterior->setVisible(true);
 			imagen_tutorial->setTexture(T1);
 			imagen_tutorial->setScale(T1->getPixelsWide() / imagen_tutorial->getContentSize().width,
 				T1->getPixelsHigh() / imagen_tutorial->getContentSize().height);
@@ -261,7 +268,7 @@ void TutorialScene::ActualizarTextura(int index)
 			imagen_tutorial->setScale(T8->getPixelsWide() / imagen_tutorial->getContentSize().width,
 				T8->getPixelsHigh() / imagen_tutorial->getContentSize().height);
 
-            labelTutorial->setString("textolargo");
+			labelTutorial->setString("Hay tres modos de juego: ""\n""Normal: con vidas; Bomba: los fallos desmarcan casillas; y Libre.");
             break;
         case 9:
             imagen_tutorial->setTexture(T9);
@@ -321,6 +328,7 @@ void TutorialScene::ActualizarTextura(int index)
             labelTutorial->setString("Este método puede ser usado en varias situaciones.\nContando el número de casillas, podemos saber\nqué casillas son comunes a las varias posibilidades.\nEsto incluye cuando hay más de un número por cada fila o columna.");
             break;
         case 17:
+			botonSiguiente->setVisible(true);
 			imagen_tutorial->setTexture(T17);
 			imagen_tutorial->setScale(T17->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
 				T17->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);
@@ -329,6 +337,7 @@ void TutorialScene::ActualizarTextura(int index)
             break;
 
         case 18:
+			botonSiguiente->setVisible(false);
 			imagen_tutorial->setTexture(T18);
 			imagen_tutorial->setScale(T18->getPixelsWide() / imagen_tutorial->getContentSize().width * 3,
 				T18->getPixelsHigh() / imagen_tutorial->getContentSize().height * 3);

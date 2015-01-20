@@ -54,7 +54,7 @@ bool PicrossGameScene::init()
 	{
 		return false;
 	}
-   
+
 	//Crear listener del ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(PicrossGameScene::onMouseDown, this);
@@ -494,7 +494,7 @@ void PicrossGameScene::onMouseDown(Event* event)
 					userSolution[i][j] = -1;
 					picrossGridVector[i][j]->setTexture(texMarkX);
 
-					//if (!Global::DEBUG)
+					if (!Global::DEBUG)
 						lifes -= 1;
 
 					lifeLabel->setString("Vidas " + to_string(lifes));

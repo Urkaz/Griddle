@@ -101,9 +101,16 @@ bool WinScene::init()
 
 void WinScene::goToSelectorScene(Ref *pSender) {
 
-	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/ButtonClick.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("cambio_escena.wav");
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying() == false)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("cancionmenu.wav");
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("cancionmenu.wav", true);
+	}
 
 	auto scene = PicrossSelectorScene::createScene();
-
-	Director::getInstance()->replaceScene(TransitionSlideInB::create(0.5, scene));
+	Director::getInstance()->replaceScene(TransitionFadeBL::create(1, scene));
 }
