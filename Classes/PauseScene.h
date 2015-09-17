@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 class PauseScene: public cocos2d::Layer
 {

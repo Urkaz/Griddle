@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "Picross.h"
 #include "Global.h"
+#include "SimpleAudioEngine.h"
 
 class MainMenuScene: public cocos2d::Layer
 {

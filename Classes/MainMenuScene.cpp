@@ -5,8 +5,6 @@
 using namespace cocos2d;
 using namespace std;
 
-USING_NS_CC;
-
 //Constante redefinida
 GameMode Global::GAMEMODE;
 bool Global::DEBUG;

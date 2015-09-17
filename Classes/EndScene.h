@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "Picross.h"
 #include "Global.h"
-//#include "UIWidget.h"
+#include "SimpleAudioEngine.h"
 
 class EndScene : public cocos2d::Layer
 {

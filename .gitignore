@@ -3,11 +3,13 @@
 [Dd]ebug.*
 [Rr]elease.*
 .cocos-project.json
-proj.wp8-xaml
+proj.win8.1-universal
 proj.linux
 *.psd
 PicrossGenerator/*.dat
 *.lnk
+*/.idea
+
 
 
 #--------------
