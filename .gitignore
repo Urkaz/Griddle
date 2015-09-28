@@ -9,7 +9,8 @@ proj.linux
 PicrossGenerator/*.dat
 *.lnk
 */.idea
-
+proj.android-studio/app/assets
+proj.android-studio/app/libs
 
 
 #--------------

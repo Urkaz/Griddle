@@ -47,25 +47,20 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-	auto fileUtils = FileUtils::getInstance();
-	std::vector<std::string> resDirOrders;
-
-	// Sets the search path for images
-	resDirOrders.push_back("picross_images");
-	resDirOrders.push_back("picross_images/mini_pics");
-	resDirOrders.push_back("picross_images/mini_pics_unsolved");
-	resDirOrders.push_back("picross_data");
-	resDirOrders.push_back("imagenes/Tutorial");
-	resDirOrders.push_back("fonts");
-	resDirOrders.push_back("imagenes/Fondos");
-	resDirOrders.push_back("imagenes/interfaz");
-	resDirOrders.push_back("imagenes/interfaz/Botonesnuevos");
-	resDirOrders.push_back("sonidos");
-
-	fileUtils->setSearchPaths(resDirOrders);
+	// Sets the search path for resources
+	FileUtils::getInstance()->addSearchPath("picross_images");
+	FileUtils::getInstance()->addSearchPath("picross_images/mini_pics");
+	FileUtils::getInstance()->addSearchPath("picross_images/mini_pics_unsolved");
+	FileUtils::getInstance()->addSearchPath("imagenes/Tutorial");
+	FileUtils::getInstance()->addSearchPath("fonts");
+	FileUtils::getInstance()->addSearchPath("imagenes/Fondos");
+	FileUtils::getInstance()->addSearchPath("imagenes/interfaz");
+	FileUtils::getInstance()->addSearchPath("imagenes/interfaz/Botonesnuevos");
+	FileUtils::getInstance()->addSearchPath("sonidos");
+	FileUtils::getInstance()->addSearchResolutionsOrder("picross_data");
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);

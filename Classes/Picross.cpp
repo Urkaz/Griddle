@@ -19,7 +19,7 @@ Picross::Picross(short num, GameMode gm)
 		//mode = "b";
 		mode = "n";
     
-	string fullPath = CCFileUtils::getInstance()->fullPathForFilename(mode+"_"+to_string(num)+".dat");
+	string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(mode+"_"+to_string(num)+".dat");
 
 	FILE *stream = fopen(fullPath.c_str(),"r");
 
